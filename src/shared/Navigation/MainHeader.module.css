@@ -1,0 +1,31 @@
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+.main__header {
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  background-color: #fde0b4;
+  color: #4d4d4d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+}
+.logo {
+  font-size: 28px;
+}
+
+.nav__list {
+  display: flex;
+}
+
+.nav__item {
+  margin-left: 25px;
+}
+
+.nav__item svg {
+  fill: #4d4d4d;
+  width: 30px;
+  height: 30px;
+}
