@@ -1,7 +1,7 @@
 .auth__container {
   max-width: 1440px;
   color: #4d4d4d;
-  /* height: 100vh; */
+  height: 100vh;
   padding: 100px 60px 0;
   margin: auto;
   display: flex;
@@ -18,7 +18,7 @@
 
 .form__container {
   flex: 50%;
-  padding-top: 50px;
+  padding-top: 70px;
 }
 
 .form__container_content {
@@ -26,8 +26,13 @@
   margin: 0 auto;
 }
 
+.form__title {
+  margin-bottom: 50px;
+}
+
 .authMode__title {
-  font-size: 42px;
+  margin-bottom: 50px;
+  font-size: 32px;
 }
 
 .workout__mode_container {
@@ -90,6 +95,7 @@
 .form__control input {
   width: 90%;
   height: 40px;
+  padding: 8px;
   font-size: 18px;
   outline: none;
   /* border: none; */
@@ -99,7 +105,7 @@
 .auth__helper {
   width: 90%;
   display: flex;
-  margin-top: 4px;
+  margin-top: 10px;
   align-items: center;
   justify-content: space-between;
 }
