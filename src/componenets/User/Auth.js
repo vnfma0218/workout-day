@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../../shared/UIElement/Button';
 import classes from './Auth.module.css';
 export default function Auth() {
   return (
@@ -44,7 +45,7 @@ export default function Auth() {
               </div>
               <p className={classes.forgot}>Forgot password?</p>
             </div>
-            <button className={classes.submit__btn}>Login</button>
+            <Button name='Login' className='submit__btn' />
           </form>
         </div>
       </div>

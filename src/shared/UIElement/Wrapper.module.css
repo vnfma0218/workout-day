@@ -1,21 +1,19 @@
-.wrapper__dietmode {
-  background-color: red;
+.wrapper {
   width: 100%;
   max-width: 1440px;
   height: 100vh;
-  padding: 0 60px;
   margin: 0 auto;
   position: relative;
+}
+
+.wrapper__dietmode {
+  background-color: red;
+  padding: 0 60px;
   background-color: #c6d57e;
 }
 
 .wrapper__normalmode {
   background-color: red;
-  width: 100%;
-  max-width: 1440px;
-  height: 100vh;
   padding: 0 60px;
-  margin: 0 auto;
-  position: relative;
   background-color: #f4d19b;
 }

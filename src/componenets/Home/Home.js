@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { ModeContext } from '../../context/mode-context';
+import React from 'react';
+
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './Home.module.css';
 
