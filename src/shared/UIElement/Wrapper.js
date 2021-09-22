@@ -6,7 +6,7 @@ export default function Wrapper(props) {
   const mode = useContext(ModeContext);
 
   return (
-    <div className={classes.wrapper}>
+    <section className={classes.wrapper} id={props.id}>
       <div
         className={
           mode.isDietMode
@@ -22,6 +22,6 @@ export default function Wrapper(props) {
           NormalMode
         </button>
       </div>
-    </div>
+    </section>
   );
 }

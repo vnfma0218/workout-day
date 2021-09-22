@@ -1,33 +1,15 @@
-.container {
-  /* width: 100%;
-  max-width: 1440px;
-  height: 100vh;
-  padding: 0 60px;
-  margin: 0 auto;
-  position: relative; */
+.home {
   height: 60%;
 }
 
-/* .container__dietmode {
-  width: 100%;
-  height: 60%;
-  background-color: #f4d19b;
-}
-
-.container__normalmode {
-  width: 100%;
-  height: 60%;
-  background-color: blueviolet;
-} */
-
-.container__img {
+.home__img {
   width: 600px;
   position: absolute;
   top: 20%;
   left: 10%;
 }
 
-.container__title {
+.home__title {
   position: absolute;
   right: 5%;
   bottom: 20%;

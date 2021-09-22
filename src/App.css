@@ -18,3 +18,12 @@ body {
   font-family: 'BalsamiqSans';
   src: url('./fonts/BalsamiqSans-Regular.ttf');
 }
+
+:root {
+  /* font-size */
+  --font-large: 42px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 16px;
+  --font-micro: 14px;
+}
