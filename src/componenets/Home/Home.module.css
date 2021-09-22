@@ -5,7 +5,7 @@
   padding: 0 60px;
   margin: 0 auto;
   position: relative; */
-  height: 500px;
+  height: 60%;
 }
 
 /* .container__dietmode {
@@ -21,16 +21,16 @@
 } */
 
 .container__img {
-  width: 500px;
+  width: 600px;
   position: absolute;
-  top: 9rem;
-  left: 12rem;
+  top: 20%;
+  left: 10%;
 }
 
 .container__title {
   position: absolute;
-  right: 9rem;
-  bottom: 10rem;
-  font-size: 52px;
+  right: 5%;
+  bottom: 20%;
+  font-size: 60px;
   font-weight: 600;
 }
