@@ -10,7 +10,7 @@ ol {
 }
 
 body {
-  font-family: 'BalsamiqSans';
+  font-family: 'BalsamiqSans', 'GowunDodum';
   color: #252525;
 }
 
@@ -19,11 +19,7 @@ body {
   src: url('./fonts/BalsamiqSans-Regular.ttf');
 }
 
-:root {
-  /* font-size */
-  --font-large: 42px;
-  --font-medium: 28px;
-  --font-regular: 18px;
-  --font-small: 16px;
-  --font-micro: 14px;
+@font-face {
+  font-family: 'GowunDodum';
+  src: url('./fonts/GowunDodum-Regular.ttf');
 }

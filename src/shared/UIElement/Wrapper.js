@@ -4,7 +4,6 @@ import classes from './Wrapper.module.css';
 
 export default function Wrapper(props) {
   const mode = useContext(ModeContext);
-
   return (
     <section className={classes.wrapper} id={props.id}>
       <div
@@ -18,7 +17,7 @@ export default function Wrapper(props) {
         <button className={classes.dietMode} onClick={mode.onDietMode}>
           DietMode
         </button>
-        <button className={classes.NormalMode} onClick={mode.onNormalMode}>
+        <button className={classes.normalMode} onClick={mode.onNormalMode}>
           NormalMode
         </button>
       </div>

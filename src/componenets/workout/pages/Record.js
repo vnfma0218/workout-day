@@ -41,7 +41,9 @@ export default function Record() {
         {/* Record Form */}
         <form className={classes.record__form}>
           <div className={classes.form__input}>
-            <label htmlFor='date'>Date : </label>
+            <label htmlFor='date' className={classes.input_title}>
+              Date :{' '}
+            </label>
             <input
               type='date'
               id='date'
@@ -52,32 +54,49 @@ export default function Record() {
             />
           </div>
           <div className={classes.form__input}>
-            <label htmlFor='time'>Time :</label>
-            <span>From</span>
-            <input type='time' id='time' min='0:00' max='24:00' required />
-            <span>To</span>
-            <input type='time' id='time' min='0:00' max='24:00' required />
+            <label htmlFor='time' className={classes.input_title}>
+              Time :
+            </label>
+
+            <input type='number' id='hour' min='0' max='24' required />
+            <span> 시간</span>
+            <input type='number' id='minutes' min='0' max='59' required />
+            <span> 분</span>
           </div>
           <div className={classes.form__input}>
-            <label htmlFor='place'>Place : </label>
+            <label htmlFor='place' className={classes.input_title}>
+              Place :{' '}
+            </label>
             <div className={classes.place__box}>
               <img src='img/icons/location.svg' alt='location' />
             </div>
           </div>
           <div className={classes.form__input}>
-            <label htmlFor='weight'>Weight : </label>
+            <label htmlFor='weight' className={classes.input_title}>
+              Weight :{' '}
+            </label>
             <input type='number' />
             &nbsp;&nbsp;kg
           </div>
           <div className={classes.form__input}>
-            <label htmlFor='image'>Image</label>
-            <div className={classes.image__box}>
+            <p className={classes.input_title}>Image</p>
+            <label htmlFor='image' className={classes.image__box}>
+              <input type='file' id='image' />
+
               <img src='img/icons/add_photo.svg' alt='location' />
-            </div>
+            </label>
           </div>
           <div className={classes.form__input}>
-            <label htmlFor='memo'>Memo</label>
-            <textarea name='memo' id='memo' cols='30' rows='5'></textarea>
+            <label htmlFor='memo' className={classes.input_title}>
+              Memo
+            </label>
+            <textarea
+              name='memo'
+              id='memo'
+              cols='30'
+              rows='5'
+              placeholder='메모도 남겨보세요!'
+            ></textarea>
           </div>
           <div className={classes.form__btn}>
             <button className={classes.btn}>CANCEL</button>
