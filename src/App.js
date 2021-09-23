@@ -14,7 +14,7 @@ function App() {
       <Home />
       <Auth />
       <Record />
-      <Photo />
+      {/* <Photo /> */}
     </ModeContextProvider>
   );
 }

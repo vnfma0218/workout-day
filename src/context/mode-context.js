@@ -5,7 +5,6 @@ export const ModeContext = React.createContext({
   onDietMode: () => {},
   onNormalMode: () => {},
 });
-
 export function ModeContextProvider(props) {
   const [isDietMode, setIsDietMode] = useState(false);
 
