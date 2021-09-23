@@ -45,7 +45,7 @@ export default function Auth() {
               </div>
               <p className={classes.forgot}>Forgot password?</p>
             </div>
-            <Button name='Login' className='submit__btn' />
+            <Button name='Login' className={classes.submit__btn} />
           </form>
         </div>
       </div>

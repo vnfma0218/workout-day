@@ -14,12 +14,12 @@ export default function Wrapper(props) {
         }
       >
         {props.children}
-        <button className={classes.dietMode} onClick={mode.onDietMode}>
+        {/* <button className={classes.dietMode} onClick={mode.onDietMode}>
           DietMode
         </button>
         <button className={classes.normalMode} onClick={mode.onNormalMode}>
           NormalMode
-        </button>
+        </button> */}
       </div>
     </section>
   );
