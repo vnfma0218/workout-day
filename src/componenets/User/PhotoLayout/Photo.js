@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '../../shared/UIElement/Button';
-import Wrapper from '../../shared/UIElement/Wrapper';
+import Button from '../../../shared/UIElement/Button';
+import Wrapper from '../../../shared/UIElement/Wrapper';
 import classes from './Photo.module.css';
 export default function Photo() {
   return (
-    <Wrapper id='photo'>
+    <Wrapper id='first__layout'>
       {/* <div className={classes.photo__header}></div> */}
 
       <Button name='DATE' />

@@ -3,9 +3,9 @@ import Home from './componenets/Home/Home';
 import Record from './componenets/workout/pages/Record';
 
 import Auth from './componenets/User/Auth';
-import Photo from './componenets/User/Photo';
 import { ModeContextProvider } from './context/mode-context';
 import MainHeader from './shared/Navigation/MainHeader';
+import Photo from './componenets/User/PhotoLayout/Photo';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Home />
       <Auth />
       <Record />
-      {/* <Photo /> */}
+      <Photo />
     </ModeContextProvider>
   );
 }
