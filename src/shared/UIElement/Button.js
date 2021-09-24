@@ -12,7 +12,6 @@ export default function Button(props) {
     assignedClasses.push(classes.workout__mode);
   }
 
-  console.log(props);
   return (
     <button
       onClick={props.onClick}

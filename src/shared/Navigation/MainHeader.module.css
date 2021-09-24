@@ -9,7 +9,6 @@ ul {
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: #fde0b4;
 }
 .main__header {
   width: 100%;
@@ -18,8 +17,9 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px 60px;
   margin: 0 auto;
+  background-color: #fde0b4;
 }
 
 .logo {
