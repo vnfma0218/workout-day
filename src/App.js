@@ -1,11 +1,11 @@
 import './App.css';
-import Home from './componenets/Home/Home';
-import Record from './componenets/workout/pages/Record';
+import Home from './components/Home/Home';
 
-import Auth from './componenets/User/Auth';
 import { ModeContextProvider } from './context/mode-context';
 import MainHeader from './shared/Navigation/MainHeader';
-import Photo from './componenets/User/PhotoLayout/Photo';
+import Auth from './components/User/Auth';
+import Record from './components/Workout/Record';
+// import Photo from './components/User/PhotoLayout/Photo';
 
 function App() {
   return (

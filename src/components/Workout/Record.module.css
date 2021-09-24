@@ -5,25 +5,29 @@
 .record h2 {
   font-size: 42px;
   text-align: center;
+  margin-top: 30px;
 }
 
 .record__inner {
   display: flex;
   justify-content: space-around;
-  height: 100%;
+  height: 700px;
   width: 100%;
-  margin: auto;
+  padding: 80px 0 0;
+  margin: 0 auto;
 }
 
 .record__select {
-  /* width: 400px; */
-  width: 30%;
-  /* height: 600px; */
-  height: 80%;
+  width: 360px;
+  height: 100%;
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 30px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   overflow-y: scroll;
-  margin: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
 }
 .select__header {
   font-size: 18px;
@@ -35,7 +39,8 @@
 
 .select__header svg {
   margin-left: 20px;
-  fill: #0f6189;
+  width: 30px;
+  /* fill: #0f6189; */
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
   -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
@@ -82,10 +87,7 @@
 /* Record Form CSS */
 .record__form {
   width: 560px;
-  /* width: 46%; */
-  /* height: 600px; */
-  height: 80%;
-  margin: auto;
+  height: 100%;
   padding: 30px 40px 10px;
   font-size: 16px;
   font-weight: 600;
@@ -94,12 +96,15 @@
   justify-content: space-between;
   background-color: rgba(255, 255, 255, 0.4);
   position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
 }
 
 .form__input {
   height: 40px;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .input_title {

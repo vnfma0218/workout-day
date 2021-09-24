@@ -1,0 +1,116 @@
+.photos {
+  margin-top: 70px;
+  display: flex;
+}
+
+.photo {
+  position: relative;
+}
+
+.left {
+  margin-right: 100px;
+  width: 50%;
+  height: 700px;
+}
+
+.left img {
+  width: 100%;
+  height: 100%;
+}
+
+.right {
+  width: 50%;
+}
+
+.right__top {
+  height: 300px;
+}
+
+.right__bottom {
+  padding-top: 50px;
+  height: 400px;
+  display: flex;
+}
+
+.right__bottom_left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  height: 90%;
+  margin-right: 30px;
+}
+
+.right img,
+.right__bottom_left img {
+  width: 100%;
+  height: 100%;
+}
+
+/* photo description */
+
+.photo__description {
+  text-align: center;
+  position: absolute;
+  color: white;
+  padding: 0 60px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: black;
+  border: 1px solid black;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 300ms ease;
+}
+
+.photo:hover .photo__description {
+  opacity: 0.7;
+  transform: translateY(0px);
+}
+.photo:hover .mapIcon {
+  opacity: 1;
+  z-index: 1;
+}
+
+.photo__memo {
+  line-height: 1.5;
+}
+
+.mapIcon {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.mapIcon svg {
+  fill: #fff;
+  width: 30px;
+  height: 30px;
+}
+
+.photo__date {
+  margin-bottom: 20px;
+  letter-spacing: 10px;
+}
+
+.right__bottom_left .photo__description {
+  padding: 0;
+}
+.right__bottom_left .photo__date {
+  margin-bottom: 10px;
+  letter-spacing: 0;
+}
+
+.right__bottom_left .photo__memo {
+  line-height: 1.5;
+  font-size: 13px;
+}

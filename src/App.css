@@ -9,9 +9,14 @@ ol {
   list-style: none;
 }
 
-body {
+body,
+button,
+input,
+select {
   font-family: 'BalsamiqSans', 'GowunDodum';
-  color: #252525;
+  /* color: #252525;
+   */
+  color: #4d4d4d;
 }
 
 @font-face {
