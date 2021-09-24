@@ -6,18 +6,20 @@ import Auth from './components/user/Auth';
 import { ModeContextProvider } from './context/mode-context';
 import MainHeader from './shared/Navigation/MainHeader';
 import UserInfo from './components/user/UserInfo';
-// import Photo from './components/user/Photo';
-// import SecondLayout from './components/user/SecondLayout';
+import Modal from './shared/UIElement/Modal';
+import Photo from './components/user/Photo';
+import SecondLayout from './components/user/SecondLayout';
 
 function App() {
   return (
     <ModeContextProvider>
       <MainHeader />
+      <Modal />
       <Home />
       <Auth />
       <Record />
-      {/* <Photo /> */}
-      {/* <SecondLayout /> */}
+      <Photo />
+      <SecondLayout />
       <UserInfo />
     </ModeContextProvider>
   );
