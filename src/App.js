@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './components/Home/Home';
-import Record from './components/Workout/Record';
+import Record from './components/workout/Record';
 
 import Auth from './components/User/Auth';
 import { ModeContextProvider } from './context/mode-context';
