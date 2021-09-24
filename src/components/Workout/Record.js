@@ -3,7 +3,6 @@ import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import { useState } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
-import Button from '../../shared/UIElement/Button';
 
 export default function Record() {
   const [open, setOpen] = useState(false);
