@@ -3,9 +3,8 @@ import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import { useState } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
-import Button from '../../shared/UIElement/Button';
 
-export default function Record() {
+const Record = () => {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -26,7 +25,7 @@ export default function Record() {
   // const handleClose = () => {
   //   setOpen(false);
   // };
-
+  console.log(open);
   return (
     <>
       <Modal
@@ -144,4 +143,6 @@ export default function Record() {
       </Wrapper>
     </>
   );
-}
+};
+
+export default Record;

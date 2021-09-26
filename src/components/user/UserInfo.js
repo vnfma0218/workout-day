@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Button from '../../shared/UIElement/Button';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './UserInfo.module.css';
-export default function UserInfo() {
+const UserInfo = forwardRef((props) => {
   return (
     <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
       <h1>현재 JW 님은 '운동모드' 입니다</h1>
@@ -53,4 +53,5 @@ export default function UserInfo() {
       </article>
     </Wrapper>
   );
-}
+});
+export default UserInfo;
