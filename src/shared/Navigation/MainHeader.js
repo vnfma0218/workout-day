@@ -1,14 +1,20 @@
 import React from 'react';
 import classes from './MainHeader.module.css';
 
-export default function MainHeader() {
+export default function MainHeader(props) {
+  const onNavLinkClick = (e) => {
+    props.navClickHandler(e.target.dataset.link);
+  };
   return (
     <div className={classes.header__container}>
-      <header className={classes.main__header}>
-        <h1 className={classes.logo}>운동Day</h1>
+      <header className={classes.main__header} onClick={onNavLinkClick}>
+        <h1 className={classes.logo} data-link='home'>
+          운동Day
+        </h1>
         <ul className={classes.nav__list}>
           <li className={classes.nav__item}>
             <svg
+              data-link='calenadar'
               viewBox='0 0 50 50'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
@@ -18,6 +24,7 @@ export default function MainHeader() {
           </li>
           <li className={classes.nav__item}>
             <svg
+              data-link='userInfo'
               viewBox='0 0 50 50'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'

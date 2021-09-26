@@ -24,6 +24,7 @@ ul {
 
 .logo {
   font-size: 28px;
+  cursor: pointer;
 }
 
 .nav__list {
@@ -32,6 +33,8 @@ ul {
 
 .nav__item {
   margin-left: 25px;
+  cursor: pointer;
+  border-bottom: 1px solid black;
 }
 
 .nav__item svg {
