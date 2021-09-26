@@ -15,11 +15,12 @@ const ModalOverlay = (props) => {
       </header>
       <div className={classes.content}>
         <form
-        // onSubmit={
-        //   props.submit ? props.onSubmit : (event) => event.preventDefault
-        // }
+          className={classes.form}
+          // onSubmit={
+          //   props.submit ? props.onSubmit : (event) => event.preventDefault
+          // }
         >
-          <select name='choice'>
+          <select name='choice' className={classes.form__select}>
             <option value=''>Choose Image</option>
             <option value='one'>등산</option>
             <option value='two'>홈트</option>
