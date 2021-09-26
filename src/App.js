@@ -1,6 +1,7 @@
 import './App.css';
 import { ModeContextProvider } from './context/mode-context';
-import MainPage from './shared/UIElement/MainPage';
+import MainPage from './components/Home/MainPage';
+
 // import Auth from './components/User/Auth';
 // import Modal from './shared/UIElement/Modal';
 // import Photo from './components/User/Photo';
@@ -9,14 +10,12 @@ import MainPage from './shared/UIElement/MainPage';
 function App() {
   return (
     <ModeContextProvider>
-      <MainPage>
-        {/* <Modal /> */}
-        {/* <Auth /> */}
-        {/* <Photo /> */}
-        {/* <SecondLayout /> */}
-      </MainPage>
+      <MainPage />
+      {/* <Modal /> */}
+      {/* <Record /> */}
+      {/* <Photo /> */}
+      {/* <SecondLayout /> */}
     </ModeContextProvider>
   );
 }
-
 export default App;
