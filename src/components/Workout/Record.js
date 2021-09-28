@@ -5,17 +5,16 @@ import { useState } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
 
 export default function Record() {
-  const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModalHandler = () => {
     setModalOpen(true);
-    setOpen(true);
+    // setOpen(true);
   };
 
   const closeModalHandler = () => {
     setModalOpen(false);
-    setOpen(false);
+    // setOpen(false);
   };
 
   // const handleClick = () => {
