@@ -3,31 +3,22 @@ import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import { useState } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
+import MainHeader from '../../shared/Navigation/MainHeader';
 
 export default function Record() {
-  const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModalHandler = () => {
     setModalOpen(true);
-    setOpen(true);
   };
 
   const closeModalHandler = () => {
     setModalOpen(false);
-    setOpen(false);
   };
-
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   return (
     <>
+      <MainHeader />
       <Modal
         open={modalOpen}
         title='Add your activity.'

@@ -1,12 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import MainHeader from '../../shared/Navigation/MainHeader';
 import UserInfo from '../User/UserInfo';
-import Record from '../workout/Record';
 import classes from './MainPage.module.css';
 import Home from './Home';
+import Calendar from '../Workout/Calendar';
+import { useLocation } from 'react-router-dom';
+
 export default function MainPage(props) {
   const outerDivRef = useRef();
   const DIVIDER_HEIGHT = 5;
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState('/');
+
   const changePage = (page, pageHeight) => {
     if (page === 'first') {
       outerDivRef.current.scrollTo({
@@ -28,63 +34,79 @@ export default function MainPage(props) {
       });
     }
   };
-  const wheelHandler = (e) => {
-    e.preventDefault();
-    const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-    const { deltaY } = e;
-    const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-    if (deltaY > 0) {
-      // 스크롤 내릴 때
-      if (scrollTop >= 0 && scrollTop < pageHeight) {
-        //현재 1페이지
-        changePage('second', pageHeight);
-      } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-        //현재 2페이지
-        changePage('last', pageHeight);
-      } else {
-        // 현재 3페이지
-        changePage('last', pageHeight);
-      }
-    } else {
-      // 스크롤 올릴 때
-      if (scrollTop >= 0 && scrollTop < pageHeight) {
-        //현재 1페이지
-        changePage('first', pageHeight);
-      } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-        //현재 2페이지
-        changePage('first', pageHeight);
-      } else {
-        // 현재 3페이지
-        changePage('second', pageHeight);
-      }
-    }
-  };
 
   useEffect(() => {
-    window.addEventListener('wheel', wheelHandler, { passive: false });
-    return () => {
-      window.removeEventListener('wheel', wheelHandler, { passive: false });
+    const wheelHandler = (e) => {
+      e.preventDefault();
+      const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
+      const { deltaY } = e;
+      const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+
+      if (deltaY > 0) {
+        // 스크롤 내릴 때
+        if (scrollTop >= 0 && scrollTop < pageHeight) {
+          //현재 1페이지
+          changePage('second', pageHeight);
+        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
+          //현재 2페이지
+          changePage('last', pageHeight);
+        } else {
+          // 현재 3페이지
+          changePage('last', pageHeight);
+        }
+      } else {
+        // 스크롤 올릴 때
+        if (scrollTop >= 0 && scrollTop < pageHeight) {
+          //현재 1페이지
+          changePage('first', pageHeight);
+        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
+          //현재 2페이지
+          changePage('first', pageHeight);
+        } else {
+          // 현재 3페이지
+          changePage('second', pageHeight);
+        }
+      }
     };
-  });
+
+    const outerDivRefCurrent = outerDivRef.current;
+    outerDivRefCurrent.addEventListener('wheel', wheelHandler, {
+      passive: false,
+    });
+    return () => {
+      outerDivRefCurrent.removeEventListener('wheel', wheelHandler, {
+        passive: false,
+      });
+    };
+  }, []);
+
+  const pageHeight = window.innerHeight;
+
+  useEffect(() => {
+    if (location.state) {
+      changePage(location.state.page, pageHeight);
+    }
+  }, [location.state, pageHeight]);
 
   const navClickHandler = (link) => {
-    const pageHeight = window.innerHeight;
-    console.log(link);
     if (link === 'home') {
       changePage('first', pageHeight);
-    } else if (link === 'calenadar') {
+    } else if (link === 'calendar') {
+      setCurrentPage('calendar');
       changePage('second', pageHeight);
-    } else {
+    } else if (link === 'userInfo') {
+      setCurrentPage('userInfo');
       changePage('last', pageHeight);
     }
   };
+
   return (
     <React.Fragment>
-      <MainHeader navClickHandler={navClickHandler} />
+      <MainHeader navClickHandler={navClickHandler} currentPage={currentPage} />
       <div ref={outerDivRef} className={classes.container}>
         <Home />
         <div className={classes.divider}></div>
-        <Record />
+        <Calendar />
         <div className={classes.divider}></div>
         <UserInfo />
       </div>

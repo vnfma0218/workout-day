@@ -1,20 +1,58 @@
 import React from 'react';
 import classes from './MainHeader.module.css';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 export default function MainHeader(props) {
+  console.log(props);
+  const history = useHistory();
+  const location = useLocation();
+
   const onNavLinkClick = (e) => {
-    props.navClickHandler(e.target.dataset.link);
+    const navLink = e.target.dataset.link;
+    if (!navLink) return;
+
+    if (location.pathname !== '/' && navLink === 'home') {
+      history.push('/');
+      return;
+    }
+
+    if (location.pathname !== '/' && navLink === 'calendar') {
+      history.push({
+        pathname: '/',
+        state: { page: 'second' },
+      });
+      return;
+    }
+
+    if (location.pathname !== '/' && navLink === 'userInfo') {
+      history.push({
+        pathname: '/',
+        state: { page: 'last' },
+      });
+      return;
+    }
+    props.navClickHandler(navLink);
   };
+
   return (
     <div className={classes.header__container}>
       <header className={classes.main__header} onClick={onNavLinkClick}>
-        <h1 className={classes.logo} data-link='home'>
-          운동Day
-        </h1>
+        <NavLink exact to='/'>
+          <h1 className={classes.logo} data-link='home'>
+            운동Day
+          </h1>
+        </NavLink>
         <ul className={classes.nav__list}>
-          <li className={classes.nav__item}>
+          <li
+            className={
+              props.currentPage === 'calendar'
+                ? `${classes.selected} ${classes.nav__item}`
+                : classes.nav__item
+            }
+            data-link='calendar'
+          >
             <svg
-              data-link='calenadar'
               viewBox='0 0 50 50'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
@@ -23,24 +61,48 @@ export default function MainHeader(props) {
             </svg>
           </li>
           <li className={classes.nav__item}>
+            <NavLink to='/record' activeClassName={classes.selected}>
+              <svg
+                viewBox='0 0 50 50'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path d='M6.25 35.9375V43.75H14.0625L37.1042 20.7084L29.2917 12.8959L6.25 35.9375Z' />
+                <path d='M43.1458 11.7292L38.2708 6.85425C37.4583 6.04175 36.1458 6.04175 35.3333 6.85425L31.5208 10.6667L39.3333 18.4792L43.1458 14.6667C43.9583 13.8542 43.9583 12.5417 43.1458 11.7292Z' />
+              </svg>
+            </NavLink>
+          </li>
+
+          <li
+            className={
+              props.currentPage === 'userInfo'
+                ? `${classes.selected} ${classes.nav__item}`
+                : classes.nav__item
+            }
+            data-link='userInfo'
+          >
             <svg
-              data-link='userInfo'
-              viewBox='0 0 50 50'
-              fill='none'
               xmlns='http://www.w3.org/2000/svg'
+              height='24px'
+              viewBox='0 0 24 24'
+              width='24px'
+              fill='#000000'
             >
-              <path d='M6.25 35.9375V43.75H14.0625L37.1042 20.7084L29.2917 12.8959L6.25 35.9375Z' />
-              <path d='M43.1458 11.7292L38.2708 6.85425C37.4583 6.04175 36.1458 6.04175 35.3333 6.85425L31.5208 10.6667L39.3333 18.4792L43.1458 14.6667C43.9583 13.8542 43.9583 12.5417 43.1458 11.7292Z' />
+              <path d='M0 0h24v24H0z' fill='none' />
+              <path d='M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z' />
             </svg>
           </li>
           <li className={classes.nav__item}>
-            <svg
-              viewBox='0 0 20 18'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
-            </svg>
+            <NavLink to='/auth' activeClassName={classes.selected}>
+              <svg
+                data-key='auth'
+                viewBox='0 0 20 18'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
+              </svg>
+            </NavLink>
           </li>
         </ul>
       </header>

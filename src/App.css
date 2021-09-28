@@ -23,6 +23,17 @@ select {
   color: #4d4d4d;
 }
 
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: #4d4d4d;
+}
+
 @font-face {
   font-family: 'BalsamiqSans';
   src: url('./fonts/BalsamiqSans-Regular.ttf');
