@@ -103,7 +103,7 @@
   border: 2px solid #fde0b4;
 }
 
-.auth__helper {
+.form .auth__helper {
   width: 90%;
   display: flex;
   margin-top: 10px;

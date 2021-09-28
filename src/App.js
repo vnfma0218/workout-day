@@ -6,6 +6,7 @@ import Auth from './components/User/Auth';
 import Photo from './components/User/Photo';
 import Record from './components/Workout/Record';
 import MainPage from './components/Home/MainPage';
+
 // import Modal from './shared/UIElement/Modal';
 // import SecondLayout from './components/User/SecondLayout';
 
