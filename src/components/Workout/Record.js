@@ -1,12 +1,22 @@
 import React from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
-import { useState } from 'react/cjs/react.development';
+import { useState, useRef } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
-import MainHeader from '../../shared/Navigation/MainHeader';
 
 export default function Record() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [inputs, setInputs] = useState({
+    date: '',
+    hour: 0,
+    minutes: 0,
+    weight: 0,
+    memo: '',
+  });
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState('');
+  // const fileInput = useRef();
+  const [totalByte, setTotalByte] = useState(0);
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -16,9 +26,45 @@ export default function Record() {
     setModalOpen(false);
   };
 
+  // 기록 저장
+  const saveHandler = (e) => {
+    e.preventDefault();
+
+    const target = e.target;
+    const add = [];
+    add.push({
+      date: target.date.value,
+      time: `${target.hour.value}시간 ${target.minutes.value}분`,
+      weight: parseInt(target.weight.value),
+      imageUrl: url,
+      memo: target.memo.value,
+    });
+
+    console.log(add);
+  };
+
+  const fileHandler = (e) => {
+    const image = e.target.files[0];
+    console.log(image);
+
+    if (image) {
+      setImage(image);
+      setUrl(url);
+    }
+  };
+
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+    // console.log(inputs);
+    setTotalByte(value.length);
+  };
+
   return (
     <>
-      <MainHeader />
       <Modal
         open={modalOpen}
         title='Add your activity.'
@@ -67,67 +113,96 @@ export default function Record() {
             </li>
           </ul>
           {/* Record Form */}
-          <form className={classes.record__form}>
+          <form className={classes.record__form} onSubmit={saveHandler}>
             <div className={classes.form__input}>
-              <label htmlFor='date' className={classes.input_title}>
-                Date :
-              </label>
+              <label className={classes.input_title}>Date :</label>
               <input
                 type='date'
-                id='date'
+                name='date'
                 min='2021-01-01'
                 max='2030-12-31'
                 required
+                onChange={inputHandler}
               />
             </div>
             <div className={classes.form__input}>
-              <label htmlFor='time' className={classes.input_title}>
-                Time :
-              </label>
-
-              <input type='number' id='hour' min='0' max='24' required />
+              <label className={classes.input_title}>Time :</label>
+              <input
+                type='number'
+                name='hour'
+                min='0'
+                max='24'
+                required
+                onChange={inputHandler}
+              />
               <span> 시간</span>
-              <input type='number' id='minutes' min='0' max='59' required />
+
+              <input
+                type='number'
+                name='minutes'
+                min='0'
+                max='59'
+                required
+                onChange={inputHandler}
+              />
               <span> 분</span>
             </div>
             <div className={classes.form__input}>
-              <label htmlFor='place' className={classes.input_title}>
-                Place :
-              </label>
+              <label className={classes.input_title}>Place :</label>
               <div className={classes.place__box}>
                 <img src='img/icons/location.svg' alt='location' />
               </div>
             </div>
             <div className={classes.form__input}>
-              <label htmlFor='weight' className={classes.input_title}>
-                Weight :
-              </label>
-              <input type='number' />
+              <label className={classes.input_title}>Weight :</label>
+              <input
+                type='number'
+                name='weight'
+                min='0'
+                required
+                onChange={inputHandler}
+              />
               &nbsp;&nbsp;kg
             </div>
-            <div className={classes.form__input}>
+            <div className={`${classes.form__input} ${classes.preview__Image}`}>
               <p className={classes.input_title}>Image</p>
-              <label htmlFor='image' className={classes.image__box}>
-                <input type='file' id='image' />
+              <label className={classes.image__box}>
+                <input
+                  type='file'
+                  name='image'
+                  onChange={fileHandler}
+                  // ref={fileInput}
+                />
 
-                <img src='img/icons/add_photo.svg' alt='location' />
+                <img src='img/icons/add_photo.svg' alt='add' />
+                {/* {image ? (
+                  <img src={url} alt='preview_image' />
+                ) : (
+                  <img src='img/icons/add_photo.svg' alt='photo' />
+                )} */}
               </label>
             </div>
             <div className={classes.form__input}>
-              <label htmlFor='memo' className={classes.input_title}>
-                Memo
-              </label>
+              <div className={classes.memo__box}>
+                <label className={classes.input_title}>Memo</label>
+                <p>
+                  <span>{`(${totalByte} / 100)`}</span>
+                </p>
+              </div>
               <textarea
                 name='memo'
-                id='memo'
                 cols='30'
                 rows='5'
-                placeholder='메모도 남겨보세요!'
+                maxLength='100'
+                placeholder='메모도 남겨보세요 😃'
+                onChange={inputHandler}
               ></textarea>
             </div>
             <div className={classes.form__btn}>
               <button className={classes.btn}>CANCEL</button>
-              <button className={classes.btn}>SAVE</button>
+              <button className={classes.btn} type='submit'>
+                SAVE
+              </button>
             </div>
           </form>
         </div>

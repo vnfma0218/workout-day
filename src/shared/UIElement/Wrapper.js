@@ -21,11 +21,6 @@ export default function Wrapper(props) {
           NormalMode
         </button> */}
       </div>
-      <img
-        src='img/icons/scroll.png'
-        alt='scroll'
-        className={classes.wrapper__scroll}
-      />
     </section>
   );
 }

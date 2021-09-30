@@ -3,7 +3,7 @@
 }
 
 .home__img {
-  width: 600px;
+  width: 40%;
   position: absolute;
   top: 20%;
   left: 10%;
@@ -13,6 +13,6 @@
   position: absolute;
   right: 5%;
   bottom: 20%;
-  font-size: 60px;
+  font-size: 3.6rem;
   font-weight: 600;
 }

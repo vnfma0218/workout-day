@@ -20,10 +20,3 @@
   padding: 0 60px;
   background-color: #fde0b4;
 }
-
-.wrapper__scroll {
-  width: 60px;
-  position: absolute;
-  left: 50%;
-  bottom: 1rem;
-}

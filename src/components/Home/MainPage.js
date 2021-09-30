@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import MainHeader from '../../shared/Navigation/MainHeader';
-import UserInfo from '../User/UserInfo';
 import classes from './MainPage.module.css';
 import Home from './Home';
 import Calendar from '../Workout/Calendar';
 import { useLocation } from 'react-router-dom';
+import Record from '../Workout/Record';
 
 export default function MainPage(props) {
   const outerDivRef = useRef();
@@ -15,18 +15,23 @@ export default function MainPage(props) {
 
   const changePage = (page, pageHeight) => {
     if (page === 'first') {
+      setCurrentPage('home');
       outerDivRef.current.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth',
       });
     } else if (page === 'second') {
+      setCurrentPage('calendar');
+
       outerDivRef.current.scrollTo({
         top: pageHeight + DIVIDER_HEIGHT,
         left: 0,
         behavior: 'smooth',
       });
     } else {
+      setCurrentPage('record');
+
       outerDivRef.current.scrollTo({
         top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
         left: 0,
@@ -92,10 +97,8 @@ export default function MainPage(props) {
     if (link === 'home') {
       changePage('first', pageHeight);
     } else if (link === 'calendar') {
-      setCurrentPage('calendar');
       changePage('second', pageHeight);
-    } else if (link === 'userInfo') {
-      setCurrentPage('userInfo');
+    } else if (link === 'record') {
       changePage('last', pageHeight);
     }
   };
@@ -108,8 +111,13 @@ export default function MainPage(props) {
         <div className={classes.divider}></div>
         <Calendar />
         <div className={classes.divider}></div>
-        <UserInfo />
+        <Record />
       </div>
+      <img
+        src='img/icons/scroll.png'
+        alt='scroll'
+        className={classes.mainpage__scroll}
+      />
     </React.Fragment>
   );
 }

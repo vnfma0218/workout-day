@@ -1,24 +1,25 @@
 .record {
-  padding: 100px 140px 50px;
+  /* padding: 100px 140px 50px; */
+  padding: 3rem 5rem 2rem;
   height: 100%;
 }
 .record h2 {
   font-size: 42px;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 66px;
 }
 
 .record__inner {
   display: flex;
   justify-content: space-around;
-  height: 700px;
+  height: 680px;
   width: 100%;
-  padding: 80px 0 0;
+  padding: 50px 0 0;
   margin: 0 auto;
 }
 
 .record__select {
-  width: 360px;
+  width: 28%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 30px 20px;
@@ -86,9 +87,9 @@
 
 /* Record Form CSS */
 .record__form {
-  width: 560px;
+  width: 45%;
   height: 100%;
-  padding: 30px 40px 10px;
+  padding: 20px 40px 20px;
   font-size: 16px;
   font-weight: 600;
   display: flex;
@@ -111,10 +112,6 @@
   margin-right: 40px;
   width: 60px;
 }
-
-/* .form__input:nth-child(2) > label {
-  margin-right: 0;
-} */
 
 .form__input > span {
   margin: 0 20px 0 10px;
@@ -139,9 +136,11 @@
   width: 70px;
 }
 
-.form__input:nth-child(5),
+.form__input:nth-child(5) {
+  height: 12rem;
+}
 .form__input:nth-child(6) {
-  height: 140px;
+  height: 6rem;
 }
 
 .place__box,
@@ -188,6 +187,10 @@
   cursor: pointer;
   height: 24px;
 }
+.memo__box {
+  display: flex;
+  flex-direction: column;
+}
 
 .form__input textarea {
   width: 300px;
@@ -215,4 +218,17 @@
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
   margin-left: 20px;
   cursor: pointer;
+}
+
+.btn__unactive {
+  width: 80px;
+  height: 30px;
+  background-color: #d1d1cf;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  margin-left: 20px;
 }

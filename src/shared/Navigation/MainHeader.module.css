@@ -30,6 +30,7 @@ ul {
 
 .nav__list {
   display: flex;
+  align-items: center;
 }
 
 .nav__item {
