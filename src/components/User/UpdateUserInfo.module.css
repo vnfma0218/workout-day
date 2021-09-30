@@ -1,0 +1,87 @@
+/* rgba(255, 255, 255, 0.4); container background  
+    #fdf2e5; input background 
+*/
+
+.userInfo__container {
+  padding: 100px 140px 50px;
+  height: 1000px;
+  border-top: 1px solid black;
+}
+
+.userInfo__container h1 {
+  text-align: center;
+}
+
+.userInfo {
+  height: 500px;
+  background-color: rgba(255, 255, 255, 0.4);
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  margin: 30px 0;
+  display: flex;
+  position: relative;
+}
+
+.userImg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 40%;
+  text-align: center;
+  /* border-right: 1px solid black; */
+}
+
+.avatar {
+  align-self: center;
+  margin-top: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+
+/* user detail */
+.userForm {
+  margin: 50px 0;
+  flex: 60%;
+}
+.user__detail {
+  margin: 50px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.user__personal {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  padding: 0 120px;
+  margin-bottom: 20px;
+}
+
+.user__personal p {
+  flex: 20%;
+}
+
+.edit__btn {
+  width: 100px;
+  height: 45px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.cancel__btn {
+  width: 100px;
+  height: 45px;
+  position: absolute;
+  bottom: 10px;
+  right: 130px;
+  padding: 0.5rem 1.2rem;
+}
+.divider {
+  width: 65%;
+  margin: auto;
+  height: 1px;
+  background-color: #bdbdbd;
+}
