@@ -1,6 +1,6 @@
 .calendar__container {
   padding: 10px 140px 50px;
-  height: 900px;
+  height: 100%;
   border-top: 1px solid black;
   display: flex;
   align-items: center;
@@ -12,7 +12,7 @@
   background-color: white;
   border-radius: 10px;
   padding: 10px;
-  height: 70%;
+  height: 500px;
   overflow-y: hidden;
 }
 
@@ -43,7 +43,9 @@
 
 .workout__header {
   margin-bottom: 30px;
+  font-size: 1rem;
 }
+
 .mapIcon {
   position: relative;
   top: 10px;
@@ -57,6 +59,7 @@
 
 .workout__location {
   font-weight: 700;
+  font-size: 0.7rem;
 }
 
 .workout__img {

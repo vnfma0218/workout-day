@@ -1,8 +1,69 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useReducer } from 'react';
+import Input from '../../shared/FormElement/Input';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
 import classes from './Auth.module.css';
+
+const emailRegex =
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case 'change':
+      let formIsValid = true;
+      for (const property in state.inputs) {
+        if (!state.inputs[property]) {
+          continue;
+        }
+        if (action.id === property) {
+          formIsValid = formIsValid && action.isValid;
+        } else {
+          formIsValid = formIsValid && state.inputs[property].isValid;
+        }
+      }
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.id]: { value: action.value, isValid: action.isValid },
+        },
+        formIsValid,
+      };
+    default:
+      return state;
+  }
+};
+
 export default function Auth() {
+  const [formState, formDispatch] = useReducer(formReducer, {
+    inputs: {
+      email: {
+        value: '',
+        isValid: false,
+      },
+      password: {
+        value: '',
+        isValid: false,
+      },
+    },
+    formIsValid: false,
+  });
+
+  const onInputChnage = useCallback((id, value, isValid) => {
+    console.log(id);
+    formDispatch({
+      type: 'change',
+      value: value,
+      isValid: isValid,
+      id: id,
+    });
+  }, []);
+
+  const loginSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState);
+  };
   return (
     <>
       <MainHeader />
@@ -34,12 +95,24 @@ export default function Auth() {
                 <input type='checkbox' />
               </div>
             </div>
-            <form className={classes.auth__form}>
+            <form className={classes.auth__form} onSubmit={loginSubmitHandler}>
               <div className={classes.form__control}>
-                <input type='text' placeholder='email' />
+                <Input
+                  type='text'
+                  id='email'
+                  placeholder='email'
+                  validator={(val) => emailRegex.test(val)}
+                  onInputChnage={onInputChnage}
+                />
               </div>
               <div className={classes.form__control}>
-                <input type='password' placeholder='password' />
+                <Input
+                  type='password'
+                  id='password'
+                  placeholder='password'
+                  validator={(val) => val.trim().length > 0}
+                  onInputChnage={onInputChnage}
+                />
               </div>
               <div className={classes.auth__helper}>
                 <div className={classes.rememberMe}>
@@ -48,7 +121,11 @@ export default function Auth() {
                 </div>
                 <p className={classes.forgot}>Forgot password?</p>
               </div>
-              <Button name='Login' className={classes.submit__btn} />
+              <Button
+                name='Login'
+                className={classes.submit__btn}
+                invalid='true'
+              />
             </form>
           </div>
         </div>

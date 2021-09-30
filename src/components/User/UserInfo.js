@@ -18,17 +18,14 @@ export default function UserInfo() {
             <div className={`${classes.user__personal}`}>
               <p className={classes.nickname}>닉네임</p>
               <p>Mr. Lee</p>
-              <Button name='수정' className={classes.edit__btn} />
             </div>
             <div className={`${classes.user__personal}`}>
               <p className={classes.email}>이메일</p>
               <p>vnfma0218@naver.com</p>
-              <Button name='수정' className={classes.edit__btn} />
             </div>
             <div className={`${classes.user__personal}`}>
               <p className={classes.password}>비밀번호</p>
               <p>**********</p>
-              <Button name='수정' className={classes.edit__btn} />
             </div>
           </div>
           <div className={classes.divider}></div>
@@ -36,20 +33,18 @@ export default function UserInfo() {
             <div className={`${classes.user__personal}`}>
               <p className={classes.height}>키</p>
               <p>176cm</p>
-              <Button name='수정' className={classes.edit__btn} />
             </div>
             <div className={`${classes.user__personal}`}>
               <p className={classes.height}>몸무게</p>
               <p>76kg</p>
-              <Button name='수정' className={classes.edit__btn} />
             </div>
             <div className={`${classes.user__personal}`}>
               <p className={classes.height}>BMI</p>
               <p>23.5</p>
-              <Button name='수정' className={classes.edit__btn} />
             </div>
           </div>
         </div>
+        <Button to={`/users/edit`} name='EDIT' className={classes.edit__btn} />
       </article>
     </Wrapper>
   );

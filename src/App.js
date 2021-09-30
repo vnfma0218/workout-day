@@ -4,8 +4,8 @@ import { ModeContextProvider } from './context/mode-context';
 
 import Auth from './components/User/Auth';
 import Photo from './components/User/Photo';
-import Record from './components/Workout/Record';
 import MainPage from './components/Home/MainPage';
+import UserInfo from './components/User/UserInfo';
 
 // import Modal from './shared/UIElement/Modal';
 // import SecondLayout from './components/User/SecondLayout';
@@ -21,8 +21,8 @@ function App() {
           <Route path='/auth'>
             <Auth />
           </Route>
-          <Route path='/record'>
-            <Record />
+          <Route path='/userinfo'>
+            <UserInfo />
           </Route>
           <Route path='/photo'>
             <Photo />
