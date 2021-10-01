@@ -1,0 +1,11 @@
+.invalid {
+  border-color: red;
+  background: #ffd1d1;
+  outline: none;
+}
+
+.errorText {
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: tomato;
+}

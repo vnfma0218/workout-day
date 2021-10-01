@@ -1,7 +1,6 @@
 .calendar__container {
   padding: 10px 140px 50px;
   height: 100%;
-
   display: flex;
   align-items: center;
   padding-bottom: 100px;
@@ -9,6 +8,7 @@
 
 .calendarApp {
   width: 60%;
+  margin-top: 66px;
   background-color: white;
   border-radius: 10px;
   padding: 10px;
@@ -29,8 +29,9 @@
 
 /* workout item */
 .dateItem {
-  height: 50%;
-  width: 30%;
+  margin-top: 66px;
+  height: 60%;
+  width: 25%;
   margin-left: 100px;
   background-color: #d7e9f7;
   /* border: 1px solid black; */
@@ -65,8 +66,8 @@
 .workout__img {
   margin: 30px auto 0;
   margin-top: 30px;
-  width: 250px;
-  height: 150px;
+  width: 80%;
+  height: 40%;
 }
 .workout__img img {
   width: 100%;
