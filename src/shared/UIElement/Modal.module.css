@@ -10,9 +10,9 @@
 
 .modal {
   position: fixed;
-  top: 30vh;
+  top: 25vh;
   left: 35%;
-  width: 400px;
+  width: auto;
   z-index: 100;
   overflow: hidden;
   background-color: #d7e9f7;
@@ -39,7 +39,8 @@
 }
 
 .actions {
-  padding: 1rem;
+  padding: 0 1rem;
+  padding-bottom: 1rem;
   display: flex;
   justify-content: flex-end;
 }

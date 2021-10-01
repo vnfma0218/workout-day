@@ -3,27 +3,42 @@ import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import { useState, useRef } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
+import SearchPlace from '../../shared/UIElement/SeacrchPlace';
 
 export default function Record() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [mapOpen, setMapOpen] = useState(false);
   const [inputs, setInputs] = useState({
     date: '',
     hour: 0,
     minutes: 0,
     weight: 0,
     memo: '',
+    location: '',
   });
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState('');
   // const fileInput = useRef();
   const [totalByte, setTotalByte] = useState(0);
 
+  const [place, setPlace] = useState('');
+  const [address, setAddress] = useState('');
+  const [enter, setEnter] = useState(false);
   const openModalHandler = () => {
     setModalOpen(true);
   };
 
   const closeModalHandler = () => {
     setModalOpen(false);
+  };
+
+  const mapOepnHandler = () => {
+    setMapOpen(true);
+    setEnter(false);
+  };
+
+  const closeMapHandler = () => {
+    setMapOpen(false);
   };
 
   // 기록 저장
@@ -38,6 +53,7 @@ export default function Record() {
       weight: parseInt(target.weight.value),
       imageUrl: url,
       memo: target.memo.value,
+      location: enter ? target.location.value : place,
     });
 
     console.log(add);
@@ -54,13 +70,26 @@ export default function Record() {
   };
 
   const inputHandler = (e) => {
+    console.log(e.target.value);
     const { name, value } = e.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
-    // console.log(inputs);
+    console.log(inputs);
     setTotalByte(value.length);
+  };
+
+  const selectPlace = (placeName, placeAddress) => {
+    setPlace(placeName);
+    setAddress(placeAddress);
+  };
+
+  const enterPlaceHandler = (e) => {
+    e.preventDefault();
+    enter ? setEnter(false) : setEnter(true);
+    setPlace('');
+    setAddress('');
   };
 
   return (
@@ -71,7 +100,15 @@ export default function Record() {
         onClose={closeModalHandler}
         onConfirm={closeModalHandler}
         // footer={<Button onClick={closeModalHandler}>CONFIRM</Button>}
-      ></Modal>
+      />
+      <Modal
+        open={mapOpen}
+        title='Please enter your location'
+        onClose={closeMapHandler}
+        onConfirm={closeMapHandler}
+      >
+        {<SearchPlace selectPlace={selectPlace} />}
+      </Modal>
       <Wrapper className={classes.record} id={classes.record}>
         <h2>Today's Workout</h2>
         <div className={classes.record__inner}>
@@ -150,7 +187,35 @@ export default function Record() {
             <div className={classes.form__input}>
               <label className={classes.input_title}>Place :</label>
               <div className={classes.place__box}>
-                <img src='img/icons/location.svg' alt='location' />
+                <img
+                  src='img/icons/location.svg'
+                  alt='location'
+                  onClick={mapOepnHandler}
+                />
+                {enter ? (
+                  <input
+                    name='location'
+                    type='text'
+                    maxLength='30'
+                    placeholder='장소를 검색해보세요.'
+                    onChange={inputHandler}
+                  />
+                ) : (
+                  <span>{place}</span>
+                )}
+
+                <button
+                  className={
+                    enter
+                      ? classes.enterBtn__active
+                      : classes.enterBtn__unactive
+                  }
+                  onClick={enterPlaceHandler}
+                >
+                  직접
+                  <br />
+                  입력
+                </button>
               </div>
             </div>
             <div className={classes.form__input}>
@@ -194,7 +259,7 @@ export default function Record() {
                 cols='30'
                 rows='5'
                 maxLength='100'
-                placeholder='메모도 남겨보세요 😃'
+                placeholder='메모를 남겨보세요 😃'
                 onChange={inputHandler}
               ></textarea>
             </div>

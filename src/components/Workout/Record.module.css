@@ -102,7 +102,7 @@
 }
 
 .form__input {
-  height: 40px;
+  height: 34px;
   display: flex;
   align-items: center;
   width: 100%;
@@ -123,17 +123,24 @@
   outline: none;
   border: none;
   border-radius: 4px;
-  padding: 10px;
+  padding: 2px;
 }
 
-.form__input input {
-  width: 200px;
-  height: 30px;
+.form__input > input {
+  height: 34px;
+}
+
+.form__input:nth-child(1) input {
+  width: 160px;
 }
 
 .form__input:nth-child(2) input,
 .form__input:nth-child(4) input {
   width: 70px;
+}
+
+.form__input:nth-child(3) input {
+  width: 75%;
 }
 
 .form__input:nth-child(5) {
@@ -149,16 +156,17 @@
   border-radius: 4px;
   display: flex;
   align-items: center;
+  width: 300px;
 }
 
 .place__box {
-  width: 200px;
-  height: 30px;
-  padding-left: 10px;
+  height: 34px;
+  /* padding-left: 10px; */
+  display: flex;
+  justify-content: space-between;
 }
 
 .image__box {
-  width: 300px;
   height: 100%;
   justify-content: center;
   cursor: pointer;
@@ -193,8 +201,8 @@
 }
 
 .form__input textarea {
-  width: 300px;
   height: 100%;
+  width: 300px;
 }
 
 .form__btn {
@@ -218,6 +226,26 @@
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
   margin-left: 20px;
   cursor: pointer;
+}
+
+.place__box > button {
+  width: 40px;
+  height: 30px;
+  font-size: 10px;
+  padding-bottom: 1px;
+  border-radius: 4px;
+  padding-bottom: 0 1px;
+  line-height: 10px;
+  color: rgb(37, 37, 37);
+  cursor: pointer;
+}
+
+.enterBtn__active {
+  background-color: #d7e9f7;
+}
+
+.enterBtn__unactive {
+  background-color: #d1d1cf;
 }
 
 .btn__unactive {

@@ -6,6 +6,7 @@ import Auth from './components/User/Auth';
 import Photo from './components/User/Photo';
 import MainPage from './components/Home/MainPage';
 import UserInfo from './components/User/UserInfo';
+import SearchPlace from './shared/UIElement/SeacrchPlace';
 
 // import Modal from './shared/UIElement/Modal';
 // import SecondLayout from './components/User/SecondLayout';
@@ -15,6 +16,7 @@ function App() {
     <Router>
       <Switch>
         <ModeContextProvider>
+          {/* <SearchPlace /> */}
           <Route path='/' exact>
             <MainPage />
           </Route>
