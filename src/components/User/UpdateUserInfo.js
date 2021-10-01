@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useReducer, useRef, useState } from 'react';
 import { useEffect } from 'react/cjs/react.development';
 import Input from '../../shared/FormElement/Input';
 import Button from '../../shared/UIElement/Button';
@@ -55,7 +55,7 @@ export default function UpdateUserInfo() {
     },
     formIsValid: false,
   });
-
+  const avatarRef = useRef();
   useEffect(() => {
     const loadedUserInfo = {
       nickname: {
@@ -96,6 +96,16 @@ export default function UpdateUserInfo() {
       id: id,
     });
   }, []);
+
+  const onAvatarClick = (e) => {
+    console.log('click');
+    avatarRef.current.click();
+  };
+
+  const avatarChangeHandler = (e) => {
+    console.log(e.target.files);
+  };
+
   return (
     <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
       <h1>현재 JW 님은 '운동모드' 입니다</h1>
@@ -103,16 +113,21 @@ export default function UpdateUserInfo() {
         <article className={classes.userInfo}>
           <div className={classes.userImg}>
             <h2 className={classes.title}>회원정보</h2>
-            <div className={classes.avatar}>
+            <div className={classes.avatar} onClick={onAvatarClick}>
               <img src='' alt='' />
             </div>
           </div>
-
+          <input
+            type='file'
+            ref={avatarRef}
+            className={classes.avatarInput}
+            onChange={avatarChangeHandler}
+          />
           <form onSubmit={userInfoSubmitHandler} className={classes.userForm}>
             <div className={classes.user__detail}>
               <div className={classes.user__info}>
                 <div className={`${classes.user__personal}`}>
-                  <p className={classes.nickname}>닉네임</p>
+                  <p className={classes.label}>닉네임</p>
                   <Input
                     type='text'
                     id='nickname'
@@ -125,11 +140,11 @@ export default function UpdateUserInfo() {
                   />
                 </div>
                 <div className={`${classes.user__personal}`}>
-                  <p className={classes.email}>이메일</p>
+                  <p className={classes.label}>이메일</p>
                   <p>vnfma0218@naver.com</p>
                 </div>
                 <div className={`${classes.user__personal}`}>
-                  <p className={classes.password}>비밀번호</p>
+                  <p className={classes.label}>비밀번호</p>
                   <Input
                     type='text'
                     id='password'
@@ -144,7 +159,7 @@ export default function UpdateUserInfo() {
               </div>
               <div className={classes.user__bmi}>
                 <div className={`${classes.user__personal}`}>
-                  <p className={classes.height}>키</p>
+                  <p className={classes.label}>키</p>
                   <Input
                     type='text'
                     id='height'
@@ -157,7 +172,7 @@ export default function UpdateUserInfo() {
                   />
                 </div>
                 <div className={`${classes.user__personal}`}>
-                  <p className={classes.height}>몸무게</p>
+                  <p className={classes.label}>몸무게</p>
                   <Input
                     type='text'
                     id='weight'

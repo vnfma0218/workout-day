@@ -56,7 +56,7 @@ export default function Input(props) {
         onChange={changeHandler}
         value={inputState.value}
         onBlur={touchHandler}
-        className={`${classes.input} ${
+        className={`${props.className} ${classes.input} ${
           !inputState.isValid && inputState.isTouched && classes.invalid
         }`}
       />

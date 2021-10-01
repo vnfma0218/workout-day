@@ -28,6 +28,7 @@
   justify-content: center;
   width: 50%;
   text-align: center;
+  margin-bottom: 100px;
   /* border-right: 1px solid black; */
 }
 
@@ -40,45 +41,53 @@
   height: 120px;
 }
 
+.avatarInput {
+  display: none;
+}
+
 /* user detail */
 .userForm {
   margin: 0 0 50px;
   width: 60%;
 }
 .user__detail {
+  /* margin-left: 100px; */
   flex: 60%;
   display: flex;
   height: 100%;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* user__info */
 .user__info {
-  width: 50%;
+  width: 100%;
 }
 
 .user__personal {
   width: 100%;
-  /* display: flex; */
+  display: flex;
   margin-top: 20px;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.user__personal p {
+.label {
   font-size: 1rem;
-  width: 100%;
+  width: 15%;
+  margin-right: 10%;
   margin-bottom: 10px;
 }
 
 .user__personal input {
   height: 30px;
+  width: 30%;
 }
 
 /* user__bmi */
 .user__bmi {
-  width: 60%;
+  width: 100%;
 }
 
 .submit__btn {
