@@ -50,60 +50,6 @@
   margin-left: 10px;
 }
 
-.form {
-  display: flex;
-  align-items: center;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-around; */
-  height: 140px;
-  padding: 0 20px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
-  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
-}
-
-.form__select {
-  width: 120px;
-  height: 120px;
-  padding: 0.8em 0.5em;
-  border: 1px solid rgb(185, 185, 185);
-  font-family: inherit;
-  border-radius: 4px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  text-align: center;
-  margin-right: 10px;
-  /* background-image: url('images/arrow.svg') no-repeat 95% 50%; */
-}
-
-.form__select option {
-  height: 40px;
-}
-
-.activity__image {
-  width: 120px;
-  height: 100px;
-}
-
-.form input {
-  width: 140px;
-  height: 40px;
-  padding: 0.8em 0.5em;
-  border: 1px solid #999;
-  border-radius: 4px;
-}
-
-.form svg {
-  fill: #9e9e9e;
-  margin-left: 10%;
-  cursor: pointer;
-}
-
 @keyframes modal-show {
   from {
     opacity: 0;

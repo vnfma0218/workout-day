@@ -69,7 +69,7 @@ export default function Auth() {
       <MainHeader />
       <section className={classes.auth__container}>
         <div className={classes.auth__img}>
-          <img src='./image/auth/Ride a bicycle-rafiki.png' alt='auth-img' />
+          <img src='./image/auth/Ride a bicycle.svg' alt='auth-img' />
         </div>
         <div className={classes.form__container}>
           <div className={classes.form__container_content}>

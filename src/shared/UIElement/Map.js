@@ -1,6 +1,6 @@
 // global kakao
 // https://cs-vegemeal.tistory.com/57?category=891845
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const { kakao } = window;
 
@@ -52,7 +52,7 @@ export default function Map({ searchPlace, selectPlace }) {
         infowindow.open(map, marker);
       });
     }
-  }, [searchPlace]);
+  }, [searchPlace, selectPlace]);
 
   return (
     <div
