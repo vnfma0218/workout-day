@@ -12,11 +12,13 @@
 .wrapper__dietmode {
   width: 100%;
   padding: 0 60px;
-  background-color: #c6d57e;
+  background-color: #ffed99;
+  /* background-color: #c6d57e; */
 }
 
 .wrapper__normalmode {
   width: 100%;
   padding: 0 60px;
-  background-color: #fde0b4;
+  /* background-color: #fde0b4; */
+  background-color: #d7e9f7;
 }

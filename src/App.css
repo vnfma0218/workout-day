@@ -20,7 +20,8 @@ select {
   font-family: 'BalsamiqSans', 'GowunDodum';
   /* color: #252525;
    */
-  color: #4d4d4d;
+  color: #383838;
+  /* color: #4d4d4d; */
 }
 
 button {
@@ -31,7 +32,7 @@ button {
 
 a {
   text-decoration: none;
-  color: #4d4d4d;
+  color: #383838;
 }
 
 @font-face {

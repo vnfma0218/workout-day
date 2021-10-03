@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classes from './MainHeader.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { ModeContext } from '../../context/mode-context';
 
 export default function MainHeader(props) {
   const history = useHistory();
   const location = useLocation();
+  const mode = useContext(ModeContext);
 
   const onNavLinkClick = (e) => {
     const navLink = e.target.dataset.link;
@@ -36,7 +38,12 @@ export default function MainHeader(props) {
 
   return (
     <div className={classes.header__container}>
-      <header className={classes.main__header} onClick={onNavLinkClick}>
+      <header
+        className={
+          mode.isDietMode ? classes.main__header__diet : classes.main__header
+        }
+        onClick={onNavLinkClick}
+      >
         <NavLink exact to='/'>
           <h1 className={classes.logo} data-link='home'>
             운동Day

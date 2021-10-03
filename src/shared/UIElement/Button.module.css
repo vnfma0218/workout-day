@@ -14,12 +14,17 @@
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.workout__mode {
+.btn {
+  background-color: #fdfaf1;
+  border: 1px solid #fdfaf1;
+}
+
+/* .workout__mode {
   background-color: #d7e9f7;
   border: 1px solid #d7e9f7;
 }
 
 .diet__mode {
-  background-color: #ffe3e3;
-  border: 1px solid #d7e9f7;
-}
+  background-color: #c6d57e;
+  border: 1px solid #c6d57e;
+} */

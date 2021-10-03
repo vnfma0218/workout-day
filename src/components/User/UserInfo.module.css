@@ -10,11 +10,32 @@
 
 .userInfo__container h1 {
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__btn {
+  margin: 0 10px;
+}
+
+.modal__content {
+  height: 100px;
+}
+
+.modal__content > h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.modal__content > div > p {
+  margin-bottom: 4px;
 }
 
 .userInfo {
   height: 500px;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
   /* border: 1px solid black; */
   border-radius: 5px;
   margin: 30px 0;

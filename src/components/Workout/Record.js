@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
-import { useState } from 'react/cjs/react.development';
+import { useState, useRef } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
 import SearchPlace from '../../shared/UIElement/SeacrchPlace';
 import SelectActivity from './SelectActivity';
 import Button from '../../shared/UIElement/Button';
+import { ModeContext } from '../../context/mode-context';
 
 export default function Record() {
+  const mode = useContext(ModeContext);
+
   const [mapOpen, setMapOpen] = useState(false);
   const [inputs, setInputs] = useState({
     date: '',
@@ -174,7 +177,11 @@ export default function Record() {
                 </button>
               </div>
             </div>
-            <div className={classes.form__input}>
+            <div
+              className={
+                mode.isDietMode ? classes.form__input : classes.unactive
+              }
+            >
               <label className={classes.input_title}>Weight :</label>
               <input
                 type='number'

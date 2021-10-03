@@ -1,15 +1,62 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { ModeContext } from '../../context/mode-context';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
+import Modal from '../../shared/UIElement/Modal';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './UserInfo.module.css';
 export default function UserInfo() {
+  const mode = useContext(ModeContext);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModalHandler = () => {
+    setModalOpen(true);
+  };
+
+  const closeModalHandler = () => {
+    setModalOpen(false);
+  };
+  const changeModelHandler = () => {
+    setModalOpen(false);
+    mode.isDietMode ? mode.onNormalMode() : mode.onDietMode();
+  };
+
   return (
     <>
       <MainHeader />
-
+      <Modal
+        title='Change Your Mode'
+        open={modalOpen}
+        onClose={closeModalHandler}
+        onConfirm={changeModelHandler}
+        name='CHANGE'
+      >
+        {
+          <div className={classes.modal__content}>
+            <h3>
+              <strong>{mode.isDietMode ? '운동' : '다이어트'} 모드</strong>로
+              변경하시겠습니까?
+            </h3>
+            <div>
+              <p>운동 모드는 기본적인 운동을 기록하고 확인할 수 있습니다.</p>
+              <p>
+                다이어트 모드는 목표 몸무게를 설정하고 식단과 몸무게를 기록할 수
+                있습니다.
+              </p>
+            </div>
+          </div>
+        }
+      </Modal>
       <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
-        <h1>현재 JW 님은 '운동모드' 입니다</h1>
+        <h1>
+          현재 JW 님은
+          <Button
+            name={mode.isDietMode ? '다이어트 모드' : '운동 모드'}
+            onClick={openModalHandler}
+            className={classes.modal__btn}
+          />
+          입니다.
+        </h1>
         <article className={classes.userInfo}>
           <div className={classes.userImg}>
             <h2 className={classes.title}>회원정보</h2>

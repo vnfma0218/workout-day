@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classes from './Modal.module.css';
 import Button from '../UIElement/Button';
 import ReactDom from 'react-dom';
+import { ModeContext } from '../../context/mode-context';
 
 const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onConfirm}></div>;
 };
 
 const ModalOverlay = (props) => {
+  const mode = useContext(ModeContext);
   return (
-    <div className={classes.modal}>
+    <div
+      className={mode.isDietMode ? classes.modal__diet : classes.modal__normal}
+    >
       <header className={classes.header}>
         <h2>{props.title}</h2>
       </header>
@@ -21,7 +25,7 @@ const ModalOverlay = (props) => {
           className={classes.add__btn}
         />
         <Button
-          name='CONFIRM'
+          name={props.name ? props.name : 'CONFIRM'}
           className={classes.add__btn}
           onClick={props.onConfirm}
         />
@@ -33,6 +37,7 @@ const ModalOverlay = (props) => {
 };
 
 export default function Modal(props) {
+  const mode = useContext(ModeContext);
   if (!props.open) {
     return null;
   } else {
@@ -49,6 +54,7 @@ export default function Modal(props) {
             children={props.children}
             onConfirm={props.onConfirm}
             name={props.name}
+            mode={mode}
           />,
           document.getElementById('modaloverlay-root')
         )}
