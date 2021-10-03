@@ -170,9 +170,7 @@ export default function Record() {
                   }
                   onClick={enterPlaceHandler}
                 >
-                  직접
-                  <br />
-                  입력
+                  <img src='img/icons/pen.svg' alt='write' />
                 </button>
               </div>
             </div>

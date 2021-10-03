@@ -13,6 +13,10 @@ export default function AddActivity() {
     { value: 'Free', label: '🤸‍♀️' },
   ];
 
+  const choiceHandler = () => {
+    setChoice(choice);
+  };
+
   return (
     <form
       className={classes.form}
@@ -30,8 +34,7 @@ export default function AddActivity() {
         placeholder='Choice!'
         menuPortalTarget={document.body}
         styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-
-        // onChange={}
+        onChange={choiceHandler}
       />
       <input
         className={classes.activity__name}

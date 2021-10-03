@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import AddActivity from '../../shared/UIElement/AddActivity';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
 import ActivityList from './ActivityList';
+import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
 
 export default function SelectActivity() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
+
   const openModalHandler = () => {
     setModalOpen(true);
   };
@@ -24,6 +26,10 @@ export default function SelectActivity() {
     { imageUrl: 'img/exercise/gym.png', name: 'Gym' },
   ];
 
+  const editHandler = () => {
+    edit ? setEdit(false) : setEdit(true);
+  };
+
   return (
     <>
       <Modal
@@ -40,18 +46,14 @@ export default function SelectActivity() {
           <h3>Select your Activity</h3>
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            aria-hidden='true'
-            focusable='false'
-            data-prefix='fas'
-            data-icon='plus-circle'
-            role='img'
-            viewBox='0 0 512 512'
+            height='30px'
+            viewBox='0 0 24 24'
+            width='30px'
+            fill='#6499c2'
             onClick={openModalHandler}
           >
-            <path
-              fill='#0f6189'
-              d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z'
-            />
+            <path d='M0 0h24v24H0z' fill='none' />
+            <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z' />
           </svg>
         </div>
         <div className={classes.record__select__wrap}>
@@ -60,10 +62,22 @@ export default function SelectActivity() {
               key={array.id}
               imageUrl={array.imageUrl}
               name={array.name}
+              edit={edit}
             />
           ))}
         </div>
-        <Button className={classes.edit__btn} name='EDIT' />
+        <div className={classes.btn}>
+          <Button
+            className={edit ? classes.edit__btn : classes.unactive}
+            name='DELETE'
+            // onClick={deleteHandler}
+          />
+          <Button
+            className={classes.edit__btn}
+            name={edit ? 'CONFIRM' : 'EDIT'}
+            onClick={editHandler}
+          />
+        </div>
       </ul>
     </>
   );
