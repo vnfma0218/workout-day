@@ -7,9 +7,9 @@ import Modal from '../../shared/UIElement/Modal';
 import { useState } from 'react';
 
 const event = [
-  { title: 'event 1', date: '2021-09-11', display: 'background' },
-  { title: 'event 2', date: '2021-09-27', display: 'background' },
-  { title: '사이클링', date: '2021-08-27', display: 'background' },
+  { title: '헬스', date: '2021-10-11', display: 'background' },
+  { title: '조깅', date: '2021-10-27', display: 'background' },
+  { title: '사이클링', date: '2021-10-27', display: 'background' },
 ];
 
 export default function Calendar(props) {

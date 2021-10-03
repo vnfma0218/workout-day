@@ -1,7 +1,6 @@
 import React from 'react';
 import MainHeader from '../../shared/Navigation/MainHeader';
 
-import Button from '../../shared/UIElement/Button';
 import DateRange from '../../shared/UIElement/DatePicker';
 import Wrapper from '../../shared/UIElement/Wrapper';
 

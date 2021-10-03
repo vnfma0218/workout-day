@@ -1,43 +1,17 @@
-import React, { useCallback } from 'react';
-import { useReducer } from 'react';
+import React, { useState } from 'react';
 import Input from '../../shared/FormElement/Input';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
 import classes from './Auth.module.css';
-
+import useForm from '../../shared/hooks/form-hooks';
 const emailRegex =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case 'change':
-      let formIsValid = true;
-      for (const property in state.inputs) {
-        if (!state.inputs[property]) {
-          continue;
-        }
-        if (action.id === property) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[property].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.id]: { value: action.value, isValid: action.isValid },
-        },
-        formIsValid,
-      };
-    default:
-      return state;
-  }
-};
-
 export default function Auth() {
-  const [formState, formDispatch] = useReducer(formReducer, {
-    inputs: {
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isWorkoutMode, setIsWorkoutMode] = useState(true);
+  const { formState, onInputChange, setFormData } = useForm(
+    {
       email: {
         value: '',
         isValid: false,
@@ -47,23 +21,53 @@ export default function Auth() {
         isValid: false,
       },
     },
-    formIsValid: false,
-  });
+    false
+  );
 
-  const onInputChnage = useCallback((id, value, isValid) => {
-    console.log(id);
-    formDispatch({
-      type: 'change',
-      value: value,
-      isValid: isValid,
-      id: id,
-    });
-  }, []);
+  const onToggleLoginMode = () => {
+    if (!isLoginMode) {
+      setFormData(
+        {
+          ...formState.inputs,
+          passwordConfirm: undefined,
+          nickname: undefined,
+        },
+        formState.inputs.email.isValid && formState.inputs.password.isValid
+      );
+    } else {
+      setFormData(
+        {
+          ...formState.inputs,
+          passwordConfirm: {
+            value: '',
+            isValid: false,
+          },
+          nickname: {
+            value: '',
+            isValid: false,
+          },
+        },
+        false
+      );
+    }
+    setIsLoginMode((prev) => !prev);
+  };
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formState);
+    console.log(isWorkoutMode);
   };
+
+  const modeSelectHandler = (e) => {
+    console.log(e.target.name);
+    if (e.target.name === 'workoutMode') {
+      setIsWorkoutMode(true);
+    } else {
+      setIsWorkoutMode(false);
+    }
+  };
+
   return (
     <>
       <MainHeader />
@@ -83,7 +87,12 @@ export default function Auth() {
                     기본적인 운동을 기록하고 확인할 수 있습니다.
                   </span>
                 </label>
-                <input type='checkbox' />
+                <input
+                  checked={isWorkoutMode}
+                  type='checkbox'
+                  name='workoutMode'
+                  onChange={modeSelectHandler}
+                />
               </div>
               <div className={classes.diet__mode}>
                 <label htmlFor='workout-mode'>
@@ -92,7 +101,12 @@ export default function Auth() {
                 <span className={classes.diet__mode_text}>
                   목표 몸무게를 설정하고 식단과 몸무게를 기록할 수 있습니다
                 </span>
-                <input type='checkbox' />
+                <input
+                  checked={!isWorkoutMode}
+                  type='checkbox'
+                  name='dietMode'
+                  onChange={modeSelectHandler}
+                />
               </div>
             </div>
             <form className={classes.auth__form} onSubmit={loginSubmitHandler}>
@@ -102,7 +116,8 @@ export default function Auth() {
                   id='email'
                   placeholder='email'
                   validator={(val) => emailRegex.test(val)}
-                  onInputChnage={onInputChnage}
+                  onInputChange={onInputChange}
+                  errorText={'이메일 형식에 맞지않습니다'}
                 />
               </div>
               <div className={classes.form__control}>
@@ -110,10 +125,34 @@ export default function Auth() {
                   type='password'
                   id='password'
                   placeholder='password'
-                  validator={(val) => val.trim().length > 0}
-                  onInputChnage={onInputChnage}
+                  validator={(val) => val.trim().length > 5}
+                  onInputChange={onInputChange}
+                  errorText={'6글자 이상이 필요합니다'}
                 />
               </div>
+              {!isLoginMode && (
+                <div className={classes.form__control}>
+                  <Input
+                    type='password'
+                    id='passwordConfirm'
+                    placeholder='password confirm'
+                    validator={(val) => val.trim().length > 5}
+                    onInputChange={onInputChange}
+                    errorText={'6글자 이상이 필요합니다'}
+                  />
+                </div>
+              )}
+              {!isLoginMode && (
+                <div className={classes.form__control}>
+                  <Input
+                    id='nickname'
+                    placeholder='nickname'
+                    validator={(val) => val.trim().length > 0}
+                    onInputChange={onInputChange}
+                    errorText={'최소 1글자가 필요합니다'}
+                  />
+                </div>
+              )}
               <div className={classes.auth__helper}>
                 <div className={classes.rememberMe}>
                   <input type='checkbox' />
@@ -122,11 +161,24 @@ export default function Auth() {
                 <p className={classes.forgot}>Forgot password?</p>
               </div>
               <Button
-                name='Login'
+                name={isLoginMode ? 'Login' : 'Sign up'}
                 className={classes.submit__btn}
                 invalid='true'
               />
             </form>
+            <div className={classes.loginMode}>
+              <p>
+                {isLoginMode
+                  ? 'don`t have an account?'
+                  : 'Already have an account?'}
+              </p>
+              <p
+                className={classes.toggleLoginMode}
+                onClick={onToggleLoginMode}
+              >
+                {isLoginMode ? 'sign up' : 'login'}
+              </p>
+            </div>
           </div>
         </div>
       </section>

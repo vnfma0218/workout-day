@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import { useState } from 'react/cjs/react.development';

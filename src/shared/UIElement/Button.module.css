@@ -1,7 +1,8 @@
 .btn {
   font: inherit;
   font-size: 14px;
-  padding: 0.5rem;
+  line-height: 45px;
+  text-align: center;
   /* border: 1px solid #ff0055; */
   border-radius: 4px;
   cursor: pointer;
