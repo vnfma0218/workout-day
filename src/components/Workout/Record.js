@@ -104,7 +104,6 @@ export default function Record() {
         {<SearchPlace selectPlace={selectPlace} />}
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
-        <h2>Today's Workout</h2>
         <div className={classes.record__inner}>
           <SelectActivity />
           {/* Record Form */}

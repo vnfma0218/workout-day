@@ -28,13 +28,22 @@ ul {
   fill: #4d4d4d;
 }
 
+.name {
+  /* osition: absolute; */
+  /* writing-mode: vertical-rl; */
+  font-size: 25px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 .nav__list {
   display: flex;
   align-items: center;
+  width: 13%;
+  justify-content: space-between;
 }
 
 .nav__item {
-  margin-left: 25px;
+  /* margin-left: 25px; */
   cursor: pointer;
   transition: all 0.4 ease-in-out;
 }

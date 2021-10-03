@@ -1,0 +1,4 @@
+.react-datepicker {
+  position: absolute;
+  z-index: 10;
+}
