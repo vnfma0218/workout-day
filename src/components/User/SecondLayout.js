@@ -2,6 +2,7 @@ import React from 'react';
 import MainHeader from '../../shared/Navigation/MainHeader';
 
 import Button from '../../shared/UIElement/Button';
+import DateRange from '../../shared/UIElement/DatePicker';
 import Wrapper from '../../shared/UIElement/Wrapper';
 
 import classes from './SecondLayout.module.css';
@@ -10,7 +11,7 @@ export default function SecondLayout() {
     <>
       <MainHeader />
       <Wrapper id='second__layout' className={classes.second__layout}>
-        <Button name='DATE' className={classes.dateBtn} />
+        <DateRange />
         <div className={classes.photos}>
           <div className={`${classes.photo}`}>
             <img src='image/userPhoto/photo1.jpg' alt='workout' />
