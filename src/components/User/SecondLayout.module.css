@@ -1,9 +1,19 @@
+.second__layout {
+  height: 100%;
+}
+
 .photos {
-  /* margin-top: 70px; */
-  height: 100vh;
+  margin-top: 50px;
+  /* height: 100vh; */
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.dateBtn {
+  margin-top: 80px;
+  padding-top: 0.5rem;
+  /* position: absolute; */
+  /* top: 140px; */
 }
 
 .photo {
@@ -71,9 +81,4 @@
 .photo__date {
   margin-bottom: 20px;
   letter-spacing: 10px;
-}
-
-.dateBtn {
-  position: absolute;
-  top: 140px;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
-import { useState, useRef } from 'react/cjs/react.development';
+import { useState } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
 import SearchPlace from '../../shared/UIElement/SeacrchPlace';
 import SelectActivity from './SelectActivity';

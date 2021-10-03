@@ -1,13 +1,18 @@
 import React, { useReducer } from 'react';
 import { useEffect } from 'react/cjs/react.development';
-
+import classes from './Input.module.css';
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case 'input_change':
+    case 'INPUT_CHANGE':
       return {
         ...state,
         value: action.value,
         isValid: action.validator(action.value),
+      };
+    case 'TOUCH':
+      return {
+        ...state,
+        isTouched: true,
       };
     default:
       return state;
@@ -16,15 +21,22 @@ const inputReducer = (state, action) => {
 
 export default function Input(props) {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: '',
-    isValid: false,
+    value: props.initialValue || '',
+    isValid: props.initialValid || false,
+    isTouched: false,
   });
 
   const changeHandler = (e) => {
     dispatch({
-      type: 'input_change',
+      type: 'INPUT_CHANGE',
       value: e.target.value,
       validator: props.validator,
+    });
+  };
+
+  const touchHandler = (e) => {
+    dispatch({
+      type: 'TOUCH',
     });
   };
 
@@ -36,12 +48,21 @@ export default function Input(props) {
   }, [id, value, isValid, onInputChnage]);
 
   return (
-    <input
-      type={props.type}
-      id={props.id}
-      placeholder={props.placeholder}
-      onChange={changeHandler}
-      value={inputState.value}
-    />
+    <>
+      <input
+        type={props.type}
+        id={props.id}
+        placeholder={props.placeholder}
+        onChange={changeHandler}
+        value={inputState.value}
+        onBlur={touchHandler}
+        className={`${props.className} ${classes.input} ${
+          !inputState.isValid && inputState.isTouched && classes.invalid
+        }`}
+      />
+      {!inputState.isValid && (
+        <p className={classes.errorText}>{props.errorText}</p>
+      )}
+    </>
   );
 }

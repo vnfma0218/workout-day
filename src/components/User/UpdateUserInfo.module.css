@@ -26,8 +26,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 40%;
+  width: 50%;
   text-align: center;
+  margin-bottom: 100px;
   /* border-right: 1px solid black; */
 }
 
@@ -40,15 +41,28 @@
   height: 120px;
 }
 
+.avatarInput {
+  display: none;
+}
+
 /* user detail */
 .userForm {
-  margin: 50px 0;
-  flex: 60%;
+  margin: 0 0 50px;
+  width: 60%;
 }
 .user__detail {
-  margin: 50px 0;
+  /* margin-left: 100px; */
+  flex: 60%;
   display: flex;
+  height: 100%;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* user__info */
+.user__info {
+  width: 100%;
 }
 
 .user__personal {
@@ -56,21 +70,35 @@
   display: flex;
   margin-top: 20px;
   align-items: center;
-  padding: 0 120px;
   margin-bottom: 20px;
 }
 
-.user__personal p {
-  flex: 20%;
+.label {
+  font-size: 1rem;
+  width: 15%;
+  margin-right: 10%;
+  margin-bottom: 10px;
 }
 
-.edit__btn {
+.user__personal input {
+  height: 30px;
+  width: 30%;
+}
+
+/* user__bmi */
+.user__bmi {
+  width: 100%;
+}
+
+.submit__btn {
   width: 100px;
   height: 45px;
   position: absolute;
   bottom: 10px;
   right: 10px;
+  padding: 0.5rem 1.2rem;
 }
+
 .cancel__btn {
   width: 100px;
   height: 45px;
@@ -79,9 +107,17 @@
   right: 130px;
   padding: 0.5rem 1.2rem;
 }
+
 .divider {
   width: 65%;
-  margin: auto;
+  margin: 20px auto 20px;
   height: 1px;
   background-color: #bdbdbd;
+}
+
+.submit__btn:disabled {
+  cursor: not-allowed;
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
 }

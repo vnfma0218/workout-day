@@ -49,7 +49,7 @@ export default function UserInfo() {
             </div>
           </div>
           <Button
-            to={`/users/edit`}
+            to='/userinfo/edit'
             name='EDIT'
             className={classes.edit__btn}
           />
