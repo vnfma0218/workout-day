@@ -1,41 +1,16 @@
-import React, { useCallback, useReducer, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react/cjs/react.development';
 import Input from '../../shared/FormElement/Input';
 import Button from '../../shared/UIElement/Button';
 import Wrapper from '../../shared/UIElement/Wrapper';
+import useForm from '../../shared/hooks/form-hooks';
+
 import classes from './UpdateUserInfo.module.css';
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case 'change':
-      let formIsValid = true;
-      for (const property in state.inputs) {
-        if (!state.inputs[property]) {
-          continue;
-        }
-        if (action.id === property) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[property].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.id]: { value: action.value, isValid: action.isValid },
-        },
-        formIsValid,
-      };
-    case 'SET_DATA':
-      return { inputs: action.inputs, formIsValid: action.formIsValid };
-    default:
-      return state;
-  }
-};
+
 export default function UpdateUserInfo() {
   const [loadedUserInfo, setLoadedUserInfo] = useState();
-  const [formState, formDispatch] = useReducer(formReducer, {
-    inputs: {
+  const { formState, onInputChange, setFormData } = useForm(
+    {
       nickname: {
         value: '',
         isValid: false,
@@ -53,8 +28,8 @@ export default function UpdateUserInfo() {
         isValid: false,
       },
     },
-    formIsValid: false,
-  });
+    false
+  );
   const avatarRef = useRef();
   useEffect(() => {
     const loadedUserInfo = {
@@ -76,26 +51,13 @@ export default function UpdateUserInfo() {
       },
     };
     setLoadedUserInfo(loadedUserInfo);
-    formDispatch({
-      type: 'SET_DATA',
-      inputs: loadedUserInfo,
-      formIsValid: true,
-    });
-  }, []);
+    setFormData(loadedUserInfo, true);
+  }, [setFormData]);
 
   const userInfoSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formState);
   };
-
-  const onInputChnage = useCallback((id, value, isValid) => {
-    formDispatch({
-      type: 'change',
-      value: value,
-      isValid: isValid,
-      id: id,
-    });
-  }, []);
 
   const onAvatarClick = (e) => {
     console.log('click');
@@ -135,7 +97,7 @@ export default function UpdateUserInfo() {
                     initialValue={loadedUserInfo.nickname.value}
                     initialValid={true}
                     validator={(val) => val.trim().length > 0}
-                    onInputChnage={onInputChnage}
+                    onInputChange={onInputChange}
                     errorText={'최소 한글자 이상 입력해주세요'}
                   />
                 </div>
@@ -152,7 +114,7 @@ export default function UpdateUserInfo() {
                     initialValue={'123456'}
                     initialValid={true}
                     validator={(val) => val.trim().length > 0}
-                    onInputChnage={onInputChnage}
+                    onInputChange={onInputChange}
                     errorText={'at least 6 characters'}
                   />
                 </div>
@@ -167,7 +129,7 @@ export default function UpdateUserInfo() {
                     initialValue={'Mr.Lee'}
                     initialValid={true}
                     validator={(val) => val.trim().length > 0}
-                    onInputChnage={onInputChnage}
+                    onInputChange={onInputChange}
                     errorText={'적절한 숫자를 입력해주세요'}
                   />
                 </div>
@@ -180,7 +142,7 @@ export default function UpdateUserInfo() {
                     initialValue={'Mr.Lee'}
                     initialValid={true}
                     validator={(val) => val.trim().length > 0}
-                    onInputChnage={onInputChnage}
+                    onInputChange={onInputChange}
                     errorText={'적절한 숫자를 입력해주세요'}
                   />
                 </div>

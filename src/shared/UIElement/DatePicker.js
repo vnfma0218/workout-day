@@ -2,27 +2,39 @@ import React, { forwardRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
+import './DatePicker.css';
 import classes from './DatePicker.module.css';
-export default function DateRange() {
-  const [dateRange, setDateRange] = useState([new Date(), null]);
-  const [startDate, endDate] = dateRange;
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <button className={classes.dateInput} onClick={onClick} ref={ref}>
-      {value}
-    </button>
-  ));
-  console.log(startDate, endDate);
+export default function DateRange(props) {
+  const [startDate, setStartDate] = useState(new Date());
+  const [isOpen, setIsOpen] = useState(false);
+  const handleChange = (e) => {
+    setIsOpen(!isOpen);
+    setStartDate(e);
+    props.setDate(e);
+  };
+  const handleClick = (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
   return (
-    <DatePicker
-      locale={ko}
-      selectsRange={true}
-      startDate={startDate}
-      endDate={endDate}
-      onChange={(update) => {
-        setDateRange(update);
-      }}
-      customInput={<ExampleCustomInput />}
-      withPortal
-    />
+    <>
+      <span className={classes.dateInput}>
+        {startDate.toISOString().split('T')[0]}
+      </span>
+      <img
+        className={classes.arrowIcon}
+        src='img/icons/down-arrow.png'
+        alt='dropdown'
+        onClick={handleClick}
+      />
+      {isOpen && (
+        <DatePicker
+          selected={startDate}
+          onChange={handleChange}
+          inline
+          minDate={props.minDate}
+        />
+      )}
+    </>
   );
 }
