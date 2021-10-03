@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ModeContextProvider } from './context/mode-context';
 
 import Auth from './components/User/Auth';
-import Photo from './components/User/Photo';
 import MainPage from './components/Home/MainPage';
 import UserInfo from './components/User/UserInfo';
+import UpdateUserInfo from './components/User/UpdateUserInfo';
+import SecondLayout from './components/User/SecondLayout';
 
 // import Modal from './shared/UIElement/Modal';
 // import SecondLayout from './components/User/SecondLayout';
@@ -21,11 +22,14 @@ function App() {
           <Route path='/auth'>
             <Auth />
           </Route>
+          <Route path='/userinfo/edit'>
+            <UpdateUserInfo />
+          </Route>
           <Route path='/userinfo'>
             <UserInfo />
           </Route>
           <Route path='/photo'>
-            <Photo />
+            <SecondLayout />
           </Route>
           {/* <Modal /> */}
           {/* <SecondLayout /> */}
