@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
-import { useState, useRef } from 'react/cjs/react.development';
 import Modal from '../../shared/UIElement/Modal';
 import SearchPlace from '../../shared/UIElement/SeacrchPlace';
 import SelectActivity from './SelectActivity';
@@ -107,7 +106,6 @@ export default function Record() {
         {<SearchPlace selectPlace={selectPlace} />}
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
-        <h2>Today's Workout</h2>
         <div className={classes.record__inner}>
           <SelectActivity />
           {/* Record Form */}

@@ -41,11 +41,11 @@ export default function Input(props) {
   };
 
   const { value, isValid } = inputState;
-  const { id, onInputChnage } = props;
+  const { id, onInputChange } = props;
 
   useEffect(() => {
-    onInputChnage(id, value, isValid);
-  }, [id, value, isValid, onInputChnage]);
+    onInputChange(id, value, isValid);
+  }, [id, value, isValid, onInputChange]);
 
   return (
     <>
@@ -60,7 +60,7 @@ export default function Input(props) {
           !inputState.isValid && inputState.isTouched && classes.invalid
         }`}
       />
-      {!inputState.isValid && (
+      {!inputState.isValid && inputState.isTouched && (
         <p className={classes.errorText}>{props.errorText}</p>
       )}
     </>

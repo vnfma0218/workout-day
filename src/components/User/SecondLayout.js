@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MainHeader from '../../shared/Navigation/MainHeader';
 
-import Button from '../../shared/UIElement/Button';
 import DateRange from '../../shared/UIElement/DatePicker';
 import Wrapper from '../../shared/UIElement/Wrapper';
 
 import classes from './SecondLayout.module.css';
 export default function SecondLayout() {
+  const [minDate, setMinDate] = useState(new Date());
+  const [endDate, setEndDate] = useState();
+  const selectMinDate = (date) => {
+    setMinDate(date);
+  };
+  console.log(minDate, endDate);
   return (
     <>
       <MainHeader />
       <Wrapper id='second__layout' className={classes.second__layout}>
-        <DateRange />
+        <div className={classes.selectDate__container}>
+          <div className={classes.selectDate}>
+            <DateRange setDate={selectMinDate} />
+            <p>–</p>
+            <DateRange minDate={minDate} setDate={(date) => setEndDate(date)} />
+          </div>
+          <button className={classes.selectBtn}>조회</button>
+        </div>
+
         <div className={classes.photos}>
           <div className={`${classes.photo}`}>
             <img src='image/userPhoto/photo1.jpg' alt='workout' />

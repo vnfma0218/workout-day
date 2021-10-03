@@ -12,7 +12,6 @@ export default function MainPage(props) {
   const DIVIDER_HEIGHT = 5;
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('/');
-
   const changePage = (page, pageHeight) => {
     if (page === 'first') {
       setCurrentPage('home');
@@ -108,6 +107,7 @@ export default function MainPage(props) {
       <MainHeader navClickHandler={navClickHandler} currentPage={currentPage} />
       <div ref={outerDivRef} className={classes.container}>
         <Home />
+
         <div className={classes.divider}></div>
         <Calendar />
         <div className={classes.divider}></div>

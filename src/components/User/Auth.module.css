@@ -18,7 +18,7 @@
 
 .form__container {
   flex: 50%;
-  padding-top: 70px;
+  padding-top: 20px;
 }
 
 .form__container_content {
@@ -103,7 +103,7 @@
   border: 2px solid #fde0b4;
 }
 
-.form .auth__helper {
+.auth__helper {
   width: 90%;
   display: flex;
   margin-top: 10px;
@@ -128,4 +128,15 @@
   font-weight: 700;
   font-size: 18px;
   border-radius: 4px;
+}
+
+.loginMode {
+  display: flex;
+  margin-top: 10px;
+}
+.toggleLoginMode {
+  color: dodgerblue;
+  cursor: pointer;
+  font-size: 17 px;
+  margin-left: 15px;
 }
