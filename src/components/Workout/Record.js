@@ -198,7 +198,6 @@ export default function Record() {
                     maxLength='30'
                     placeholder='장소를 검색해보세요.'
                     onChange={inputHandler}
-                    required
                     value={inputs.location}
                   />
                 ) : (

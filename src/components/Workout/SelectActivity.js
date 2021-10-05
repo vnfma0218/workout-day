@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { dbService } from '../../firebase';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
 import ActivityList from './ActivityList';
@@ -8,6 +9,8 @@ import classes from './SelectActivity.module.css';
 export default function SelectActivity() {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [activities, setActivities] = useState();
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -17,14 +20,20 @@ export default function SelectActivity() {
     setModalOpen(false);
   };
 
-  const activity = [
-    { imageUrl: 'img/exercise/bicycle.png', name: 'Cycling' },
-    { imageUrl: 'img/exercise/badminton.png', name: 'Badminton' },
-    { imageUrl: 'img/exercise/yoga.png', name: 'Yoga' },
-    { imageUrl: 'img/exercise/jogging.png', name: 'Running' },
-    { imageUrl: 'img/exercise/swimming.png', name: 'Swimming' },
-    { imageUrl: 'img/exercise/gym.png', name: 'Gym' },
-  ];
+  useEffect(() => {
+    dbService
+      .collection('activity')
+      .get()
+      .then((docs) => {
+        let activitiList = [];
+        docs.forEach((doc) => {
+          activitiList.push({ ...doc.data(), id: doc.id });
+        });
+        console.log(activitiList);
+        setActivities(activitiList);
+        setLoading(true);
+      });
+  }, []);
 
   const editHandler = () => {
     edit ? setEdit(false) : setEdit(true);
@@ -57,14 +66,16 @@ export default function SelectActivity() {
           </svg>
         </div>
         <div className={classes.record__select__wrap}>
-          {activity.map((array) => (
-            <ActivityList
-              key={array.name}
-              imageUrl={array.imageUrl}
-              name={array.name}
-              edit={edit}
-            />
-          ))}
+          {loading &&
+            activities.map((activity) => (
+              <ActivityList
+                key={activity.id}
+                imageUrl={activity.imageUrl}
+                name={activity.name}
+                from={activity.from}
+                edit={edit}
+              />
+            ))}
         </div>
         <div className={classes.btn}>
           <Button

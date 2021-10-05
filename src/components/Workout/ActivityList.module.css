@@ -1,5 +1,6 @@
 .select__item {
-  width: 280px;
+  /* width: 280px; */
+  width: 90%;
   height: 70px;
   padding: 0 20px;
   margin: 0 auto 10px;

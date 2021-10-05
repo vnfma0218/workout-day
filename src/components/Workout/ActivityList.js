@@ -4,7 +4,7 @@ import classes from './ActivityList.module.css';
 export default function ActivityList(props) {
   return (
     <>
-      <li className={classes.select__item}>
+      <li className={classes.select__item} id={props.key} from={props.from}>
         <div className={classes.select__item_content}>
           <div>
             <img
@@ -14,7 +14,7 @@ export default function ActivityList(props) {
             />
             <span>{props.name}</span>
           </div>
-          {props.edit ? (
+          {props.from === 'user' && props.edit ? (
             <input type='checkbox' style={{ transform: 'scale(1.5)' }} />
           ) : (
             <svg
