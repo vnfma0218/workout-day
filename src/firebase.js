@@ -1,16 +1,16 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+import 'firebase/compat/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCbe4JP4xSOQ7XlLwyUOiJOidXueqlOazM',
-  authDomain: 'workoutday-b082f.firebaseapp.com',
-  projectId: 'workoutday-b082f',
-  storageBucket: 'workoutday-b082f.appspot.com',
-  messagingSenderId: '196161320278',
-  appId: '1:196161320278:web:62f71bd86b4da64cbc12f7',
+  apiKey: 'AIzaSyB7QuYTO0Bb5WiEbhBBinv5zL-jDjmyx78',
+  authDomain: 'workoutday-946ba.firebaseapp.com',
+  projectId: 'workoutday-946ba',
+  storageBucket: 'workoutday-946ba.appspot.com',
+  messagingSenderId: '928990359035',
+  appId: '1:928990359035:web:09e326ec3c96f002e02f5e',
 };
 
 firebase.initializeApp(firebaseConfig);

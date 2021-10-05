@@ -2,14 +2,13 @@ import React, { useContext, useRef, useState } from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
-import SearchPlace from '../../shared/UIElement/SeacrchPlace';
+import SearchPlace from '../../shared/UIElement/SearchPlace';
 import SelectActivity from './SelectActivity';
 import Button from '../../shared/UIElement/Button';
 import { ModeContext } from '../../context/mode-context';
 
 export default function Record() {
   const mode = useContext(ModeContext);
-
   const [mapOpen, setMapOpen] = useState(false);
   const [inputs, setInputs] = useState({
     date: '',
@@ -46,7 +45,7 @@ export default function Record() {
     add.push({
       date: target.date.value,
       time: `${target.hour.value}시간 ${target.minutes.value}분`,
-      weight: parseInt(target.weight.value),
+      // weight: parseInt(target.weight.value),
       imageUrl: url,
       memo: target.memo.value,
       location: enter ? target.location.value : [place, address],
@@ -80,6 +79,7 @@ export default function Record() {
       [name]: value,
     });
     console.log(inputs);
+
     setTotalByte(value.length);
   };
 
