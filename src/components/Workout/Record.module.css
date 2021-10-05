@@ -1,6 +1,6 @@
 .record {
   /* padding: 100px 140px 50px; */
-  padding: 3rem 5rem 2rem;
+  /* padding: 3rem 5rem 2rem; */
   height: 100%;
 }
 .record h2 {
@@ -12,9 +12,9 @@
 .record__inner {
   display: flex;
   justify-content: space-around;
-  height: 600px;
+  height: 90%;
   width: 100%;
-  padding: 50px 0 0;
+  /* padding: 50px 0 0; */
   margin: 0 auto;
 }
 
@@ -22,7 +22,7 @@
 .record__form {
   width: 45%;
   height: 100%;
-  padding: 20px 40px 20px;
+  padding: 30px 40px 20px;
   font-size: 16px;
   font-weight: 600;
   display: flex;
@@ -58,7 +58,7 @@
   outline: none;
   border: none;
   border-radius: 4px;
-  padding: 2px;
+  padding: 2px 2px 2px 8px;
 }
 
 .form__input > input {
@@ -70,23 +70,23 @@
 }
 
 .form__input:nth-child(2) input,
-.form__input:nth-child(4) input {
+.form__input:nth-child(3) input {
   width: 70px;
 }
 
-.form__input:nth-child(3) input {
+/* .form__input:nth-child(4) input {
   width: 75%;
-}
+} */
 
 .form__input:nth-child(5) {
   height: 12rem;
 }
+
 .form__input:nth-child(6) {
   height: 6rem;
 }
 
-.place__box,
-.image__box {
+.place__box {
   background-color: rgb(255, 255, 255, 255);
   border-radius: 4px;
   display: flex;
@@ -101,13 +101,12 @@
   justify-content: space-between;
 }
 
-.image__box {
-  height: 100%;
-  justify-content: center;
+.place__box img {
   cursor: pointer;
+  height: 24px;
 }
 
-.image__box input {
+.filebox > input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -116,19 +115,27 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+  top: 50%;
+  left: 50%;
 }
 
-.place__box img {
+.preview__Image {
+  width: 300px;
+  height: 100%;
+  background-color: rgb(255, 255, 255, 255);
+  border-radius: 4px;
   cursor: pointer;
-  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.preview__box__preview {
+.preview__box__img {
   width: 100%;
   height: 100%;
 }
 
-.preview__box__icon {
+.image__box__icon {
   height: 24px;
 }
 
@@ -171,9 +178,9 @@
 }
 
 .btn {
-  width: 80px;
   margin-left: 20px;
   margin-right: 0;
+  font-weight: 400;
 }
 
 .unactive {

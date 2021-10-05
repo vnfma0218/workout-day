@@ -59,7 +59,7 @@ export default function SelectActivity() {
         <div className={classes.record__select__wrap}>
           {activity.map((array) => (
             <ActivityList
-              key={array.id}
+              key={array.name}
               imageUrl={array.imageUrl}
               name={array.name}
               edit={edit}

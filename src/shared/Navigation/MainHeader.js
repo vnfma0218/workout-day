@@ -5,9 +5,10 @@ import { useHistory } from 'react-router';
 import { ModeContext } from '../../context/mode-context';
 
 export default function MainHeader(props) {
+  const mode = useContext(ModeContext);
+
   const history = useHistory();
   const location = useLocation();
-  const mode = useContext(ModeContext);
 
   const onNavLinkClick = (e) => {
     const navLink = e.target.dataset.link;
@@ -38,7 +39,12 @@ export default function MainHeader(props) {
 
   return (
     <div className={classes.header__container}>
-      <header className={classes.main__header} onClick={onNavLinkClick}>
+      <header
+        className={
+          mode.isDietMode ? classes.main__header__diet : classes.main__header
+        }
+        onClick={onNavLinkClick}
+      >
         <div className='' style={{ display: 'flex', alignItems: 'center' }}>
           <NavLink exact to='/'>
             <h1 className={classes.logo} data-link='home'>
@@ -46,7 +52,13 @@ export default function MainHeader(props) {
             </h1>
           </NavLink>
         </div>
-        <h2 className={classes.name}>Today's Workout</h2>
+        <h2 className={classes.currentpage}>
+          {props.currentPage === 'calendar'
+            ? 'My Calendar'
+            : props.currentPage === 'record'
+            ? "Today's Workout"
+            : null}
+        </h2>
 
         <ul className={classes.nav__list}>
           <li

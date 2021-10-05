@@ -11,7 +11,7 @@ export default function MainPage(props) {
   const outerDivRef = useRef();
   const DIVIDER_HEIGHT = 5;
   const location = useLocation();
-  const [currentPage, setCurrentPage] = useState('/');
+  const [currentPage, setCurrentPage] = useState('home');
   const changePage = (page, pageHeight) => {
     if (page === 'first') {
       setCurrentPage('home');

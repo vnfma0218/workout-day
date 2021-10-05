@@ -2,7 +2,7 @@
   max-width: 1440px;
   color: #4d4d4d;
   height: 100vh;
-  padding: 100px 60px 0;
+  /* padding: 100px 60px 0; */
   margin: auto;
   display: flex;
 }

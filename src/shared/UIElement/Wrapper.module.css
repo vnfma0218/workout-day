@@ -11,14 +11,16 @@
 
 .wrapper__dietmode {
   width: 100%;
-  padding: 0 60px;
-  background-color: #ffed99;
+  padding: 10rem 60px 2rem;
+  background-color: #cbb9e0;
+  /* background-color: #ffed99; */
   /* background-color: #c6d57e; */
 }
 
 .wrapper__normalmode {
   width: 100%;
-  padding: 0 60px;
+  padding: 8rem 60px 2rem;
+
   /* background-color: #fde0b4; */
   background-color: #d7e9f7;
 }

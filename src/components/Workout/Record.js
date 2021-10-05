@@ -2,31 +2,32 @@ import React, { useContext, useRef, useState } from 'react';
 import classes from './Record.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
-import SearchPlace from '../../shared/UIElement/SeacrchPlace';
+import SearchPlace from '../../shared/UIElement/SearchPlace';
 import SelectActivity from './SelectActivity';
 import Button from '../../shared/UIElement/Button';
 import { ModeContext } from '../../context/mode-context';
+import { dbService, storage } from '../../firebase';
 
 export default function Record() {
   const mode = useContext(ModeContext);
-
   const [mapOpen, setMapOpen] = useState(false);
+  const [enter, setEnter] = useState(false);
+
+  // form
   const [inputs, setInputs] = useState({
     date: '',
-    hour: 0,
-    minutes: 0,
-    weight: 0,
+    hour: '',
+    minutes: '',
+    weight: '',
     memo: '',
     location: '',
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
   const fileInput = useRef();
-
   const [totalByte, setTotalByte] = useState(0);
   const [place, setPlace] = useState('');
   const [address, setAddress] = useState('');
-  const [enter, setEnter] = useState(false);
 
   const oepnMapHandler = () => {
     setMapOpen(true);
@@ -37,49 +38,82 @@ export default function Record() {
     setMapOpen(false);
   };
 
-  // 기록 저장
+  // form 저장
   const saveHandler = (e) => {
     e.preventDefault();
 
     const target = e.target;
-    const add = [];
-    add.push({
-      date: target.date.value,
-      time: `${target.hour.value}시간 ${target.minutes.value}분`,
-      weight: parseInt(target.weight.value),
-      imageUrl: url,
-      memo: target.memo.value,
-      location: enter ? target.location.value : [place, address],
-    });
-
-    console.log(add);
+    dbService
+      .collection('record')
+      .add({
+        date: target.date.value,
+        time: `${target.hour.value}시간 ${target.minutes.value}분`,
+        weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
+        imageUrl: url,
+        memo: target.memo.value,
+        location: enter ? target.location.value : [place, address],
+        uploadDate: new Date(),
+      })
+      .then((result) => {
+        //입력 후 초기화
+        return (
+          setInputs({
+            date: '',
+            hour: '',
+            minutes: '',
+            weight: '',
+            memo: '',
+            location: '',
+          }),
+          setUrl(''),
+          setFile(''),
+          setPlace(''),
+          setAddress('')
+        );
+      })
+      .catch((err) => console.error(err));
   };
 
+  // image file 저장
   const fileHandler = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
-      // console.log(reader.result);
       setUrl(reader.result);
     };
-    reader.readAsDataURL(file);
-
-    // console.log(url);
 
     if (file) {
+      reader.readAsDataURL(file);
       setFile(file);
       setUrl(url);
     }
+    console.log(file.name);
+    const uploadFile = storage.ref(`images/${file.name}`).put(file);
+    uploadFile.on(
+      'state_change',
+      null,
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        storage
+          .ref('images')
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+          });
+      }
+    );
   };
 
   const inputHandler = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
-    console.log(inputs);
+
     setTotalByte(value.length);
   };
 
@@ -109,16 +143,21 @@ export default function Record() {
         <div className={classes.record__inner}>
           <SelectActivity />
           {/* Record Form */}
-          <form className={classes.record__form} onSubmit={saveHandler}>
+          <form
+            id={classes.form}
+            className={classes.record__form}
+            onSubmit={saveHandler}
+          >
             <div className={classes.form__input}>
               <label className={classes.input_title}>Date :</label>
               <input
                 type='date'
                 name='date'
                 min='2021-01-01'
-                max='2030-12-31'
+                max={new Date().toISOString().split('T')[0]}
                 required
                 onChange={inputHandler}
+                value={inputs.date}
               />
             </div>
             <div className={classes.form__input}>
@@ -126,10 +165,10 @@ export default function Record() {
               <input
                 type='number'
                 name='hour'
-                min='0'
+                min='1'
                 max='24'
-                required
                 onChange={inputHandler}
+                value={inputs.hour}
               />
               <span> 시간</span>
 
@@ -140,6 +179,7 @@ export default function Record() {
                 max='59'
                 required
                 onChange={inputHandler}
+                value={inputs.minutes}
               />
               <span> 분</span>
             </div>
@@ -158,6 +198,8 @@ export default function Record() {
                     maxLength='30'
                     placeholder='장소를 검색해보세요.'
                     onChange={inputHandler}
+                    required
+                    value={inputs.location}
                   />
                 ) : (
                   <span>{place}</span>
@@ -186,26 +228,23 @@ export default function Record() {
                 name='weight'
                 min='0'
                 required
+                disabled={mode.isDietMode ? false : true}
                 onChange={inputHandler}
+                value={inputs.weight}
               />
               &nbsp;&nbsp;kg
             </div>
-            <div className={`${classes.form__input} ${classes.preview__Image}`}>
-              <p className={classes.input_title}>Image</p>
-              <label className={classes.image__box}>
-                <input
-                  type='file'
-                  name='image'
-                  onChange={fileHandler}
-                  ref={fileInput}
-                  required
-                />
-
+            <div className={classes.form__input}>
+              <label className={classes.input_title}>Image</label>
+              <div
+                className={classes.preview__Image}
+                onClick={() => fileInput.current.click()}
+              >
                 {file ? (
                   <img
                     src={url}
                     alt='preview_image'
-                    className={classes.preview__box__preview}
+                    className={classes.preview__box__img}
                   />
                 ) : (
                   <img
@@ -214,7 +253,16 @@ export default function Record() {
                     className={classes.image__box__icon}
                   />
                 )}
-              </label>
+              </div>
+              <div className={classes.filebox}>
+                <input
+                  type='file'
+                  name='image'
+                  required
+                  onChange={fileHandler}
+                  ref={fileInput}
+                />
+              </div>
             </div>
             <div className={classes.form__input}>
               <div className={classes.memo__box}>
@@ -230,6 +278,7 @@ export default function Record() {
                 maxLength='100'
                 placeholder='메모를 남겨보세요 😃'
                 onChange={inputHandler}
+                value={inputs.memo}
               ></textarea>
             </div>
             <div className={classes.form__btn}>

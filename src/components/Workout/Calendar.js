@@ -5,6 +5,7 @@ import classes from './Calendar.module.css';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
 import { useState } from 'react';
+import Button from '../../shared/UIElement/Button';
 
 const event = [
   { title: '헬스', date: '2021-10-11', display: 'background' },
@@ -55,6 +56,10 @@ export default function Calendar(props) {
           <span className={classes.workout__location}>여의도 한강공원</span>
           <div className={classes.workout__img}>
             <img src='image/userPhoto/photo1.jpg' alt='workout' />
+          </div>
+          <div className={classes.btn}>
+            <Button name='Go to PhotoBook' />
+            <Button name='EDIT' className={classes.editBtn} />
           </div>
         </div>
       </Wrapper>
