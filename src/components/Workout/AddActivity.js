@@ -1,22 +1,60 @@
 import React, { useState } from 'react';
 import classes from './AddActivity.module.css';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
+import { dbService } from '../../firebase';
 
 export default function AddActivity() {
   const [choice, setChoice] = useState('');
   const options = [
-    { value: 'Golf', label: '🏌️‍♂️' },
-    { value: 'Ball', label: '🏀' },
-    { value: 'Free', label: '🤸‍♀️' },
-    { value: 'Free', label: '🤸‍♀️' },
-    { value: 'Free', label: '🤸‍♀️' },
-    { value: 'Free', label: '🤸‍♀️' },
+    {
+      value: 'Free',
+      label: 'barbell',
+      iconUrl: 'img/exercise/barbell.png',
+    },
+    {
+      value: 'Free',
+      label: 'golf',
+      iconUrl: 'img/exercise/golf.png',
+    },
+    {
+      value: 'Free',
+      label: 'homeTraining',
+      iconUrl: 'img/exercise/home.png',
+    },
+    {
+      value: 'Free',
+      label: 'ball',
+      iconUrl: 'img/exercise/ball.png',
+    },
   ];
 
-  const choiceHandler = () => {
-    setChoice(choice);
+  const { Option } = components;
+  const IconOption = (props) => (
+    <Option {...props}>
+      <img
+        src={require('./' + props.data.iconUrl)}
+        style={{ width: 36 }}
+        alt={props.data.label}
+      />
+      {props.data.label}
+    </Option>
+  );
+
+  const choiceHandler = (e) => {
+    setChoice(e.iconUrl);
+    console.log(e);
+    // const docRef = await AudioScheduledSourceNode(collection(db, 'activity'), {
+    //   name:
+    // })
   };
 
+  const addActivityHandler = (e) => {
+    dbService.doc('/activity/iDowLboCGD6mfAnoIvOJ').add({
+      name: e.target.value,
+      from: 'user',
+      imageUrl: choice,
+    });
+  };
   return (
     <form
       className={classes.form}
@@ -33,13 +71,27 @@ export default function AddActivity() {
         })}
         placeholder='Choice!'
         menuPortalTarget={document.body}
-        styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+        styles={{
+          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+        }}
         onChange={choiceHandler}
+        getOptionLabel={(e) => (
+          <img
+            src={e.iconUrl}
+            alt=''
+            style={{ width: '20px', height: '20px' }}
+          />
+          // <div style={{ display: 'flex', alignItems: 'center'}}>
+          //   {e.icon}
+          //   <span style={{ marginLeft: 5 }}>{e.label}</span>
+          // </div>
+        )}
       />
       <input
         className={classes.activity__name}
         type='text'
         placeholder='Enter your workout'
+        onChange={addActivityHandler}
       />
       <svg
         xmlns='http://www.w3.org/2000/svg'
