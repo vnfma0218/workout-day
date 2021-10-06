@@ -5,6 +5,18 @@ import Modal from '../../shared/UIElement/Modal';
 // import ActivityList from './ActivityList';
 import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
+const activityDefault = [
+  { name: 'Cycling', imageUrl: 'img/exercise/bicycle.png', from: 'admin' },
+  { name: 'Swimming', imageUrl: 'img/exercise/swimming.png', from: 'admin' },
+  { name: 'Yoga', imageUrl: 'img/exercise/yoga.png', from: 'admin' },
+  {
+    name: 'Badminton',
+    imageUrl: 'img/exercise/badminton.png',
+    from: 'admin',
+  },
+  { name: 'Running', imageUrl: 'img/exercise/jogging.png', from: 'admin' },
+  { name: 'Gym', imageUrl: 'img/exercise/gym.png', from: 'admin' },
+];
 
 export default function SelectActivity() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,7 +29,7 @@ export default function SelectActivity() {
   // console.log(inputs);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
-
+  const [defalutActivities, setDefalutActivities] = useState(activityDefault);
   const openModalHandler = () => {
     setModalOpen(true);
   };
@@ -38,7 +50,6 @@ export default function SelectActivity() {
       }
     });
   }, []);
-  console.log(activities);
 
   const addActivityHandler = () => {
     if (!inputs.name || !inputs.imageUrl) {
@@ -79,23 +90,20 @@ export default function SelectActivity() {
     }
   };
 
-  const activityDefault = [
-    { name: 'Cycling', imageUrl: 'img/exercise/bicycle.png', from: 'admin' },
-    { name: 'Swimming', imageUrl: 'img/exercise/swimming.png', from: 'admin' },
-    { name: 'Yoga', imageUrl: 'img/exercise/yoga.png', from: 'admin' },
-    {
-      name: 'Badminton',
-      imageUrl: 'img/exercise/badminton.png',
-      from: 'admin',
-    },
-    { name: 'Running', imageUrl: 'img/exercise/jogging.png', from: 'admin' },
-    { name: 'Gym', imageUrl: 'img/exercise/gym.png', from: 'admin' },
-  ];
-
   const editHandler = () => {
     edit ? setEdit(false) : setEdit(true);
   };
 
+  const selectDefalutActivityHandler = (e, activity) => {
+    const withSelectActivities = defalutActivities.map((ele) => {
+      if (ele.name === activity.name) {
+        return { ...ele, selected: true };
+      } else {
+        return { ...ele, selected: false };
+      }
+    });
+    setDefalutActivities(withSelectActivities);
+  };
   return (
     <>
       <Modal
@@ -156,7 +164,7 @@ export default function SelectActivity() {
               </li>
             ))}
 
-          {activityDefault.map((activity) => (
+          {defalutActivities.map((activity) => (
             <li
               className={classes.select__item}
               key={activity.name}
@@ -179,8 +187,13 @@ export default function SelectActivity() {
                     height='30px'
                     viewBox='0 0 24 24'
                     width='30px'
-                    fill='#000000'
-                    className={classes.select__icon}
+                    // fill='#000000'
+                    onClick={(e) => selectDefalutActivityHandler(e, activity)}
+                    className={
+                      activity.selected && activity.selected === true
+                        ? classes.selected__icon
+                        : classes.select__icon
+                    }
                   >
                     <path d='M0 0h24v24H0z' fill='none' />
                     <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
