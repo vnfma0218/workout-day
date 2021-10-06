@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { dbService } from '../../firebase';
+
 // firebase로부터 데이터 받아오는거 custom hook 으로 만들기
 export default function usePhotofetch() {
   const [loadedPhotos, setLoadedPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [lastDoc, setLastDoc] = useState();
+
   useEffect(() => {
     setLoading(true);
     dbService
-      .collection('events')
+      .collection('record')
       .doc('user1')
       .collection('userEvents')
       .limit(2)
@@ -25,10 +27,11 @@ export default function usePhotofetch() {
         setLoading(false);
       });
   }, []);
+
   const fetchNextData = () => {
     setLoading(true);
     dbService
-      .collection('events')
+      .collection('record')
       .doc('user1')
       .collection('userEvents')
       .startAfter(lastDoc)

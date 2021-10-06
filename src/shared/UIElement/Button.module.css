@@ -3,7 +3,6 @@
   font-size: 14px;
   text-align: center;
   padding: 10px 15px;
-
   /* border: 1px solid #ff0055; */
   border-radius: 6px;
   cursor: pointer;
@@ -19,6 +18,15 @@
 .btn {
   background-color: #fdfaf1;
   border: 1px solid #fdfaf1;
+}
+
+.btn:disabled,
+.btn:hover:disabled,
+.btn:active:disabled {
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
+  cursor: not-allowed;
 }
 
 /* .workout__mode {

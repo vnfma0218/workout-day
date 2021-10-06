@@ -13,6 +13,7 @@ export default function SecondLayout() {
 
   const { loadedPhotos, loading, hasMore, fetchNextData } = usePhotofetch();
   const observer = useRef();
+
   const lastRef = useCallback(
     (node) => {
       if (loading) return;
@@ -30,6 +31,7 @@ export default function SecondLayout() {
     },
     [fetchNextData, hasMore, loading]
   );
+
   const selectMinDate = (date) => {
     setMinDate(date);
   };

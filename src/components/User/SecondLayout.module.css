@@ -35,8 +35,8 @@
 .photos {
   margin-top: 50px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
   align-items: center;
 }
 
