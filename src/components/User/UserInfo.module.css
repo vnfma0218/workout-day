@@ -82,12 +82,10 @@
 }
 
 .edit__btn {
-  width: 100px;
-  height: 45px;
   position: absolute;
   bottom: 10px;
   right: 10px;
-  /* padding: 0.8rem 1.8rem; */
+  padding: 10px 25px;
 }
 
 .divider {

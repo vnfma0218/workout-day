@@ -68,9 +68,10 @@
   width: 220px;
   opacity: 0.9;
   background-color: #fde0b4;
-  color: #4d4d4d;
+  color: #313131;
   border-radius: 6px;
   padding: 8px;
+  font-weight: 800;
   font-size: 13px;
   /* Position the tooltip */
   position: absolute;
@@ -99,8 +100,7 @@
   padding: 8px;
   font-size: 18px;
   outline: none;
-  /* border: none; */
-  border: 2px solid #fde0b4;
+  border: none;
 }
 
 .auth__helper {
@@ -118,12 +118,12 @@
 
 .submit__btn {
   outline: none;
-  background: transparent;
+  /* background: transparent; */
   cursor: pointer;
   margin-top: 30px;
   width: 92%;
   height: 45px;
-  background-color: #fde0b4;
+  /* background-color: #fde0b4; */
   border: none;
   font-weight: 700;
   font-size: 18px;
@@ -137,6 +137,6 @@
 .toggleLoginMode {
   color: dodgerblue;
   cursor: pointer;
-  font-size: 17 px;
+  font-size: 17px;
   margin-left: 15px;
 }

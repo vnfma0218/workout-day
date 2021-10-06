@@ -196,7 +196,7 @@ export default function Record() {
                     name='location'
                     type='text'
                     maxLength='30'
-                    placeholder='장소를 검색해보세요.'
+                    placeholder='장소를 입력하세요.'
                     onChange={inputHandler}
                     value={inputs.location}
                   />

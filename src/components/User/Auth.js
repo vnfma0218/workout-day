@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import Input from '../../shared/FormElement/Input';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
-import classes from './Auth.module.css';
 import useForm from '../../shared/hooks/form-hooks';
 import Wrapper from '../../shared/UIElement/Wrapper';
+import Modal from '../../shared/UIElement/Modal';
+
+import classes from './Auth.module.css';
+import useAuthHook from '../../shared/DbServices/useAuthHook';
 const emailRegex =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
 export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isWorkoutMode, setIsWorkoutMode] = useState(true);
+  const { modalOpen, error, signupHandler, closeModalHandler, loginHandler } =
+    useAuthHook();
   const { formState, onInputChange, setFormData } = useForm(
     {
       email: {
@@ -54,10 +59,24 @@ export default function Auth() {
     setIsLoginMode((prev) => !prev);
   };
 
-  const loginSubmitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = async (e) => {
     console.log(formState);
-    console.log(isWorkoutMode);
+    e.preventDefault();
+    if (!isLoginMode) {
+      const {
+        email: { value: email },
+        password: { value: password },
+        passwordConfirm: { value: passwordConfirm },
+        nickname: { value: nickname },
+      } = formState.inputs;
+      signupHandler(email, password, passwordConfirm, nickname, isWorkoutMode);
+    } else {
+      const {
+        email: { value: email },
+        password: { value: password },
+      } = formState.inputs;
+      loginHandler(email, password);
+    }
   };
 
   const modeSelectHandler = (e) => {
@@ -73,6 +92,14 @@ export default function Auth() {
     <>
       <MainHeader />
       <Wrapper>
+        <Modal
+          open={modalOpen}
+          title='Error'
+          onClose={closeModalHandler}
+          onConfirm={closeModalHandler}
+        >
+          {error}
+        </Modal>
         <section className={classes.auth__container}>
           <div className={classes.auth__img}>
             <img src='./img/illustrations/auth.png' alt='auth-img' />
@@ -111,10 +138,7 @@ export default function Auth() {
                   />
                 </div>
               </div>
-              <form
-                className={classes.auth__form}
-                onSubmit={loginSubmitHandler}
-              >
+              <form className={classes.auth__form} onSubmit={submitHandler}>
                 <div className={classes.form__control}>
                   <Input
                     type='text'
@@ -168,7 +192,7 @@ export default function Auth() {
                 <Button
                   name={isLoginMode ? 'Login' : 'Sign up'}
                   className={classes.submit__btn}
-                  invalid='true'
+                  disabled={!formState.formIsValid}
                 />
               </form>
               <div className={classes.loginMode}>

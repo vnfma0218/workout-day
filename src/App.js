@@ -7,6 +7,7 @@ import MainPage from './components/Home/MainPage';
 import UserInfo from './components/User/UserInfo';
 import UpdateUserInfo from './components/User/UpdateUserInfo';
 import SecondLayout from './components/User/SecondLayout';
+import { AuthProvider } from './context/auth-context';
 
 // import Modal from './shared/UIElement/Modal';
 // import SecondLayout from './components/User/SecondLayout';
@@ -15,25 +16,27 @@ function App() {
   return (
     <Router>
       <Switch>
-        <ModeContextProvider>
-          <Route path='/' exact>
-            <MainPage />
-          </Route>
-          <Route path='/auth'>
-            <Auth />
-          </Route>
-          <Route path='/userinfo/edit'>
-            <UpdateUserInfo />
-          </Route>
-          <Route path='/userinfo'>
-            <UserInfo />
-          </Route>
-          <Route path='/photo'>
-            <SecondLayout />
-          </Route>
-          {/* <Modal /> */}
-          {/* <SecondLayout /> */}
-        </ModeContextProvider>
+        <AuthProvider>
+          <ModeContextProvider>
+            <Route path='/' exact>
+              <MainPage />
+            </Route>
+            <Route path='/auth'>
+              <Auth />
+            </Route>
+            <Route path='/userinfo/edit'>
+              <UpdateUserInfo />
+            </Route>
+            <Route path='/userinfo'>
+              <UserInfo />
+            </Route>
+            <Route path='/photo'>
+              <SecondLayout />
+            </Route>
+            {/* <Modal /> */}
+            {/* <SecondLayout /> */}
+          </ModeContextProvider>
+        </AuthProvider>
       </Switch>
     </Router>
   );

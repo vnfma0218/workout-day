@@ -9,10 +9,6 @@ ol {
   list-style: none;
 }
 
-body {
-  overflow-y: hidden;
-}
-
 body,
 button,
 input,
