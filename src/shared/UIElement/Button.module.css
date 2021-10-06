@@ -20,6 +20,15 @@
   border: 1px solid #fdfaf1;
 }
 
+.btn:disabled,
+.btn:hover:disabled,
+.btn:active:disabled {
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
 /* .workout__mode {
   background-color: #d7e9f7;
   border: 1px solid #d7e9f7;

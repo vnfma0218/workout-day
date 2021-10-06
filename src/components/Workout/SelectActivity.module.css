@@ -1,6 +1,6 @@
 .record__select {
   width: 30%;
-  height: 100%;
+  height: 90%;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 40px 20px 56px;
   display: flex;
@@ -13,7 +13,7 @@
 
 .record__select__wrap {
   width: 100%;
-  height: 400px;
+  height: 80%;
   overflow-y: scroll;
   margin: auto;
 }

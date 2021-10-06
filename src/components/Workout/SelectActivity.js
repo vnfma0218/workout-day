@@ -103,7 +103,6 @@ export default function SelectActivity() {
         title='Add your activity.'
         onClose={closeModalHandler}
         onConfirm={addActivityHandler}
-        // footer={<Button onClick={closeModalHandler}>CONFIRM</Button>}
       >
         {<AddActivity inputs={inputs} setInputs={setInputs} />}
       </Modal>

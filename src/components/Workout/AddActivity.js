@@ -83,9 +83,7 @@ export default function AddActivity(props) {
   return (
     <form
       className={classes.form}
-      // onSubmit={
-      //  props.submit ? props.onSubmit : (event) => event.preventDefault
-      // }
+      onSubmit={props.submit ? props.onSubmit : (event) => event.preventDefault}
     >
       <Select
         options={options}
@@ -106,10 +104,6 @@ export default function AddActivity(props) {
             alt=''
             style={{ width: '20px', height: '20px' }}
           />
-          // <div style={{ display: 'flex', alignItems: 'center'}}>
-          //   {e.icon}
-          //   <span style={{ marginLeft: 5 }}>{e.label}</span>
-          // </div>
         )}
       />
       <input
