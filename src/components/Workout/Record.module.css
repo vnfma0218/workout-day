@@ -77,15 +77,11 @@
   width: 80%;
 }
 
-/* .form__input:nth-child(4) input {
-  width: 75%;
-} */
-
-.form__input:nth-child(5) {
+.file__input {
   height: 12rem;
 }
 
-.form__input:nth-child(6) {
+.memo__input {
   height: 6rem;
 }
 
@@ -96,6 +92,13 @@
   align-items: center;
   width: 300px;
   height: 34px;
+  justify-content: space-between;
+}
+
+.place__box div {
+  width: 80%;
+  display: flex;
+  align-items: center;
 }
 
 .place__box img {
@@ -173,7 +176,7 @@
 
 .enterBtn__unactive {
   background-color: #d1d1cf;
-  margin-left: 80%;
+  /* margin-left: 80%; */
 }
 
 .btn {

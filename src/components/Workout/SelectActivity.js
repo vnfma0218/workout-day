@@ -2,21 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { dbService } from '../../firebase';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
-// import ActivityList from './ActivityList';
 import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
 
 export default function SelectActivity() {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [select, setSelect] = useState('');
   const [inputs, setInputs] = useState({
     name: '',
     imageUrl: '',
     from: 'user',
+    date: '',
   });
   // console.log(inputs);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
+  const [error, setError] = useState(false);
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -24,6 +26,7 @@ export default function SelectActivity() {
 
   const closeModalHandler = () => {
     setModalOpen(false);
+    setError(false);
   };
 
   const activityRef = dbService.collection('activity').doc('jiwon');
@@ -38,12 +41,11 @@ export default function SelectActivity() {
       }
     });
   }, []);
-  console.log(activities);
 
   const addActivityHandler = () => {
     if (!inputs.name || !inputs.imageUrl) {
       //필수입력 알림 필요
-      alert('입력하세요');
+      setError(true);
     } else {
       activityRef.get().then((doc) => {
         if (!doc.exists) {
@@ -55,6 +57,7 @@ export default function SelectActivity() {
             name: '',
             imageUrl: '',
             from: 'user',
+            date: '',
           });
         } else {
           dbService
@@ -72,6 +75,7 @@ export default function SelectActivity() {
             name: '',
             imageUrl: '',
             from: 'user',
+            date: '',
           });
         }
       });
@@ -96,6 +100,13 @@ export default function SelectActivity() {
     edit ? setEdit(false) : setEdit(true);
   };
 
+  const selectActivityHandler = (e) => {
+    // 다른걸 누르면 색깔이 바껴야 함....어떻게...
+    setSelect(e.target);
+    console.log(e.target.parentNode.id);
+    e.target.style.fill = '#ee91ad';
+  };
+
   return (
     <>
       <Modal
@@ -104,7 +115,7 @@ export default function SelectActivity() {
         onClose={closeModalHandler}
         onConfirm={addActivityHandler}
       >
-        {<AddActivity inputs={inputs} setInputs={setInputs} />}
+        {<AddActivity inputs={inputs} setInputs={setInputs} error={error} />}
       </Modal>
       <ul className={classes.record__select}>
         <div className={classes.select__header}>
@@ -134,19 +145,21 @@ export default function SelectActivity() {
                     />
                     <span>{add.name}</span>
                   </div>
-                  {add.from && edit ? (
+                  {edit ? (
                     <input
                       type='checkbox'
                       style={{ transform: 'scale(1.5)' }}
                     />
                   ) : (
                     <svg
+                      id={id}
                       xmlns='http://www.w3.org/2000/svg'
                       height='30px'
                       viewBox='0 0 24 24'
                       width='30px'
                       fill='#000000'
                       className={classes.select__icon}
+                      onClick={selectActivityHandler}
                     >
                       <path d='M0 0h24v24H0z' fill='none' />
                       <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
@@ -156,7 +169,7 @@ export default function SelectActivity() {
               </li>
             ))}
 
-          {activityDefault.map((activity) => (
+          {activityDefault.map((activity, id) => (
             <li
               className={classes.select__item}
               key={activity.name}
@@ -171,21 +184,20 @@ export default function SelectActivity() {
                   />
                   <span>{activity.name}</span>
                 </div>
-                {activity.from && edit ? (
-                  <input type='checkbox' style={{ transform: 'scale(1.5)' }} />
-                ) : (
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='30px'
-                    viewBox='0 0 24 24'
-                    width='30px'
-                    fill='#000000'
-                    className={classes.select__icon}
-                  >
-                    <path d='M0 0h24v24H0z' fill='none' />
-                    <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
-                  </svg>
-                )}
+
+                <svg
+                  id={id}
+                  xmlns='http://www.w3.org/2000/svg'
+                  height='30px'
+                  viewBox='0 0 24 24'
+                  width='30px'
+                  fill='#000000'
+                  className={classes.select__icon}
+                  onClick={selectActivityHandler}
+                >
+                  <path d='M0 0h24v24H0z' fill='none' />
+                  <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
+                </svg>
               </div>
             </li>
           ))}

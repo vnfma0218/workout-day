@@ -83,6 +83,10 @@
   font-size: 16px;
 }
 
+.select {
+  fill: #ee91ad;
+}
+
 .select__icon {
   fill: #9e9e9e;
   cursor: pointer;

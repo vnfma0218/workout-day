@@ -45,9 +45,13 @@ export default function Record() {
     const target = e.target;
     dbService
       .collection('record')
+      .doc('userId')
+      .collection('events')
       .add({
         date: target.date.value,
-        time: `${target.hour.value}시간 ${target.minutes.value}분`,
+        time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
+          target.minutes.value
+        }분`,
         weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
         imageUrl: url,
         memo: target.memo.value,
@@ -186,23 +190,25 @@ export default function Record() {
             <div className={classes.form__input}>
               <label className={classes.input_title}>Place :</label>
               <div className={classes.place__box}>
-                <img
-                  src='img/icons/location.svg'
-                  alt='location'
-                  onClick={oepnMapHandler}
-                />
-                {enter ? (
-                  <input
-                    name='location'
-                    type='text'
-                    maxLength='30'
-                    placeholder='장소를 입력하세요.'
-                    onChange={inputHandler}
-                    value={inputs.location}
+                <div>
+                  <img
+                    src='img/icons/location.svg'
+                    alt='location'
+                    onClick={oepnMapHandler}
                   />
-                ) : (
-                  <span>{place}</span>
-                )}
+                  {enter ? (
+                    <input
+                      name='location'
+                      type='text'
+                      maxLength='30'
+                      placeholder='장소를 입력하세요.'
+                      onChange={inputHandler}
+                      value={inputs.location}
+                    />
+                  ) : (
+                    <span className={classes.location__result}>{place}</span>
+                  )}
+                </div>
 
                 <button
                   className={
@@ -216,24 +222,23 @@ export default function Record() {
                 </button>
               </div>
             </div>
-            <div
-              className={
-                mode.isDietMode ? classes.form__input : classes.unactive
-              }
-            >
-              <label className={classes.input_title}>Weight :</label>
-              <input
-                type='number'
-                name='weight'
-                min='0'
-                required
-                disabled={mode.isDietMode ? false : true}
-                onChange={inputHandler}
-                value={inputs.weight}
-              />
-              &nbsp;&nbsp;kg
-            </div>
-            <div className={classes.form__input}>
+            {mode.isDietMode && (
+              <div className={classes.form__input}>
+                <label className={classes.input_title}>Weight :</label>
+                <input
+                  type='number'
+                  name='weight'
+                  min='0'
+                  required
+                  // disabled={mode.isDietMode ? false : true}
+                  onChange={inputHandler}
+                  value={inputs.weight}
+                />
+                &nbsp;&nbsp;kg
+              </div>
+            )}
+
+            <div className={`${classes.form__input} ${classes.file__input}`}>
               <label className={classes.input_title}>Image</label>
               <div
                 className={classes.preview__Image}
@@ -263,7 +268,7 @@ export default function Record() {
                 />
               </div>
             </div>
-            <div className={classes.form__input}>
+            <div className={`${classes.form__input} ${classes.memo__input}`}>
               <div className={classes.memo__box}>
                 <label className={classes.input_title}>Memo</label>
                 <p>
