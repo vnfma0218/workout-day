@@ -9,8 +9,14 @@ import classes from './SelectActivity.module.css';
 export default function SelectActivity() {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [inputs, setInputs] = useState({
+    name: '',
+    imageUrl: '',
+    from: 'user',
+  });
+  // console.log(inputs);
   const [loading, setLoading] = useState(false);
-  const [activities, setActivities] = useState();
+  const [activities, setActivities] = useState([]);
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -20,34 +26,71 @@ export default function SelectActivity() {
     setModalOpen(false);
   };
 
+  const activityRef = dbService.collection('activity').doc('jiwon');
+  // const activityRef = dbService.collection('activity').doc(currentUser.uid);
   useEffect(() => {
-    // dbService
-    //   .collection('activity')
-    //   .get()
-    //   .then((docs) => {
-    //     console.log(docs);
-    //     let activitiList = [];
-    //     docs.forEach((doc) => {
-    //       activitiList.push({ ...doc.data(), id: doc.id });
-    //     });
-    //     setActivities(activitiList);
-    //     setLoading(true);
-    //   });
-    dbService
-      .doc('/activity/iDowLboCGD6mfAnoIvOJ') //userId로 바꾸기
-      .get()
-      .then((docs) => {
-        console.log(docs.data());
-        let list = docs.data().activityList;
-        // let activitiList = [];
-        // list.forEach((doc) => {
-        //   activitiList.push({ ...doc.data(), id: doc.id });
-        // });
-        setActivities(list);
+    activityRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        setActivities(doc.data().activityList);
         setLoading(true);
-        // console.log(activitiList);
-      });
+      } else {
+        setLoading(false);
+      }
+    });
   }, []);
+  console.log(activities);
+
+  const addActivityHandler = () => {
+    if (!inputs.name || !inputs.imageUrl) {
+      //필수입력 알림 필요
+      alert('입력하세요');
+    } else {
+      activityRef.get().then((doc) => {
+        if (!doc.exists) {
+          dbService.doc('/activity/jiwon').set({
+            activityList: [inputs],
+          });
+          setLoading(true);
+          setInputs({
+            name: '',
+            imageUrl: '',
+            from: 'user',
+          });
+        } else {
+          dbService
+            .doc('/activity/jiwon')
+            .get()
+            .then((doc) => {
+              let newActivityList = [];
+              newActivityList = doc.data().activityList;
+
+              newActivityList.push(inputs);
+              activityRef.update({ activityList: newActivityList });
+              setLoading(true);
+            });
+          setInputs({
+            name: '',
+            imageUrl: '',
+            from: 'user',
+          });
+        }
+      });
+      setModalOpen(false);
+    }
+  };
+
+  const activityDefault = [
+    { name: 'Cycling', imageUrl: 'img/exercise/bicycle.png', from: 'admin' },
+    { name: 'Swimming', imageUrl: 'img/exercise/swimming.png', from: 'admin' },
+    { name: 'Yoga', imageUrl: 'img/exercise/yoga.png', from: 'admin' },
+    {
+      name: 'Badminton',
+      imageUrl: 'img/exercise/badminton.png',
+      from: 'admin',
+    },
+    { name: 'Running', imageUrl: 'img/exercise/jogging.png', from: 'admin' },
+    { name: 'Gym', imageUrl: 'img/exercise/gym.png', from: 'admin' },
+  ];
 
   const editHandler = () => {
     edit ? setEdit(false) : setEdit(true);
@@ -59,10 +102,10 @@ export default function SelectActivity() {
         open={modalOpen}
         title='Add your activity.'
         onClose={closeModalHandler}
-        onConfirm={closeModalHandler}
+        onConfirm={addActivityHandler}
         // footer={<Button onClick={closeModalHandler}>CONFIRM</Button>}
       >
-        {<AddActivity />}
+        {<AddActivity inputs={inputs} setInputs={setInputs} />}
       </Modal>
       <ul className={classes.record__select}>
         <div className={classes.select__header}>
@@ -80,33 +123,19 @@ export default function SelectActivity() {
           </svg>
         </div>
         <div className={classes.record__select__wrap}>
-          {/* {loading &&
-            activities.map((activity) => (
-              <ActivityList
-                key={activity.id}
-                imageUrl={activity.imageUrl}
-                name={activity.name}
-                from={activity.from}
-                edit={edit}
-              />
-            ))} */}
           {loading &&
-            activities.map((activity) => (
-              <li
-                className={classes.select__item}
-                key={activity.id}
-                from={activity.from}
-              >
+            activities.map((add, id) => (
+              <li className={classes.select__item} key={id} from={add.from}>
                 <div className={classes.select__item_content}>
                   <div>
                     <img
-                      src={activity.imageUrl}
+                      src={add.imageUrl}
                       alt='activity'
                       className={classes.select__image}
                     />
-                    <span>{activity.name}</span>
+                    <span>{add.name}</span>
                   </div>
-                  {activity.from === 'user' && activity.edit ? (
+                  {add.from && edit ? (
                     <input
                       type='checkbox'
                       style={{ transform: 'scale(1.5)' }}
@@ -127,6 +156,40 @@ export default function SelectActivity() {
                 </div>
               </li>
             ))}
+
+          {activityDefault.map((activity) => (
+            <li
+              className={classes.select__item}
+              key={activity.name}
+              from={activity.from}
+            >
+              <div className={classes.select__item_content}>
+                <div>
+                  <img
+                    src={activity.imageUrl}
+                    alt='activity'
+                    className={classes.select__image}
+                  />
+                  <span>{activity.name}</span>
+                </div>
+                {activity.from && edit ? (
+                  <input type='checkbox' style={{ transform: 'scale(1.5)' }} />
+                ) : (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    height='30px'
+                    viewBox='0 0 24 24'
+                    width='30px'
+                    fill='#000000'
+                    className={classes.select__icon}
+                  >
+                    <path d='M0 0h24v24H0z' fill='none' />
+                    <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
+                  </svg>
+                )}
+              </div>
+            </li>
+          ))}
         </div>
         <div className={classes.btn}>
           <Button

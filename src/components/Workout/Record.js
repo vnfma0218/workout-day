@@ -88,7 +88,7 @@ export default function Record() {
       setUrl(url);
     }
     console.log(file.name);
-    const uploadFile = storage.ref(`images/${file.name}`).put(file);
+    const uploadFile = storage.ref(`images/record/${file.name}`).put(file);
     uploadFile.on(
       'state_change',
       null,
@@ -97,7 +97,7 @@ export default function Record() {
       },
       () => {
         storage
-          .ref('images')
+          .ref('images/record')
           .child(file.name)
           .getDownloadURL()
           .then((url) => {

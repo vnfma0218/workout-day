@@ -3,58 +3,83 @@ import classes from './AddActivity.module.css';
 import Select, { components } from 'react-select';
 import { dbService } from '../../firebase';
 
-export default function AddActivity() {
+export default function AddActivity(props) {
   const [choice, setChoice] = useState('');
+  // const [inputs, setInputs] = useState({
+  //   name: '',
+  //   icon: '',
+  //   from: 'user',
+  // });
   const options = [
     {
       value: 'Free',
       label: 'barbell',
-      iconUrl: 'img/exercise/barbell.png',
+      iconUrl:
+        'https://img-premium.flaticon.com/png/512/1297/premium/1297690.png?token=exp=1633497627~hmac=2a8cf4f6633cce9c49193d3500662f65',
     },
     {
       value: 'Free',
       label: 'golf',
-      iconUrl: 'img/exercise/golf.png',
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/753/753858.png',
     },
     {
       value: 'Free',
       label: 'homeTraining',
-      iconUrl: 'img/exercise/home.png',
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/553/553416.png',
     },
     {
       value: 'Free',
       label: 'ball',
-      iconUrl: 'img/exercise/ball.png',
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/587/587393.png',
+    },
+    {
+      value: 'Free',
+      label: 'dance',
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/3048/3048356.png',
+    },
+    {
+      value: 'Free',
+      label: 'stretch',
+      iconUrl:
+        'https://img-premium.flaticon.com/png/512/1653/premium/1653925.png?token=exp=1633497932~hmac=7d63cbd8c42ab7c31628f5f97fb28279',
+    },
+    {
+      value: 'Free',
+      label: 'etc',
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/3388/3388801.png',
     },
   ];
 
   const { Option } = components;
-  const IconOption = (props) => (
-    <Option {...props}>
-      <img
-        src={require('./' + props.data.iconUrl)}
-        style={{ width: 36 }}
-        alt={props.data.label}
-      />
-      {props.data.label}
-    </Option>
-  );
+  // const IconOption = (props) => (
+  //   <Option {...props}>
+  //     <img
+  //       src={require('./' + props.data.iconUrl)}
+  //       style={{ width: 36 }}
+  //       alt={props.data.label}
+  //     />
+  //     {props.data.label}
+  //   </Option>
+  // );
 
-  const choiceHandler = (e) => {
-    setChoice(e.iconUrl);
-    console.log(e);
-    // const docRef = await AudioScheduledSourceNode(collection(db, 'activity'), {
-    //   name:
-    // })
+  // const choiceHandler = (e) => {
+  //   setChoice(e.iconUrl);
+  // };
+
+  const activityInputHandler = (e) => {
+    if (e.iconUrl) {
+      props.setInputs({ imageUrl: e.iconUrl });
+    }
+    if (e.target) {
+      const { name, value } = e.target;
+      props.setInputs({
+        ...props.inputs,
+        [name]: value,
+        from: 'user',
+      });
+    }
   };
 
-  const addActivityHandler = (e) => {
-    dbService.doc('/activity/iDowLboCGD6mfAnoIvOJ').add({
-      name: e.target.value,
-      from: 'user',
-      imageUrl: choice,
-    });
-  };
   return (
     <form
       className={classes.form}
@@ -69,12 +94,12 @@ export default function AddActivity() {
         value={options.find((op) => {
           return op.value === choice;
         })}
-        placeholder='Choice!'
+        placeholder='icon'
         menuPortalTarget={document.body}
         styles={{
           menuPortal: (base) => ({ ...base, zIndex: 9999 }),
         }}
-        onChange={choiceHandler}
+        onChange={activityInputHandler}
         getOptionLabel={(e) => (
           <img
             src={e.iconUrl}
@@ -88,10 +113,12 @@ export default function AddActivity() {
         )}
       />
       <input
+        name='name'
         className={classes.activity__name}
         type='text'
+        required
         placeholder='Enter your workout'
-        onChange={addActivityHandler}
+        onChange={activityInputHandler}
       />
       <svg
         xmlns='http://www.w3.org/2000/svg'
