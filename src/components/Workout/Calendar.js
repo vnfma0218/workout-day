@@ -3,107 +3,50 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import './Calendar.css';
 import classes from './Calendar.module.css';
 import Button from '../../shared/UIElement/Button';
-const event = [
-  {
-    title: '등산',
-    date: '2021-09-30',
-    location: '한강공원',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmMniUplL6ws5rYq2aL_5gmxs84lok4556mg&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '헬스',
-    date: '2021-09-26',
-    location: '인왕산',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '등산',
-    date: '2021-10-05',
-    location: '한강공원',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmMniUplL6ws5rYq2aL_5gmxs84lok4556mg&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '헬스',
-    date: '2021-10-11',
-    location: '인왕산',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '조깅',
-    date: '2021-10-28',
-    location: '태릉 아이스스케이팅장',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '사이클링',
-    date: '2021-10-27',
-    location: '우리동네 헬스장',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '헬스',
-    date: '2021-11-11',
-    location: '인왕산',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '조깅',
-    date: '2021-11-28',
-    location: '태릉 아이스스케이팅장',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-  {
-    title: '사이클링',
-    date: '2021-11-27',
-    location: '우리동네 헬스장',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCe8mtwsKwDy-6pphY-1hBvDuN7zV-xawOJA&usqp=CAU',
-    display: 'background',
-  },
-];
+import useFetchEvents from '../../shared/hooks/useFetchEvents';
+import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 
-export default function Calendar(props) {
+export default function Calendar() {
+  const {
+    events,
+    selectedDate,
+    setSelectedDate,
+    setStartDate,
+    setEndDate,
+    loading,
+  } = useFetchEvents();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
-  const [selectedDate, setSelectedDate] = useState();
-  const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const today = new Date();
-    setTimeout(() => {
-      setEvents(event);
-    }, 2000);
-    setSelectedEvent(
-      events.filter(
-        (event) => event.date === today.toISOString().split('T')[0]
-      )[0]
+  const getCalendarData = (fetchInfo, successCallback, failureCallback) => {
+    if (fetchInfo) {
+      setStartDate(fetchInfo.startStr.split('T')[0]);
+      setEndDate(fetchInfo.endStr.split('T')[0]);
+    }
+    if (events.length === 0) {
+      return;
+    }
+    successCallback(
+      events.map((event) => {
+        return {
+          id: event.date,
+          title: event.time,
+          start: event.date,
+          end: event.date,
+          display: 'background',
+        };
+      })
     );
-    setSelectedDate(today.toISOString().split('T')[0]);
-  }, [events]);
-
+  };
   const dateClickHandler = (arg) => {
     if (!arg.dateStr) return;
+
     const clickedEvent = events.filter(
       (event) => event.date === arg.dateStr
     )[0];
@@ -113,36 +56,6 @@ export default function Calendar(props) {
 
   const closeModalHandler = () => {
     setModalOpen(false);
-  };
-
-  const getCalendarData = (fetchInfo, successCallback, failureCallback) => {
-    // let year = new Date().getFullYear();
-    let month = new Date().getMonth() + 1;
-
-    if (fetchInfo) {
-      // year = new Date(fetchInfo.start).getFullYear();
-      month = new Date(fetchInfo.start).getMonth() + 1;
-    }
-    // const response = await api.get(API, { year, month });
-    const data = events.filter((event) => {
-      return (
-        +event.date.split('-')[1] === month + 1 ||
-        +event.date.split('-')[1] === month + 2
-      );
-    });
-
-    // console.log(data);
-    successCallback(
-      data.map((event) => {
-        return {
-          id: event.date,
-          title: event.title,
-          start: event.date,
-          end: event.date,
-          display: 'background',
-        };
-      })
-    );
   };
 
   let dateItem;
@@ -170,7 +83,7 @@ export default function Calendar(props) {
           {selectedEvent.location}
         </span>
         <div className={classes.workout__img}>
-          <img src={selectedEvent.image} alt='workout' />
+          <img src={selectedEvent.imageUrl} alt='workout' />
         </div>
         <div className={classes.btn}>
           <Button name='Go to PhotoBook' to='/photo' />
@@ -189,6 +102,7 @@ export default function Calendar(props) {
 
       <Wrapper className={classes.calendar__container} id={classes.calendar}>
         <div className={classes.calendarApp} onClick={dateClickHandler}>
+          {loading && <LoadingSpinner />}
           <FullCalendar
             className={classes.calendarItem}
             plugins={[dayGridPlugin, interactionPlugin]}
@@ -201,7 +115,6 @@ export default function Calendar(props) {
             height='100%'
           />
         </div>
-
         <div
           className={[
             classes.dateItem,

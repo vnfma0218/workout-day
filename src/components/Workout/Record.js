@@ -45,6 +45,8 @@ export default function Record() {
     const target = e.target;
     dbService
       .collection('record')
+      .doc('user1')
+      .collection('events')
       .add({
         date: target.date.value,
         time: `${target.hour.value}시간 ${target.minutes.value}분`,
@@ -113,8 +115,9 @@ export default function Record() {
       ...inputs,
       [name]: value,
     });
-
-    setTotalByte(value.length);
+    if (e.target.name === 'memo') {
+      setTotalByte(value.length);
+    }
   };
 
   const selectPlace = (placeName, placeAddress) => {
