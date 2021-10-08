@@ -128,8 +128,9 @@ export default function Record() {
       ...inputs,
       [name]: value,
     });
-
-    setTotalByte(value.length);
+    if (e.target.name === 'memo') {
+      setTotalByte(value.length);
+    }
   };
 
   const selectPlace = (placeName, placeAddress) => {

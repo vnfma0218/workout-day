@@ -6,14 +6,12 @@ import Home from './Home';
 import Calendar from '../Workout/Calendar';
 import { useLocation } from 'react-router-dom';
 import Record from '../Workout/Record';
-import { useAuth } from '../../context/auth-context';
 
 export default function MainPage(props) {
   const outerDivRef = useRef();
   const DIVIDER_HEIGHT = 5;
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('home');
-  const { currentUser } = useAuth();
 
   const changePage = (page, pageHeight) => {
     if (page === 'first') {
