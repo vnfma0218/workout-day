@@ -5,7 +5,7 @@ import Modal from '../../shared/UIElement/Modal';
 import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
 
-export default function SelectActivity({ err, recordActivty }) {
+export default function SelectActivity({ err, recordActivity, clearActivity }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [inputs, setInputs] = useState({
@@ -28,9 +28,43 @@ export default function SelectActivity({ err, recordActivty }) {
     setError(false);
   };
 
-  const activityRef = dbService.collection('activity').doc('jiwon');
   // const activityRef = dbService.collection('activity').doc(currentUser.uid);
+  const activityRef = dbService.collection('activity').doc('jiwon');
   useEffect(() => {
+    const activityRef = dbService.collection('activity').doc('jiwon');
+
+    const activityDefault = [
+      {
+        name: 'Cycling',
+        imageUrl: 'img/exercise/bicycle.png',
+        from: 'admin',
+      },
+      {
+        name: 'Swimming',
+        imageUrl: 'img/exercise/swimming.png',
+        from: 'admin',
+      },
+      {
+        name: 'Yoga',
+        imageUrl: 'img/exercise/yoga.png',
+        from: 'admin',
+      },
+      {
+        name: 'Badminton',
+        imageUrl: 'img/exercise/badminton.png',
+        from: 'admin',
+      },
+      {
+        name: 'Running',
+        imageUrl: 'img/exercise/jogging.png',
+        from: 'admin',
+      },
+      {
+        name: 'Gym',
+        imageUrl: 'img/exercise/gym.png',
+        from: 'admin',
+      },
+    ];
     activityRef.onSnapshot((doc) => {
       if (doc.exists) {
         // setActivities(doc.data().activityList);
@@ -86,61 +120,37 @@ export default function SelectActivity({ err, recordActivty }) {
     }
   };
 
-  const activityDefault = [
-    {
-      name: 'Cycling',
-      imageUrl: 'img/exercise/bicycle.png',
-      from: 'admin',
-    },
-    {
-      name: 'Swimming',
-      imageUrl: 'img/exercise/swimming.png',
-      from: 'admin',
-    },
-    {
-      name: 'Yoga',
-      imageUrl: 'img/exercise/yoga.png',
-      from: 'admin',
-    },
-    {
-      name: 'Badminton',
-      imageUrl: 'img/exercise/badminton.png',
-      from: 'admin',
-    },
-    {
-      name: 'Running',
-      imageUrl: 'img/exercise/jogging.png',
-      from: 'admin',
-    },
-    {
-      name: 'Gym',
-      imageUrl: 'img/exercise/gym.png',
-      from: 'admin',
-    },
-  ];
-
   const editHandler = () => {
     edit ? setEdit(false) : setEdit(true);
   };
 
-  const selectActivityHandler = (e, id, activity) => {
-    if (activity.selected) {
-      const selectTarget = activities.map((el, idx) => {
+  useEffect(() => {
+    setActivities((prev) => {
+      const Change = prev.map((el) => {
         return { ...el, selected: false };
       });
-      setActivities(selectTarget);
-      recordActivty(null);
-    } else {
-      const selectTarget = activities.map((el, idx, activity) => {
-        if (id === idx) {
-          recordActivty(el.name);
-          return { ...el, selected: true };
-        } else {
-          return { ...el, selected: false };
-        }
-      });
+      return Change;
+    });
+  }, [clearActivity]);
 
-      setActivities(selectTarget);
+  const selectActivityHandler = (e, id, activity) => {
+    const allSelectedFalse = activities.map((el) => {
+      return { ...el, selected: false };
+    });
+
+    const oneSelectedTrue = activities.map((el, idx) => {
+      if (id === idx) {
+        recordActivity(el.name);
+        return { ...el, selected: true };
+      } else {
+        return { ...el, selected: false };
+      }
+    });
+    if (activity.selected) {
+      setActivities(allSelectedFalse);
+      recordActivity(null);
+    } else {
+      setActivities(oneSelectedTrue);
     }
   };
 

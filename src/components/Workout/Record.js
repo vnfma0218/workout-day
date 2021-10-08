@@ -31,6 +31,7 @@ export default function Record() {
   const [address, setAddress] = useState('');
   const [activity, setActivity] = useState('');
   const [err, setErr] = useState(false);
+  const [clearActivity, setClearActivity] = useState(false);
 
   const oepnMapHandler = () => {
     setMapOpen(true);
@@ -40,7 +41,6 @@ export default function Record() {
   const closeMapHandler = () => {
     setMapOpen(false);
   };
-  console.log(err);
 
   // form 저장
   const saveHandler = (e) => {
@@ -58,7 +58,7 @@ export default function Record() {
       .add({
         date: target.date.value,
         time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
-          target.minutes.value
+          !target.minutes.value ? 0 : target.minutes.value
         }분`,
         weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
         imageUrl: url,
@@ -83,7 +83,8 @@ export default function Record() {
           setFile(''),
           setPlace(''),
           setAddress(''),
-          setActivity('')
+          setActivity(''),
+          setClearActivity((prev) => !prev)
         );
       })
       .catch((err) => console.error(err));
@@ -145,7 +146,7 @@ export default function Record() {
     setAddress('');
   };
 
-  const recordActivty = (activityName) => {
+  const recordActivity = (activityName) => {
     if (activityName === null) {
       setActivity(activityName);
     } else {
@@ -166,7 +167,11 @@ export default function Record() {
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
-          <SelectActivity recordActivty={recordActivty} err={err} />
+          <SelectActivity
+            recordActivity={recordActivity}
+            err={err}
+            clearActivity={clearActivity}
+          />
           {/* Record Form */}
           <form
             id={classes.form}
@@ -202,7 +207,6 @@ export default function Record() {
                 name='minutes'
                 min='0'
                 max='59'
-                required
                 onChange={inputHandler}
                 value={inputs.minutes}
               />

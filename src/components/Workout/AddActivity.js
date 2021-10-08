@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import classes from './AddActivity.module.css';
-import Select, { components } from 'react-select';
-import { dbService } from '../../firebase';
+import Select from 'react-select';
 
 export default function AddActivity(props) {
   const [choice, setChoice] = useState('');
@@ -50,7 +49,7 @@ export default function AddActivity(props) {
     },
   ];
 
-  const { Option } = components;
+  // const { Option } = components;
   // const IconOption = (props) => (
   //   <Option {...props}>
   //     <img
@@ -67,6 +66,7 @@ export default function AddActivity(props) {
   // };
 
   const activityInputHandler = (e) => {
+    
     if (e.iconUrl) {
       props.setInputs({ imageUrl: e.iconUrl });
     }
