@@ -21,6 +21,7 @@ export default function Record() {
     weight: '',
     memo: '',
     location: '',
+    activityName: '',
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
@@ -28,6 +29,8 @@ export default function Record() {
   const [totalByte, setTotalByte] = useState(0);
   const [place, setPlace] = useState('');
   const [address, setAddress] = useState('');
+  const [activity, setActivity] = useState('');
+  const [err, setErr] = useState(false);
 
   const oepnMapHandler = () => {
     setMapOpen(true);
@@ -37,10 +40,15 @@ export default function Record() {
   const closeMapHandler = () => {
     setMapOpen(false);
   };
+  console.log(err);
 
   // form 저장
   const saveHandler = (e) => {
     e.preventDefault();
+    if (!activity) {
+      setErr(true);
+      return;
+    }
 
     const target = e.target;
     dbService
@@ -57,6 +65,7 @@ export default function Record() {
         memo: target.memo.value,
         location: enter ? target.location.value : [place, address],
         uploadDate: new Date(),
+        workout: activity,
       })
       .then((result) => {
         //입력 후 초기화
@@ -68,11 +77,13 @@ export default function Record() {
             weight: '',
             memo: '',
             location: '',
+            activityName: '',
           }),
           setUrl(''),
           setFile(''),
           setPlace(''),
-          setAddress('')
+          setAddress(''),
+          setActivity('')
         );
       })
       .catch((err) => console.error(err));
@@ -133,6 +144,15 @@ export default function Record() {
     setAddress('');
   };
 
+  const recordActivty = (activityName) => {
+    if (activityName === null) {
+      setActivity(activityName);
+    } else {
+      setErr(false);
+      setActivity(activityName);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -145,7 +165,7 @@ export default function Record() {
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
-          <SelectActivity />
+          <SelectActivity recordActivty={recordActivty} err={err} />
           {/* Record Form */}
           <form
             id={classes.form}

@@ -3,12 +3,18 @@
   height: auto;
 }
 
-.form__wrapper > div {
+.err__box {
   width: auto;
-  padding: 10px 10px 20px 10px;
+  display: flex;
+  padding: 10px;
   color: rgb(241, 57, 57);
   border-radius: 4px;
   font-weight: 600;
+}
+
+.err__box > svg {
+  fill: rgb(253, 56, 56);
+  margin-right: 8px;
 }
 
 .form {

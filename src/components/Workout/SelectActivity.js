@@ -5,10 +5,9 @@ import Modal from '../../shared/UIElement/Modal';
 import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
 
-export default function SelectActivity() {
+export default function SelectActivity({ err, recordActivty }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [select, setSelect] = useState('');
   const [inputs, setInputs] = useState({
     name: '',
     imageUrl: '',
@@ -34,10 +33,14 @@ export default function SelectActivity() {
   useEffect(() => {
     activityRef.onSnapshot((doc) => {
       if (doc.exists) {
-        setActivities(doc.data().activityList);
+        // setActivities(doc.data().activityList);
+        setActivities(
+          activityDefault.concat(doc.data().activityList).reverse()
+        );
         setLoading(true);
       } else {
-        setLoading(false);
+        setActivities(activityDefault.reverse());
+        setLoading(true);
       }
     });
   }, []);
@@ -84,27 +87,61 @@ export default function SelectActivity() {
   };
 
   const activityDefault = [
-    { name: 'Cycling', imageUrl: 'img/exercise/bicycle.png', from: 'admin' },
-    { name: 'Swimming', imageUrl: 'img/exercise/swimming.png', from: 'admin' },
-    { name: 'Yoga', imageUrl: 'img/exercise/yoga.png', from: 'admin' },
+    {
+      name: 'Cycling',
+      imageUrl: 'img/exercise/bicycle.png',
+      from: 'admin',
+    },
+    {
+      name: 'Swimming',
+      imageUrl: 'img/exercise/swimming.png',
+      from: 'admin',
+    },
+    {
+      name: 'Yoga',
+      imageUrl: 'img/exercise/yoga.png',
+      from: 'admin',
+    },
     {
       name: 'Badminton',
       imageUrl: 'img/exercise/badminton.png',
       from: 'admin',
     },
-    { name: 'Running', imageUrl: 'img/exercise/jogging.png', from: 'admin' },
-    { name: 'Gym', imageUrl: 'img/exercise/gym.png', from: 'admin' },
+    {
+      name: 'Running',
+      imageUrl: 'img/exercise/jogging.png',
+      from: 'admin',
+    },
+    {
+      name: 'Gym',
+      imageUrl: 'img/exercise/gym.png',
+      from: 'admin',
+    },
   ];
 
   const editHandler = () => {
     edit ? setEdit(false) : setEdit(true);
   };
 
-  const selectActivityHandler = (e) => {
-    // 다른걸 누르면 색깔이 바껴야 함....어떻게...
-    setSelect(e.target);
-    console.log(e.target.parentNode.id);
-    e.target.style.fill = '#ee91ad';
+  const selectActivityHandler = (e, id, activity) => {
+    if (activity.selected) {
+      const selectTarget = activities.map((el, idx) => {
+        return { ...el, selected: false };
+      });
+      setActivities(selectTarget);
+      recordActivty(null);
+    } else {
+      const selectTarget = activities.map((el, idx, activity) => {
+        if (id === idx) {
+          recordActivty(el.name);
+          return { ...el, selected: true };
+        } else {
+          return { ...el, selected: false };
+        }
+      });
+
+      setActivities(selectTarget);
+    }
   };
 
   return (
@@ -118,6 +155,21 @@ export default function SelectActivity() {
         {<AddActivity inputs={inputs} setInputs={setInputs} error={error} />}
       </Modal>
       <ul className={classes.record__select}>
+        {err && (
+          <div className={classes.err__box}>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              height='24px'
+              viewBox='0 0 24 24'
+              width='24px'
+              fill='#000000'
+            >
+              <path d='M0 0h24v24H0z' fill='none' />
+              <path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z' />
+            </svg>
+            <p>이미지와 운동명을 입력해주세요.</p>
+          </div>
+        )}
         <div className={classes.select__header}>
           <h3>Select your Activity</h3>
           <svg
@@ -134,18 +186,19 @@ export default function SelectActivity() {
         </div>
         <div className={classes.record__select__wrap}>
           {loading &&
-            activities.map((add, id) => (
-              <li className={classes.select__item} key={id} from={add.from}>
+            activities.map((activity, id) => (
+              <li className={classes.select__item} key={id}>
                 <div className={classes.select__item_content}>
                   <div>
                     <img
-                      src={add.imageUrl}
+                      src={activity.imageUrl}
                       alt='activity'
                       className={classes.select__image}
                     />
-                    <span>{add.name}</span>
+                    <span>{activity.name}</span>
                   </div>
-                  {edit ? (
+
+                  {activity.from === 'user' && edit ? (
                     <input
                       type='checkbox'
                       style={{ transform: 'scale(1.5)' }}
@@ -158,8 +211,12 @@ export default function SelectActivity() {
                       viewBox='0 0 24 24'
                       width='30px'
                       fill='#000000'
-                      className={classes.select__icon}
-                      onClick={selectActivityHandler}
+                      className={
+                        activity.selected === true
+                          ? classes.select__icon
+                          : classes.icon
+                      }
+                      onClick={(e) => selectActivityHandler(e, id, activity)}
                     >
                       <path d='M0 0h24v24H0z' fill='none' />
                       <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
@@ -168,39 +225,6 @@ export default function SelectActivity() {
                 </div>
               </li>
             ))}
-
-          {activityDefault.map((activity, id) => (
-            <li
-              className={classes.select__item}
-              key={activity.name}
-              from={activity.from}
-            >
-              <div className={classes.select__item_content}>
-                <div>
-                  <img
-                    src={activity.imageUrl}
-                    alt='activity'
-                    className={classes.select__image}
-                  />
-                  <span>{activity.name}</span>
-                </div>
-
-                <svg
-                  id={id}
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='30px'
-                  viewBox='0 0 24 24'
-                  width='30px'
-                  fill='#000000'
-                  className={classes.select__icon}
-                  onClick={selectActivityHandler}
-                >
-                  <path d='M0 0h24v24H0z' fill='none' />
-                  <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
-                </svg>
-              </div>
-            </li>
-          ))}
         </div>
         <div className={classes.btn}>
           <Button

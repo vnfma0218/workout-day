@@ -11,6 +11,20 @@
   position: relative;
 }
 
+.err__box {
+  width: auto;
+  display: flex;
+  padding: 10px;
+  color: rgb(241, 57, 57);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.err__box > svg {
+  fill: rgb(253, 56, 56);
+  margin-right: 8px;
+}
+
 .record__select__wrap {
   width: 100%;
   height: 80%;
@@ -37,7 +51,7 @@
 
 .btn {
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 1rem;
   right: 1rem;
   margin: 0;
 }
@@ -83,11 +97,12 @@
   font-size: 16px;
 }
 
-.select {
+.select__icon {
   fill: #ee91ad;
+  cursor: pointer;
 }
 
-.select__icon {
+.icon {
   fill: #9e9e9e;
   cursor: pointer;
 }
