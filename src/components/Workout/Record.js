@@ -31,6 +31,7 @@ export default function Record() {
   const [address, setAddress] = useState('');
   const [activity, setActivity] = useState('');
   const [err, setErr] = useState(false);
+  const [clearSelectedActivity, setClearSelectedActivity] = useState(false);
 
   const oepnMapHandler = () => {
     setMapOpen(true);
@@ -40,7 +41,6 @@ export default function Record() {
   const closeMapHandler = () => {
     setMapOpen(false);
   };
-  console.log(err);
 
   // form 저장
   const saveHandler = (e) => {
@@ -53,7 +53,7 @@ export default function Record() {
     const target = e.target;
     dbService
       .collection('record')
-      .doc('userId')
+      .doc('user1')
       .collection('events')
       .add({
         date: target.date.value,
@@ -87,6 +87,7 @@ export default function Record() {
         );
       })
       .catch((err) => console.error(err));
+    setClearSelectedActivity((prev) => !prev);
   };
 
   // image file 저장
@@ -166,7 +167,11 @@ export default function Record() {
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
-          <SelectActivity recordActivty={recordActivty} err={err} />
+          <SelectActivity
+            recordActivty={recordActivty}
+            err={err}
+            clearSelectedActivity={clearSelectedActivity}
+          />
           {/* Record Form */}
           <form
             id={classes.form}

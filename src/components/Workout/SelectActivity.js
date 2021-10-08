@@ -5,7 +5,11 @@ import Modal from '../../shared/UIElement/Modal';
 import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
 
-export default function SelectActivity({ err, recordActivty }) {
+export default function SelectActivity({
+  err,
+  recordActivty,
+  clearSelectedActivity,
+}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [inputs, setInputs] = useState({
@@ -44,6 +48,15 @@ export default function SelectActivity({ err, recordActivty }) {
       }
     });
   }, []);
+
+  useEffect(() => {
+    setActivities((prevState) => {
+      const newState = prevState.map((ele) => {
+        return { ...ele, selected: false };
+      });
+      return newState;
+    });
+  }, [clearSelectedActivity]);
 
   const addActivityHandler = () => {
     if (!inputs.name || !inputs.imageUrl) {

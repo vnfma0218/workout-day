@@ -25,6 +25,7 @@ export default function Calendar() {
   const [selectedEvent, setSelectedEvent] = useState();
 
   const getCalendarData = (fetchInfo, successCallback, failureCallback) => {
+    console.log('getCalendarData');
     if (fetchInfo) {
       setStartDate(fetchInfo.startStr.split('T')[0]);
       setEndDate(fetchInfo.endStr.split('T')[0]);
@@ -35,7 +36,7 @@ export default function Calendar() {
     successCallback(
       events.map((event) => {
         return {
-          id: event.date,
+          id: event.id,
           title: event.time,
           start: event.date,
           end: event.date,

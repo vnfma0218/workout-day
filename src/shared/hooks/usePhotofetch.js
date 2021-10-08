@@ -13,8 +13,9 @@ export default function usePhotofetch() {
     dbService
       .collection('record')
       .doc('user1')
-      .collection('userEvents')
-      .limit(2)
+      .collection('events')
+      .orderBy('date')
+      .limit(3)
       .get()
       .then((docs) => {
         let loadedPhotos = [];
@@ -33,9 +34,10 @@ export default function usePhotofetch() {
     dbService
       .collection('record')
       .doc('user1')
-      .collection('userEvents')
+      .collection('events')
+      .orderBy('date')
       .startAfter(lastDoc)
-      .limit(2)
+      .limit(3)
       .get()
       .then((docs) => {
         let loadedPhotos = [];

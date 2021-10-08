@@ -6,8 +6,8 @@ import useForm from '../../shared/hooks/form-hooks';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
 
+import useAuthHook from '../../shared/hooks/useAuthHook';
 import classes from './Auth.module.css';
-import useAuthHook from '../../shared/DbServices/useAuthHook';
 const emailRegex =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 

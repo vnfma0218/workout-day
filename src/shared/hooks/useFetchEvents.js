@@ -17,7 +17,6 @@ export default function useFetchEvents() {
     const start =
       startDate || `${year}-${month < 10 ? `0${month}` : { month }}-01`;
     const end = endDate || `${year}-${month < 10 ? `0${month}` : { month }}-31`;
-    let loadedEvents = [];
     dbService
       .collection('record')
       .doc('user1')
@@ -25,11 +24,11 @@ export default function useFetchEvents() {
       .orderBy('date')
       .startAt(start)
       .endAt(end)
-      .get((docs) => {
-        return docs;
-      })
-      .then((res) => {
-        res.forEach((doc) => loadedEvents.push(doc.data()));
+      .onSnapshot((snapshot) => {
+        const loadedEvents = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setEvents(loadedEvents);
         setLoading(false);
       });
