@@ -1,0 +1,50 @@
+.userPhotoInfo {
+  display: flex;
+  padding: 0 120px;
+  margin-bottom: 100px;
+}
+
+.user__img {
+  flex: 1;
+  margin-right: 100px;
+}
+.user__avatar {
+  width: 160px;
+  height: 160px;
+}
+
+.user__avatar img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+/* userInfo */
+.user__nickname h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+.userInfo {
+  flex: 4;
+}
+
+.user__body {
+  display: flex;
+  margin: 10px 0;
+}
+.user__workout__detail {
+  margin-right: 30px;
+}
+.user__workout__detail span:nth-child(2) {
+  color: #262626;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.user__greeting {
+  margin-top: 20px;
+}
+.user__greeting h4 {
+  font-size: 16px;
+  font-weight: 600;
+}

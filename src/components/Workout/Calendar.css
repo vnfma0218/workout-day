@@ -1,4 +1,30 @@
-.fc-event-title {
-  color: red;
-  font-weight: 800;
+.fc .fc-bg-event .fc-event-title {
+  font-weight: 900;
+  margin-top: 23px;
+  color: blue;
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child),
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: #fdfaf1;
+  border-color: darkgray;
+  color: black;
+  font-weight: 500;
+  outline: none;
+}
+
+.fc .fc-button:not(:disabled) {
+  background-color: #fdfaf1;
+  border-color: darkgray;
+  color: black;
+  font-weight: 500;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: #fdfaf1;
+  border-color: darkgray;
+  color: black;
+  font-weight: 500;
 }

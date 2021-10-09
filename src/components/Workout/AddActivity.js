@@ -66,7 +66,6 @@ export default function AddActivity(props) {
   // };
 
   const activityInputHandler = (e) => {
-    
     if (e.iconUrl) {
       props.setInputs({ imageUrl: e.iconUrl });
     }

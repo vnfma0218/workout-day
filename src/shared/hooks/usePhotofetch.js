@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
+import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 
-// firebase로부터 데이터 받아오는거 custom hook 으로 만들기
 export default function usePhotofetch() {
   const [loadedPhotos, setLoadedPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [lastDoc, setLastDoc] = useState();
+  const {
+    currentUser: { email },
+  } = useAuth();
 
   useEffect(() => {
     setLoading(true);
     dbService
       .collection('record')
-      .doc('user1')
-      .collection('userEvents')
-      .limit(2)
+      .doc(email)
+      .collection('events')
+      .orderBy('date')
+      .limit(3)
       .get()
       .then((docs) => {
         let loadedPhotos = [];
@@ -26,16 +30,17 @@ export default function usePhotofetch() {
         setHasMore(!docs.empty);
         setLoading(false);
       });
-  }, []);
+  }, [email]);
 
   const fetchNextData = () => {
     setLoading(true);
     dbService
       .collection('record')
-      .doc('user1')
-      .collection('userEvents')
+      .doc(email)
+      .collection('events')
+      .orderBy('date')
       .startAfter(lastDoc)
-      .limit(2)
+      .limit(3)
       .get()
       .then((docs) => {
         let loadedPhotos = [];
