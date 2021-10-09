@@ -1,34 +1,39 @@
+import { useRef, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
-import { useState } from 'react';
-
-import './Calendar.css';
-import classes from './Calendar.module.css';
 import Button from '../../shared/UIElement/Button';
 import useFetchEvents from '../../shared/hooks/useFetchEvents';
 import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 
-export default function Calendar() {
+import './Calendar.css';
+import classes from './Calendar.module.css';
+
+export default function Calendar(props) {
   const {
     events,
     selectedDate,
-    setSelectedDate,
     setStartDate,
     setEndDate,
+    selectedEvent,
+    setSelectedEvent,
+    dateClickHandler,
     loading,
   } = useFetchEvents();
-
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState();
+  const calendarComponentRef = useRef();
 
   const getCalendarData = (fetchInfo, successCallback, failureCallback) => {
-    console.log('getCalendarData');
     if (fetchInfo) {
       setStartDate(fetchInfo.startStr.split('T')[0]);
       setEndDate(fetchInfo.endStr.split('T')[0]);
+      setSelectedEvent(
+        events.filter((event) => {
+          return event.date === selectedDate;
+        })[0]
+      );
     }
     if (events.length === 0) {
       return;
@@ -45,26 +50,33 @@ export default function Calendar() {
       })
     );
   };
-  const dateClickHandler = (arg) => {
-    if (!arg.dateStr) return;
-
-    const clickedEvent = events.filter(
-      (event) => event.date === arg.dateStr
-    )[0];
-    setSelectedEvent(clickedEvent);
-    setSelectedDate(arg.dateStr);
-  };
 
   const closeModalHandler = () => {
     setModalOpen(false);
+  };
+
+  const toRecordPage = () => {
+    const pageHeight = window.innerHeight;
+    props.toRecordPage('last', pageHeight);
+  };
+
+  const recordEditHandler = () => {
+    props.recordEditHandler({ ...selectedEvent });
   };
 
   let dateItem;
   if (!selectedEvent) {
     dateItem = (
       <>
+        {loading && <h1>loading</h1>}
         <h2 className={classes.workout__header}>{selectedDate}</h2>
         <h1>운동기록이 없습니다.</h1>
+        <div className={classes.guide}>
+          <p>운동 등록하기 </p>
+          <div className={classes.downward__icon} onClick={toRecordPage}>
+            <img src='img/icons/arrow.png' alt='' />
+          </div>
+        </div>
       </>
     );
   } else {
@@ -83,12 +95,18 @@ export default function Calendar() {
         <span className={classes.workout__location}>
           {selectedEvent.location}
         </span>
+
         <div className={classes.workout__img}>
           <img src={selectedEvent.imageUrl} alt='workout' />
         </div>
+
         <div className={classes.btn}>
           <Button name='Go to PhotoBook' to='/photo' />
-          <Button name='EDIT' className={classes.editBtn} />
+          <Button
+            name='EDIT'
+            className={classes.editBtn}
+            onClick={recordEditHandler}
+          />
         </div>
       </>
     );
@@ -108,8 +126,22 @@ export default function Calendar() {
             className={classes.calendarItem}
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView='dayGridMonth'
+            customButtons={{
+              myCustomBtn: {
+                text: 'year',
+                click: () => {
+                  let calendarApi = calendarComponentRef.current.getApi();
+                  calendarApi.gotoDate('2020-01-30');
+                },
+              },
+            }}
+            headerToolbar={{
+              left: 'title',
+              center: 'myCustomBtn',
+              right: 'today,prev,next',
+            }}
             dateClick={dateClickHandler}
-            eventTextColor='black'
+            ref={calendarComponentRef}
             events={(fetchInfo, successCallback, failureCallback) =>
               getCalendarData(fetchInfo, successCallback, failureCallback)
             }
@@ -122,7 +154,7 @@ export default function Calendar() {
             !selectedEvent ? classes.noEvent : [],
           ].join(' ')}
         >
-          {dateItem}
+          {!loading && dateItem}
         </div>
       </Wrapper>
     </>

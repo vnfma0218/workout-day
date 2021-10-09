@@ -12,7 +12,7 @@ export default function MainPage(props) {
   const DIVIDER_HEIGHT = 5;
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('home');
-
+  const [selectUpdateEvent, setSelectUpdateEvent] = useState();
   const changePage = (page, pageHeight) => {
     if (page === 'first') {
       setCurrentPage('home');
@@ -103,6 +103,11 @@ export default function MainPage(props) {
     }
   };
 
+  const recordEditHandler = (selectedEvent) => {
+    changePage('last', pageHeight);
+    setSelectUpdateEvent(selectedEvent);
+  };
+
   return (
     <React.Fragment>
       <MainHeader navClickHandler={navClickHandler} currentPage={currentPage} />
@@ -110,9 +115,12 @@ export default function MainPage(props) {
         <Home />
 
         <div className={classes.divider}></div>
-        <Calendar />
+        <Calendar
+          toRecordPage={changePage}
+          recordEditHandler={recordEditHandler}
+        />
         <div className={classes.divider}></div>
-        <Record />
+        <Record selectUpdateEvent={selectUpdateEvent} />
       </div>
       <img
         src='img/icons/scroll.png'

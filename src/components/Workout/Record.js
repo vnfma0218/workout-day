@@ -1,5 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
-import classes from './Record.module.css';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
 import SearchPlace from '../../shared/UIElement/SearchPlace';
@@ -7,11 +6,13 @@ import SelectActivity from './SelectActivity';
 import Button from '../../shared/UIElement/Button';
 import { ModeContext } from '../../context/mode-context';
 import { dbService, storage } from '../../firebase';
-
-export default function Record() {
+import { useAuth } from '../../context/auth-context';
+import classes from './Record.module.css';
+export default function Record({ selectUpdateEvent }) {
   const mode = useContext(ModeContext);
   const [mapOpen, setMapOpen] = useState(false);
-  const [enter, setEnter] = useState(false);
+  const [enter, setEnter] = useState(true);
+  const [editMode, setEditMode] = useState(false);
 
   // form
   const [inputs, setInputs] = useState({
@@ -32,6 +33,29 @@ export default function Record() {
   const [activity, setActivity] = useState('');
   const [err, setErr] = useState(false);
   const [clearSelectedActivity, setClearSelectedActivity] = useState(false);
+  const [recordDocId, setRecordDocId] = useState();
+  const {
+    currentUser: { email },
+  } = useAuth();
+
+  useEffect(() => {
+    if (!selectUpdateEvent) return;
+    setEditMode(true);
+    setRecordDocId(selectUpdateEvent.id);
+    const { date, weight, memo, location, activityName, imageUrl } =
+      selectUpdateEvent;
+    setInputs({
+      date,
+      hour: selectUpdateEvent.time.split(' ')[0].split('')[0],
+      minutes: selectUpdateEvent.time.split(' ')[1].split('')[0],
+      weight,
+      memo,
+      location: typeof location === 'object' ? location[0] : location,
+      activityName,
+    });
+    setFile(imageUrl);
+    setUrl(imageUrl);
+  }, [selectUpdateEvent]);
 
   const oepnMapHandler = () => {
     setMapOpen(true);
@@ -51,42 +75,86 @@ export default function Record() {
     }
 
     const target = e.target;
-    dbService
-      .collection('record')
-      .doc('user1')
-      .collection('events')
-      .add({
-        date: target.date.value,
-        time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
-          target.minutes.value
-        }분`,
-        weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
-        imageUrl: url,
-        memo: target.memo.value,
-        location: enter ? target.location.value : [place, address],
-        uploadDate: new Date(),
-        workout: activity,
-      })
-      .then((result) => {
-        //입력 후 초기화
-        return (
-          setInputs({
-            date: '',
-            hour: '',
-            minutes: '',
-            weight: '',
-            memo: '',
-            location: '',
-            activityName: '',
-          }),
-          setUrl(''),
-          setFile(''),
-          setPlace(''),
-          setAddress(''),
-          setActivity('')
-        );
-      })
-      .catch((err) => console.error(err));
+
+    if (!editMode) {
+      dbService
+        .collection('record')
+        .doc(email)
+        .collection('events')
+        .add({
+          date: target.date.value,
+          time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
+            target.minutes.value
+          }분`,
+          weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
+          imageUrl: url,
+          memo: target.memo.value,
+          location: enter ? target.location.value : [place, address],
+          uploadDate: new Date(),
+          workout: activity,
+        })
+        .then((result) => {
+          //입력 후 초기화
+          return (
+            setInputs({
+              date: '',
+              hour: '',
+              minutes: '',
+              weight: '',
+              memo: '',
+              location: '',
+              activityName: '',
+            }),
+            setUrl(''),
+            setFile(''),
+            setPlace(''),
+            setAddress(''),
+            setActivity('')
+          );
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dbService
+        .collection('record')
+        .doc(email)
+        .collection('events')
+        .doc(recordDocId)
+        .set({
+          date: target.date.value,
+          time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
+            target.minutes.value
+          }분`,
+          weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
+          imageUrl: url,
+          memo: target.memo.value,
+          location: enter ? target.location.value : [place, address],
+          uploadDate: new Date(),
+          workout: activity,
+        })
+        .then((result) => {
+          //입력 후 초기화
+          console.log(result);
+          return (
+            setInputs({
+              date: '',
+              hour: '',
+              minutes: '',
+              weight: '',
+              memo: '',
+              location: '',
+              activityName: '',
+            }),
+            setUrl(''),
+            setFile(''),
+            setPlace(''),
+            setAddress(''),
+            setActivity('')
+          );
+        })
+        .catch((err) => console.error(err));
+      setEditMode(false);
+      // console.log(updatedEvent);
+    }
     setClearSelectedActivity((prev) => !prev);
   };
 
@@ -155,6 +223,27 @@ export default function Record() {
     }
   };
 
+  const cancelHandler = () => {
+    if (editMode) {
+      setEditMode(false);
+      setInputs({
+        date: '',
+        hour: '',
+        minutes: '',
+        weight: '',
+        memo: '',
+        location: '',
+        activityName: '',
+      });
+      setUrl('');
+      setFile('');
+      setPlace('');
+      setAddress('');
+      setActivity('');
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <Modal
@@ -163,7 +252,7 @@ export default function Record() {
         onClose={closeMapHandler}
         onConfirm={closeMapHandler}
       >
-        {<SearchPlace selectPlace={selectPlace} />}
+        <SearchPlace selectPlace={selectPlace} />
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
@@ -312,13 +401,19 @@ export default function Record() {
               ></textarea>
             </div>
             <div className={classes.form__btn}>
-              <Button className={classes.btn} name='CANCEL' />
-              <Button className={classes.btn} type='submit' name='SAVE' />
+              {editMode && (
+                <Button
+                  className={classes.btn}
+                  name='CANCEL'
+                  onClick={cancelHandler}
+                />
+              )}
 
-              {/* <button className={classes.btn}>CANCEL</button>
-              <button className={classes.btn} type='submit'>
-                SAVE
-              </button> */}
+              <Button
+                className={classes.btn}
+                type='submit'
+                name={editMode ? 'EDIT' : 'SAVE'}
+              />
             </div>
           </form>
         </div>

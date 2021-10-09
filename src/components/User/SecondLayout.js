@@ -11,7 +11,7 @@ export default function SecondLayout() {
   // const [loadedPhotos, setLoadedPhotos] = useState([]);
   const [minDate, setMinDate] = useState(new Date());
   const [endDate, setEndDate] = useState();
-
+  console.log(endDate);
   const { loadedPhotos, loading, hasMore, fetchNextData } = usePhotofetch();
   const observer = useRef();
 
@@ -20,7 +20,7 @@ export default function SecondLayout() {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       let options = {
-        rootMargin: '0px',
+        rootMargin: '10px',
         threshold: 1,
       };
       observer.current = new IntersectionObserver((entries) => {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import classes from './AddActivity.module.css';
 import Select, { components } from 'react-select';
-import { dbService } from '../../firebase';
 
 export default function AddActivity(props) {
   const [choice, setChoice] = useState('');
