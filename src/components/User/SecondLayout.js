@@ -6,11 +6,12 @@ import DateRange from '../../shared/UIElement/DatePicker';
 import Wrapper from '../../shared/UIElement/Wrapper';
 
 import classes from './SecondLayout.module.css';
+import UserPhotoInfo from './UserPhotoInfo';
 export default function SecondLayout() {
   // const [loadedPhotos, setLoadedPhotos] = useState([]);
   const [minDate, setMinDate] = useState(new Date());
   const [endDate, setEndDate] = useState();
-
+  console.log(endDate);
   const { loadedPhotos, loading, hasMore, fetchNextData } = usePhotofetch();
   const observer = useRef();
 
@@ -19,11 +20,12 @@ export default function SecondLayout() {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       let options = {
-        rootMargin: '0px',
+        rootMargin: '10px',
         threshold: 1,
       };
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
+          console.log('bottom');
           fetchNextData();
         }
       }, options);
@@ -40,6 +42,7 @@ export default function SecondLayout() {
     <>
       <MainHeader />
       <Wrapper id='second__layout' className={classes.second__layout}>
+        <UserPhotoInfo />
         <div className={classes.selectDate__container}>
           <div className={classes.selectDate}>
             <DateRange setDate={selectMinDate} />
@@ -49,7 +52,7 @@ export default function SecondLayout() {
           <button className={classes.selectBtn}>조회</button>
         </div>
 
-        <div className={classes.photos}>
+        <article className={classes.photos}>
           {loadedPhotos &&
             loadedPhotos.map((photo, index) => {
               if (loadedPhotos.length === index + 1) {
@@ -96,7 +99,7 @@ export default function SecondLayout() {
                 );
               }
             })}
-        </div>
+        </article>
       </Wrapper>
     </>
   );
