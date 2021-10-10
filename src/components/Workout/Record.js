@@ -31,7 +31,11 @@ export default function Record({ selectUpdateEvent }) {
   const [place, setPlace] = useState('');
   const [address, setAddress] = useState('');
   const [activity, setActivity] = useState('');
-  const [err, setErr] = useState(false);
+  // const [err, setErr] = useState(false);
+  const [err, setErr] = useState({
+    time: false,
+    activity: false,
+  });
   const [clearActivity, setClearActivity] = useState(false);
   const [recordDocId, setRecordDocId] = useState();
   // const {
@@ -42,12 +46,20 @@ export default function Record({ selectUpdateEvent }) {
     if (!selectUpdateEvent) return;
     setEditMode(true);
     setRecordDocId(selectUpdateEvent.id);
-    const { date, weight, memo, location, activityName, imageUrl } =
-      selectUpdateEvent;
+    const {
+      date,
+      hour,
+      minutes,
+      weight,
+      memo,
+      location,
+      activityName,
+      imageUrl,
+    } = selectUpdateEvent;
     setInputs({
       date,
-      hour: selectUpdateEvent.time.split(' ')[0].split('')[0],
-      minutes: selectUpdateEvent.time.split(' ')[1].split('')[0],
+      hour,
+      minutes,
       weight,
       memo,
       location: typeof location === 'object' ? location[0] : location,
@@ -69,12 +81,24 @@ export default function Record({ selectUpdateEvent }) {
   // form 저장
   const saveHandler = (e) => {
     e.preventDefault();
-    if (!activity) {
-      setErr(true);
+
+    const target = e.target;
+
+    if (!target.hour.value && !target.minutes.value) {
+      setErr({
+        time: true,
+        activity: false,
+      });
       return;
     }
 
-    const target = e.target;
+    if (!activity) {
+      setErr({
+        time: false,
+        activity: true,
+      });
+      return;
+    }
 
     if (!editMode) {
       dbService
@@ -83,9 +107,8 @@ export default function Record({ selectUpdateEvent }) {
         .collection('events')
         .add({
           date: target.date.value,
-          time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
-            !target.minutes.value ? 0 : target.minutes.value
-          }분`,
+          hour: `${!target.hour.value ? '' : target.hour.value}`,
+          minutes: `${!target.minutes.value ? '' : target.minutes.value}`,
           weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
           imageUrl: url,
           memo: target.memo.value,
@@ -95,23 +118,7 @@ export default function Record({ selectUpdateEvent }) {
         })
         .then((result) => {
           //입력 후 초기화
-          return (
-            setInputs({
-              date: '',
-              hour: '',
-              minutes: '',
-              weight: '',
-              memo: '',
-              location: '',
-              activityName: '',
-            }),
-            setUrl(''),
-            setFile(''),
-            setPlace(''),
-            setAddress(''),
-            setActivity(''),
-            setClearActivity((prev) => !prev)
-          );
+          onReset();
         })
         .catch((err) => console.error(err));
     } else {
@@ -122,9 +129,10 @@ export default function Record({ selectUpdateEvent }) {
         .doc(recordDocId)
         .set({
           date: target.date.value,
-          time: `${!target.hour.value ? 0 : target.hour.value}시간 ${
-            !target.minutes.value ? 0 : target.minutes.value
-          }분`,
+          hour: `${!target.hour.value ? '' : `${target.hour.value}시간`}`,
+          minutes: `${
+            !target.minutes.value ? '' : `${target.minutes.value}분`
+          }`,
           weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
           imageUrl: url,
           memo: target.memo.value,
@@ -133,25 +141,7 @@ export default function Record({ selectUpdateEvent }) {
           workout: activity,
         })
         .then((result) => {
-          //입력 후 초기화
-          console.log(result);
-          return (
-            setInputs({
-              date: '',
-              hour: '',
-              minutes: '',
-              weight: '',
-              memo: '',
-              location: '',
-              activityName: '',
-            }),
-            setUrl(''),
-            setFile(''),
-            setPlace(''),
-            setAddress(''),
-            setActivity(''),
-            setClearActivity((prev) => !prev)
-          );
+          onReset();
         })
         .catch((err) => console.error(err));
       setEditMode(false);
@@ -203,6 +193,26 @@ export default function Record({ selectUpdateEvent }) {
     }
   };
 
+  const onReset = () => {
+    return (
+      setInputs({
+        date: '',
+        hour: '',
+        minutes: '',
+        weight: '',
+        memo: '',
+        location: '',
+        activityName: '',
+      }),
+      setUrl(''),
+      setFile(''),
+      setPlace(''),
+      setAddress(''),
+      setActivity(''),
+      setClearActivity((prev) => !prev)
+    );
+  };
+
   const selectPlace = (placeName, placeAddress) => {
     setPlace(placeName);
     setAddress(placeAddress);
@@ -227,20 +237,7 @@ export default function Record({ selectUpdateEvent }) {
   const cancelHandler = () => {
     if (editMode) {
       setEditMode(false);
-      setInputs({
-        date: '',
-        hour: '',
-        minutes: '',
-        weight: '',
-        memo: '',
-        location: '',
-        activityName: '',
-      });
-      setUrl('');
-      setFile('');
-      setPlace('');
-      setAddress('');
-      setActivity('');
+      onReset();
     } else {
       return null;
     }
@@ -291,16 +288,30 @@ export default function Record({ selectUpdateEvent }) {
                 value={inputs.hour}
               />
               <span> 시간</span>
-
               <input
                 type='number'
                 name='minutes'
-                min='0'
+                min='1'
                 max='59'
                 onChange={inputHandler}
                 value={inputs.minutes}
               />
               <span> 분</span>
+              {err.time && (
+                <div className={classes.err__box}>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    height='24px'
+                    viewBox='0 0 24 24'
+                    width='24px'
+                    fill='#000000'
+                  >
+                    <path d='M0 0h24v24H0z' fill='none' />
+                    <path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z' />
+                  </svg>
+                  <p>운동 시간을 입력해주세요.</p>
+                </div>
+              )}
             </div>
             <div className={classes.form__input}>
               <label className={classes.input_title}>Place :</label>

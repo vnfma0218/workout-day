@@ -42,7 +42,13 @@ export default function Calendar(props) {
       events.map((event) => {
         return {
           id: event.id,
-          title: event.time,
+          title: `${
+            !event.hour
+              ? `${event.minutes}분`
+              : !event.minutes
+              ? `${event.hour}시간`
+              : `${event.hour}시간 ${event.minutes}분`
+          }`,
           start: event.date,
           end: event.date,
           display: 'background',

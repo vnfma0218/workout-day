@@ -14,10 +14,10 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     from: 'user',
     date: '',
   });
-  // console.log(inputs);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState(false);
+  const [checkItems, setCheckItems] = useState([]);
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -29,9 +29,15 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   };
 
   // const activityRef = dbService.collection('activity').doc(currentUser.uid);
-  const activityRef = dbService.collection('activity').doc('jiwon');
+  const activityRef = dbService
+    .collection('activity')
+    .doc('jiwon')
+    .collection('activityList');
   useEffect(() => {
-    const activityRef = dbService.collection('activity').doc('jiwon');
+    const activityRef = dbService
+      .collection('activity')
+      .doc('jiwon')
+      .collection('activityList');
 
     const activityDefault = [
       {
@@ -65,12 +71,14 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
         from: 'admin',
       },
     ];
-    activityRef.onSnapshot((doc) => {
-      if (doc.exists) {
-        // setActivities(doc.data().activityList);
-        setActivities(
-          activityDefault.concat(doc.data().activityList).reverse()
-        );
+
+    activityRef.onSnapshot((docs) => {
+      if (!docs.empty) {
+        let activityList = [];
+        docs.forEach((doc) => {
+          activityList.push({ ...doc.data(), id: doc.id });
+        });
+        setActivities(activityDefault.concat(activityList).reverse());
         setLoading(true);
       } else {
         setActivities(activityDefault.reverse());
@@ -81,40 +89,17 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
 
   const addActivityHandler = () => {
     if (!inputs.name || !inputs.imageUrl) {
-      //필수입력 알림 필요
       setError(true);
     } else {
-      activityRef.get().then((doc) => {
-        if (!doc.exists) {
-          dbService.doc('/activity/jiwon').set({
-            activityList: [inputs],
-          });
-          setLoading(true);
-          setInputs({
-            name: '',
-            imageUrl: '',
-            from: 'user',
-            date: '',
-          });
-        } else {
-          dbService
-            .doc('/activity/jiwon')
-            .get()
-            .then((doc) => {
-              let newActivityList = [];
-              newActivityList = doc.data().activityList;
-
-              newActivityList.push(inputs);
-              activityRef.update({ activityList: newActivityList });
-              setLoading(true);
-            });
-          setInputs({
-            name: '',
-            imageUrl: '',
-            from: 'user',
-            date: '',
-          });
-        }
+      activityRef.add({
+        ...inputs,
+      });
+      setLoading(true);
+      setInputs({
+        name: '',
+        imageUrl: '',
+        from: 'user',
+        date: '',
       });
       setModalOpen(false);
     }
@@ -122,6 +107,24 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
 
   const editHandler = () => {
     edit ? setEdit(false) : setEdit(true);
+  };
+
+  // const deleteHandler = (e) => {
+  //   activities;
+  //   console.log(e.target);
+  //   activityRef.get().then((docs) => {});
+  // };
+
+  const checkHandler = (id, checked) => {
+    if (checked) {
+      setCheckItems([...checkItems, id]);
+      // setActivities((prev) => {
+      //   prev.forEach((activi))
+      // })
+    } else {
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+    console.log(checkItems, id, checked);
   };
 
   useEffect(() => {
@@ -153,7 +156,6 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
       setActivities(oneSelectedTrue);
     }
   };
-
   return (
     <>
       <Modal
@@ -165,7 +167,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
         {<AddActivity inputs={inputs} setInputs={setInputs} error={error} />}
       </Modal>
       <ul className={classes.record__select}>
-        {err && (
+        {err.activity && (
           <div className={classes.err__box}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -212,6 +214,10 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
                     <input
                       type='checkbox'
                       style={{ transform: 'scale(1.5)' }}
+                      onChange={(e) =>
+                        checkHandler(activity.id, e.target.checked)
+                      }
+                      checked={checkItems.includes(activity.id) ? true : false}
                     />
                   ) : (
                     <svg
