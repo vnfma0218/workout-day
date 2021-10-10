@@ -10,10 +10,12 @@ import { useAuth } from '../../context/auth-context';
 import { dbService, storage } from '../../firebase';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import { useHistory } from 'react-router';
+import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 
 export default function UpdateUserInfo() {
   const [loadedUserInfo, setLoadedUserInfo] = useState();
   const { currentUser } = useAuth();
+  const [previewUrl, setPreviewUrl] = useState();
   const [loading, setLoading] = useState(true);
   const history = useHistory();
   const { formState, onInputChange, setFormData } = useForm(
@@ -100,6 +102,7 @@ export default function UpdateUserInfo() {
 
   const avatarChangeHandler = (e) => {
     const image = e.target.files[0];
+    setLoading(true);
     const uploadImage = storage.ref(`images/avatar/${image.name}`).put(image);
     uploadImage.on(
       'state_change',
@@ -117,6 +120,7 @@ export default function UpdateUserInfo() {
               .collection('users')
               .doc(currentUser.email)
               .update({ imageUrl: url });
+            setPreviewUrl(url);
             setLoading(false);
           })
           .then(() => {});
@@ -128,12 +132,16 @@ export default function UpdateUserInfo() {
       <MainHeader />
       <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
         <h1>현재 JW 님은 '운동모드' 입니다</h1>
-        {loadedUserInfo && !loading && (
+        {loadedUserInfo && (
           <article className={classes.userInfo}>
             <div className={classes.userImg}>
-              <h2 className={classes.title}>회원정보</h2>
               <div className={classes.avatar} onClick={onAvatarClick}>
-                <img src={loadedUserInfo.imageUrl.value} alt='userAvatar' />
+                <img
+                  src={previewUrl || loadedUserInfo.imageUrl.value}
+                  alt='userAvatar'
+                />
+                <p>프로필 사진</p>
+                {loading && <LoadingSpinner />}
               </div>
             </div>
             <input

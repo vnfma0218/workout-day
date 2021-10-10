@@ -12,7 +12,7 @@ import classes from './UserInfo.module.css';
 export default function UserInfo() {
   const mode = useContext(ModeContext);
   const [user, setUser] = useState();
-  const [bmi, setBMI] = useState();
+  const [bmi, setBMI] = useState(null);
   const { currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -23,11 +23,14 @@ export default function UserInfo() {
       .onSnapshot((snapshot) => {
         console.log(snapshot.data());
         setUser(snapshot.data());
-        const { bmi, result } = getBMI(
-          snapshot.data().weight,
-          snapshot.data().height
-        );
-        setBMI({ bmi, result });
+        if (snapshot.data().weight && snapshot.data().height) {
+          console.log('ddd');
+          const { bmi, result } = getBMI(
+            snapshot.data().weight,
+            snapshot.data().height
+          );
+          setBMI({ bmi, result });
+        }
       });
     // .then((doc) => {
     // });
@@ -70,23 +73,21 @@ export default function UserInfo() {
         onConfirm={changeModelHandler}
         name='CHANGE'
       >
-        {
-          <div className={classes.modal__content}>
-            <h3>
-              <strong>{mode.isDietMode ? '운동' : '다이어트'} 모드</strong>로
-              변경하시겠습니까?
-            </h3>
-            <div>
-              <p>운동 모드는 기본적인 운동을 기록하고 확인할 수 있습니다.</p>
-              <p>
-                다이어트 모드는 목표 몸무게를 설정하고 식단과 몸무게를 기록할 수
-                있습니다.
-              </p>
-            </div>
+        <div className={classes.modal__content}>
+          <h3>
+            <strong>{mode.isDietMode ? '운동' : '다이어트'} 모드</strong>로
+            변경하시겠습니까?
+          </h3>
+          <div>
+            <p>운동 모드는 기본적인 운동을 기록하고 확인할 수 있습니다.</p>
+            <p>
+              다이어트 모드는 목표 몸무게를 설정하고 식단과 몸무게를 기록할 수
+              있습니다.
+            </p>
           </div>
-        }
+        </div>
       </Modal>
-      {user && bmi && (
+      {user && (
         <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
           <h1>
             현재 JW 님은
@@ -99,7 +100,6 @@ export default function UserInfo() {
           </h1>
           <article className={classes.userInfo}>
             <div className={classes.userImg}>
-              <h2 className={classes.title}>회원정보</h2>
               <div className={classes.avatar}>
                 <img src={user.imageUrl} alt='userAvatar' />
               </div>
@@ -133,7 +133,7 @@ export default function UserInfo() {
                   <p className={classes.height}>BMI</p>
                   <p>
                     {bmi && `${bmi.bmi} (${bmi.result})`}
-                    {/* {bmi.bmi} {`(${bmi.result})`}  */}
+                    {!bmi && '키와 몸무게를 입력해주세요'}
                   </p>
                 </div>
               </div>
