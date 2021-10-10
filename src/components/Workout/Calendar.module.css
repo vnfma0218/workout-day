@@ -55,6 +55,12 @@
   height: 100%;
 }
 
+.loginBtn {
+  cursor: pointer;
+  font-size: 20px;
+  display: inline-block;
+}
+
 .mapIcon {
   position: relative;
   top: 10px;

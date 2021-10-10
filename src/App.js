@@ -24,10 +24,10 @@ function App() {
             <Route path='/auth'>
               <Auth />
             </Route>
-            <Route path='/userinfo/edit'>
+            <Route path='/userinfo/edit' exact>
               <UpdateUserInfo />
             </Route>
-            <Route path='/userinfo'>
+            <Route path='/userinfo' exact>
               <UserInfo />
             </Route>
             <Route path='/photo'>

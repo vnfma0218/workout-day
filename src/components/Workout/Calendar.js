@@ -10,6 +10,8 @@ import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 
 import './Calendar.css';
 import classes from './Calendar.module.css';
+import { useAuth } from '../../context/auth-context';
+import { useHistory } from 'react-router';
 
 export default function Calendar(props) {
   const {
@@ -24,6 +26,8 @@ export default function Calendar(props) {
   } = useFetchEvents();
   const [modalOpen, setModalOpen] = useState(false);
   const calendarComponentRef = useRef();
+  const { currentUser } = useAuth();
+  const history = useHistory();
 
   const getCalendarData = (fetchInfo, successCallback, failureCallback) => {
     if (fetchInfo) {
@@ -70,13 +74,32 @@ export default function Calendar(props) {
       <>
         {loading && <h1>loading</h1>}
         <h2 className={classes.workout__header}>{selectedDate}</h2>
-        <h1>운동기록이 없습니다.</h1>
-        <div className={classes.guide}>
-          <p>운동 등록하기 </p>
-          <div className={classes.downward__icon} onClick={toRecordPage}>
-            <img src='img/icons/arrow.png' alt='' />
-          </div>
-        </div>
+        {currentUser && (
+          <>
+            <h1>운동기록이 없습니다.</h1>
+            <div className={classes.guide}>
+              <p>운동 등록하기 </p>
+              <div className={classes.downward__icon} onClick={toRecordPage}>
+                <img src='img/icons/arrow.png' alt='' />
+              </div>
+            </div>
+          </>
+        )}
+        {!currentUser && (
+          <>
+            <h1 style={{ marginTop: '20px', marginBottom: '30px' }}>
+              로그인을 해주세요
+            </h1>
+            <p
+              className={classes.loginBtn}
+              onClick={() => {
+                history.push('/auth');
+              }}
+            >
+              로그인 페이지 이동
+            </p>
+          </>
+        )}
       </>
     );
   } else {

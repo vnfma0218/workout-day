@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
@@ -14,11 +15,11 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     from: 'user',
     date: '',
   });
-  // console.log(inputs);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState(false);
-
+  const { currentUser } = useAuth();
+  // const userEmail = currentUser ? currentUser.email : null;
   const openModalHandler = () => {
     setModalOpen(true);
   };
@@ -28,11 +29,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     setError(false);
   };
 
-  // const activityRef = dbService.collection('activity').doc(currentUser.uid);
-  const activityRef = dbService.collection('activity').doc('jiwon');
   useEffect(() => {
-    const activityRef = dbService.collection('activity').doc('jiwon');
-
     const activityDefault = [
       {
         name: 'Cycling',
@@ -65,28 +62,38 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
         from: 'admin',
       },
     ];
-    activityRef.onSnapshot((doc) => {
-      if (doc.exists) {
-        // setActivities(doc.data().activityList);
-        setActivities(
-          activityDefault.concat(doc.data().activityList).reverse()
-        );
-        setLoading(true);
-      } else {
-        setActivities(activityDefault.reverse());
-        setLoading(true);
-      }
-    });
-  }, []);
 
+    if (currentUser) {
+      //로그인되어있으면
+      const activityRef = dbService
+        .collection('activity')
+        .doc(currentUser.email);
+      activityRef.onSnapshot((doc) => {
+        if (doc.exists) {
+          // setActivities(doc.data().activityList);
+          setActivities(
+            activityDefault.concat(doc.data().activityList).reverse()
+          );
+          setLoading(true);
+        } else {
+          setActivities(activityDefault.reverse());
+          setLoading(true);
+        }
+      });
+    } else {
+      setActivities(activityDefault.reverse());
+      setLoading(true);
+    }
+  }, [currentUser]);
   const addActivityHandler = () => {
+    const activityRef = dbService.collection('activity').doc(currentUser.email);
     if (!inputs.name || !inputs.imageUrl) {
       //필수입력 알림 필요
       setError(true);
     } else {
       activityRef.get().then((doc) => {
         if (!doc.exists) {
-          dbService.doc('/activity/jiwon').set({
+          dbService.doc(`/activity/${currentUser.email}`).set({
             activityList: [inputs],
           });
           setLoading(true);
@@ -98,7 +105,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
           });
         } else {
           dbService
-            .doc('/activity/jiwon')
+            .doc(`/activity/${currentUser.email}`)
             .get()
             .then((doc) => {
               let newActivityList = [];

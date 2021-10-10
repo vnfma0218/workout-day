@@ -9,9 +9,7 @@ export default function useFetchEvents() {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [selectedEvent, setSelectedEvent] = useState();
-  // const {
-  //   currentUser: { email },
-  // } = useAuth();
+  const { currentUser } = useAuth();
 
   const dateClickHandler = (arg) => {
     if (!arg.dateStr) return;
@@ -34,23 +32,28 @@ export default function useFetchEvents() {
       startDate || `${year}-${month < 10 ? `0${month}` : { month }}-01`;
     const end = endDate || `${year}-${month < 10 ? `0${month}` : { month }}-31`;
     let loadedEvents = [];
-    dbService
-      .collection('record')
-      .doc('jiwon')
-      .collection('events')
-      .orderBy('date')
-      .startAt(start)
-      .endAt(end)
-      .onSnapshot((snapshot) => {
-        loadedEvents = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setEvents(loadedEvents);
-        setLoading(false);
-      });
+
+    if (currentUser) {
+      const userEmail = currentUser.email;
+      dbService
+        .collection('record')
+        .doc(userEmail)
+        .collection('events')
+        .orderBy('date')
+        .startAt(start)
+        .endAt(end)
+        .onSnapshot((snapshot) => {
+          loadedEvents = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setEvents(loadedEvents);
+          setLoading(false);
+        });
+    }
     setSelectedDate(date.toISOString().split('T')[0]);
-  }, [startDate, endDate]);
+    setLoading(false);
+  }, [startDate, endDate, currentUser]);
 
   return {
     events,
