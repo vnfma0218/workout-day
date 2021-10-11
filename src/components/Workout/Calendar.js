@@ -73,7 +73,6 @@ export default function Calendar(props) {
   const recordEditHandler = () => {
     props.recordEditHandler({ ...selectedEvent });
   };
-
   let dateItem;
   if (!selectedEvent) {
     dateItem = (
@@ -122,7 +121,7 @@ export default function Calendar(props) {
           </svg>
         </span>
         <span className={classes.workout__location}>
-          {selectedEvent.location}
+          {selectedEvent.location[0]}
         </span>
 
         <div className={classes.workout__img}>

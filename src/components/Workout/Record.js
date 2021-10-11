@@ -8,7 +8,7 @@ import { ModeContext } from '../../context/mode-context';
 import { dbService, storage } from '../../firebase';
 import classes from './Record.module.css';
 import { useAuth } from '../../context/auth-context';
-export default function Record({ selectUpdateEvent }) {
+export default function Record({ selectUpdateEvent, props }) {
   const mode = useContext(ModeContext);
   const [mapOpen, setMapOpen] = useState(false);
   const [enter, setEnter] = useState(true);
@@ -23,6 +23,7 @@ export default function Record({ selectUpdateEvent }) {
     memo: '',
     location: '',
     activityName: '',
+    activityId: '',
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
@@ -30,7 +31,14 @@ export default function Record({ selectUpdateEvent }) {
   const [totalByte, setTotalByte] = useState(0);
   const [place, setPlace] = useState('');
   const [address, setAddress] = useState('');
-  const [activity, setActivity] = useState('');
+  const [activity, setActivity] = useState({
+    name: '',
+    id: '',
+  });
+  const [editActivity, setEditActivity] = useState({
+    name: '',
+    id: '',
+  });
   // const [err, setErr] = useState(false);
   const [err, setErr] = useState({
     time: false,
@@ -39,6 +47,16 @@ export default function Record({ selectUpdateEvent }) {
   const [clearActivity, setClearActivity] = useState(false);
   const [recordDocId, setRecordDocId] = useState();
   const { currentUser } = useAuth();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState();
+
+  const openModalHandler = () => {
+    setModalOpen(true);
+  };
+
+  const closeModalHandler = () => {
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     if (!selectUpdateEvent) return;
@@ -52,8 +70,10 @@ export default function Record({ selectUpdateEvent }) {
       memo,
       location,
       activityName,
+      activityId,
       imageUrl,
     } = selectUpdateEvent;
+    console.log(selectUpdateEvent);
     setInputs({
       date,
       hour,
@@ -65,6 +85,7 @@ export default function Record({ selectUpdateEvent }) {
     });
     setFile(imageUrl);
     setUrl(imageUrl);
+    setEditActivity({ name: activityName, id: activityId });
   }, [selectUpdateEvent]);
 
   const oepnMapHandler = () => {
@@ -112,7 +133,8 @@ export default function Record({ selectUpdateEvent }) {
           memo: target.memo.value,
           location: enter ? target.location.value : [place, address],
           uploadDate: new Date(),
-          workout: activity,
+          activityName: activity.name,
+          activityId: activity.id,
         })
         .then((result) => {
           //입력 후 초기화
@@ -127,16 +149,15 @@ export default function Record({ selectUpdateEvent }) {
         .doc(recordDocId)
         .set({
           date: target.date.value,
-          hour: `${!target.hour.value ? '' : `${target.hour.value}시간`}`,
-          minutes: `${
-            !target.minutes.value ? '' : `${target.minutes.value}분`
-          }`,
+          hour: `${!target.hour.value ? '' : target.hour.value}`,
+          minutes: `${!target.minutes.value ? '' : target.minutes.value}`,
           weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
           imageUrl: url,
           memo: target.memo.value,
           location: enter ? target.location.value : [place, address],
           uploadDate: new Date(),
-          workout: activity,
+          activityName: activity.name,
+          activityId: activity.id,
         })
         .then((result) => {
           onReset();
@@ -180,6 +201,10 @@ export default function Record({ selectUpdateEvent }) {
     );
   };
 
+  const recordEditHandler = () => {
+    props.recordEditHandler({ ...selectedEvent });
+  };
+
   const inputHandler = (e) => {
     const { name, value } = e.target;
     setInputs({
@@ -189,6 +214,35 @@ export default function Record({ selectUpdateEvent }) {
     if (e.target.name === 'memo') {
       setTotalByte(value.length);
     }
+
+    if (name === 'hour' || name === 'minute') {
+      setErr({
+        time: false,
+        activity: false,
+      });
+    }
+
+    const savedDate = [];
+
+    dbService
+      .collection('record')
+      .doc(currentUser.email)
+      .collection('events')
+      .where('date', '==', value)
+      .get()
+      .then((docs) => {
+        docs.forEach((doc) => {
+          savedDate.push(doc.data());
+        });
+
+        const sameDateRecord = savedDate.filter((el) => el.date === value)[0];
+        if (sameDateRecord) {
+          openModalHandler();
+        }
+
+        console.log(sameDateRecord);
+        setSelectedEvent(sameDateRecord);
+      });
   };
 
   const onReset = () => {
@@ -206,8 +260,12 @@ export default function Record({ selectUpdateEvent }) {
       setFile(''),
       setPlace(''),
       setAddress(''),
-      setActivity(''),
-      setClearActivity((prev) => !prev)
+      setActivity({ name: '', id: '' }),
+      setClearActivity((prev) => !prev),
+      setErr({
+        time: false,
+        activity: false,
+      })
     );
   };
 
@@ -223,12 +281,12 @@ export default function Record({ selectUpdateEvent }) {
     setAddress('');
   };
 
-  const recordActivity = (activityName) => {
+  const recordActivity = (activityName, activityId) => {
     if (activityName === null) {
-      setActivity(activityName);
+      setActivity({ name: '', id: '' });
     } else {
       setErr(false);
-      setActivity(activityName);
+      setActivity({ name: activityName, id: activityId });
     }
   };
 
@@ -240,9 +298,22 @@ export default function Record({ selectUpdateEvent }) {
       return null;
     }
   };
-
   return (
     <>
+      <Modal
+        open={modalOpen}
+        title='Already have record'
+        onClose={closeModalHandler}
+        onConfirm={recordEditHandler}
+        name='EDIT'
+      >
+        {
+          <div className={classes.modal__date}>
+            선택한 날짜에 작성한 기록이 있습니다. <br />
+            수정하시겠습니까?
+          </div>
+        }
+      </Modal>
       <Modal
         open={mapOpen}
         title='Please enter your location'
@@ -257,6 +328,7 @@ export default function Record({ selectUpdateEvent }) {
             recordActivity={recordActivity}
             err={err}
             clearActivity={clearActivity}
+            selectActivityNameId={editActivity}
           />
           {/* Record Form */}
           <form
@@ -266,6 +338,7 @@ export default function Record({ selectUpdateEvent }) {
           >
             <div className={classes.form__input}>
               <label className={classes.input_title}>Date :</label>
+
               <input
                 type='date'
                 name='date'

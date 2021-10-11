@@ -120,7 +120,10 @@ export default function MainPage(props) {
           recordEditHandler={recordEditHandler}
         />
         <div className={classes.divider}></div>
-        <Record selectUpdateEvent={selectUpdateEvent} />
+        <Record
+          selectUpdateEvent={selectUpdateEvent}
+          recordEditHandler={recordEditHandler}
+        />
       </div>
       <img
         src='img/icons/scroll.png'

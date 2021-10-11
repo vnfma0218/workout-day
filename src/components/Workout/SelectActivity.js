@@ -6,7 +6,12 @@ import Modal from '../../shared/UIElement/Modal';
 import AddActivity from './AddActivity';
 import classes from './SelectActivity.module.css';
 
-export default function SelectActivity({ err, recordActivity, clearActivity }) {
+export default function SelectActivity({
+  err,
+  recordActivity,
+  clearActivity,
+  selectActivityNameId,
+}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [inputs, setInputs] = useState({
@@ -19,10 +24,12 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState(false);
   const [checkItems, setCheckItems] = useState([]);
-  // const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
+
   // const userEmail = currentUser ? currentUser.email : null;
   const openModalHandler = () => {
     setModalOpen(true);
+    setError(false);
   };
 
   const closeModalHandler = () => {
@@ -31,68 +38,85 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   };
 
   // const activityRef = dbService.collection('activity').doc(currentUser.uid);
-  const activityRef = dbService
-    .collection('activity')
-    .doc('jiwon')
-    .collection('activityList');
+  // const activityRef = dbService
+  //   .collection('activity')
+  //   .doc('jiwon')
+  //   .collection('activityList');
 
   useEffect(() => {
-    const activityRef = dbService
-      .collection('activity')
-      .doc('jiwon')
-      .collection('activityList');
+    // const activityRef = dbService
+    //   .collection('activity')
+    //   .doc('jiwon')
+    //   .collection('activityList');
 
     const activityDefault = [
       {
         name: 'Cycling',
         imageUrl: 'img/exercise/bicycle.png',
         from: 'admin',
+        id: 'adminCycling',
       },
       {
         name: 'Swimming',
         imageUrl: 'img/exercise/swimming.png',
         from: 'admin',
+        id: 'adminSwimming',
       },
       {
         name: 'Yoga',
         imageUrl: 'img/exercise/yoga.png',
         from: 'admin',
+        id: 'adminYoga',
       },
       {
         name: 'Badminton',
         imageUrl: 'img/exercise/badminton.png',
         from: 'admin',
+        id: 'adminBadminton',
       },
       {
         name: 'Running',
         imageUrl: 'img/exercise/jogging.png',
         from: 'admin',
+        id: 'adminRunning',
       },
       {
         name: 'Gym',
         imageUrl: 'img/exercise/gym.png',
         from: 'admin',
+        id: 'adminGym',
       },
     ];
+    if (currentUser) {
+      const activityRef = dbService
+        .collection('activity')
+        .doc(currentUser.email)
+        .collection('activityList');
 
-    activityRef.onSnapshot((docs) => {
-      if (!docs.empty) {
-        let activityList = [];
-        docs.forEach((doc) => {
-          activityList.push({ ...doc.data(), id: doc.id });
-        });
+      activityRef.onSnapshot((docs) => {
+        if (!docs.empty) {
+          let activityList = [];
+          docs.forEach((doc) => {
+            activityList.push({ ...doc.data(), id: doc.id });
+          });
 
-        setActivities(activityDefault.concat(activityList).reverse());
-        // console.log(activityList);
-        setLoading(true);
-      } else {
-        setActivities(activityDefault.reverse());
-        setLoading(true);
-      }
-    });
+          setActivities(activityDefault.concat(activityList).reverse());
+          // console.log(activityList);
+          setLoading(true);
+        } else {
+          setActivities(activityDefault.reverse());
+          setLoading(true);
+        }
+      });
+    }
   }, []);
 
   const addActivityHandler = () => {
+    const activityRef = dbService
+      .collection('activity')
+      .doc(currentUser.email)
+      .collection('activityList');
+
     if (!inputs.name || !inputs.imageUrl) {
       setError(true);
     } else {
@@ -115,6 +139,11 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   };
 
   const deleteHandler = () => {
+    const activityRef = dbService
+      .collection('activity')
+      .doc(currentUser.email)
+      .collection('activityList');
+
     let newActivities = activities.filter(
       (activity) => !checkItems.includes(activity.id)
     );
@@ -142,16 +171,31 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     });
   }, [clearActivity]);
 
-  const selectActivityHandler = (e, id, activity) => {
+  useEffect(() => {
+    if (selectActivityNameId) {
+      let activityEditStatus = activities.map((el) => {
+        if (selectActivityNameId.id === el.id) {
+          return { ...el, selected: true };
+        } else {
+          return { ...el, selected: false };
+        }
+      });
+      setActivities(activityEditStatus);
+    }
+  }, [selectActivityNameId]);
+
+  const selectActivityHandler = (id, activity) => {
     const allSelectedFalse = activities.map((el) => {
       return { ...el, selected: false };
     });
 
     const oneSelectedTrue = activities.map((el, idx) => {
       if (id === idx) {
-        recordActivity(el.name);
+        recordActivity(el.name, el.id);
+        // setSelectedActivity(el.name);
         return { ...el, selected: true };
       } else {
+        // setSelectedActivity('');
         return { ...el, selected: false };
       }
     });
@@ -162,6 +206,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
       setActivities(oneSelectedTrue);
     }
   };
+
   return (
     <>
       <Modal
@@ -238,7 +283,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
                           ? classes.select__icon
                           : classes.icon
                       }
-                      onClick={(e) => selectActivityHandler(e, id, activity)}
+                      onClick={(e) => selectActivityHandler(id, activity)}
                     >
                       <path d='M0 0h24v24H0z' fill='none' />
                       <path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />

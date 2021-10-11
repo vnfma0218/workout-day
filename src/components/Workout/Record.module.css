@@ -1,3 +1,9 @@
+.modal__date {
+  padding: 1rem;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .record {
   /* padding: 100px 140px 50px; */
   /* padding: 3rem 5rem 2rem; */
