@@ -6,6 +6,7 @@ import classes from './DatePicker.module.css';
 export default function DateRange(props) {
   const [startDate, setStartDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
+
   const handleChange = (e) => {
     setIsOpen(!isOpen);
     setStartDate(e);

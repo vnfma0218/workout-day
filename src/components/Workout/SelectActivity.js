@@ -26,7 +26,6 @@ export default function SelectActivity({
   const [checkItems, setCheckItems] = useState([]);
   const { currentUser } = useAuth();
 
-  // const userEmail = currentUser ? currentUser.email : null;
   const openModalHandler = () => {
     setModalOpen(true);
     setError(false);
@@ -37,18 +36,7 @@ export default function SelectActivity({
     setError(false);
   };
 
-  // const activityRef = dbService.collection('activity').doc(currentUser.uid);
-  // const activityRef = dbService
-  //   .collection('activity')
-  //   .doc('jiwon')
-  //   .collection('activityList');
-
   useEffect(() => {
-    // const activityRef = dbService
-    //   .collection('activity')
-    //   .doc('jiwon')
-    //   .collection('activityList');
-
     const activityDefault = [
       {
         name: 'Cycling',
@@ -102,6 +90,7 @@ export default function SelectActivity({
 
           setActivities(activityDefault.concat(activityList).reverse());
           // console.log(activityList);
+
           setLoading(true);
         } else {
           setActivities(activityDefault.reverse());
@@ -109,7 +98,7 @@ export default function SelectActivity({
         }
       });
     }
-  }, []);
+  }, [currentUser]);
 
   const addActivityHandler = () => {
     const activityRef = dbService
@@ -148,7 +137,6 @@ export default function SelectActivity({
       (activity) => !checkItems.includes(activity.id)
     );
     setActivities(newActivities);
-    // console.log(newActivities);
     checkItems.forEach((id) => {
       activityRef.doc(id).delete();
     });
@@ -218,7 +206,7 @@ export default function SelectActivity({
         {<AddActivity inputs={inputs} setInputs={setInputs} error={error} />}
       </Modal>
       <ul className={classes.record__select}>
-        {err.activity && (
+        {err && err.activity && (
           <div className={classes.err__box}>
             <svg
               xmlns='http://www.w3.org/2000/svg'

@@ -44,7 +44,7 @@ export default function Record(props) {
     name: '',
     id: '',
   });
-  // const [err, setErr] = useState(false);
+
   const [err, setErr] = useState({
     time: false,
     activity: false,
@@ -175,7 +175,9 @@ export default function Record(props) {
 
   // image file 저장
   const fileHandler = (e) => {
+    if (e.target.files.length === 0) return;
     const file = e.target.files[0];
+    console.log(file);
     const reader = new FileReader();
     reader.onload = () => {
       setUrl(reader.result);
@@ -208,6 +210,11 @@ export default function Record(props) {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
+    if (name === 'hour' || name === 'minutes') {
+      setErr((prev) => {
+        return { ...prev, time: null };
+      });
+    }
     setInputs({
       ...inputs,
       [name]: value,
@@ -375,7 +382,7 @@ export default function Record(props) {
                 value={inputs.minutes}
               />
               <span> 분</span>
-              {err.time && (
+              {err && err.time && (
                 <div className={classes.err__box}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
