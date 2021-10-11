@@ -8,7 +8,12 @@ import { ModeContext } from '../../context/mode-context';
 import { dbService, storage } from '../../firebase';
 import classes from './Record.module.css';
 import { useAuth } from '../../context/auth-context';
-export default function Record({ selectUpdateEvent, props }) {
+import useFetchEvents from '../../shared/hooks/useFetchEvents';
+
+export default function Record(props) {
+  const selectUpdateEvent = props.selectUpdateEvent;
+  const { selectedEvent, setSelectedEvent } = useFetchEvents();
+
   const mode = useContext(ModeContext);
   const [mapOpen, setMapOpen] = useState(false);
   const [enter, setEnter] = useState(true);
@@ -48,7 +53,6 @@ export default function Record({ selectUpdateEvent, props }) {
   const [recordDocId, setRecordDocId] = useState();
   const { currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState();
 
   const openModalHandler = () => {
     setModalOpen(true);
@@ -56,6 +60,7 @@ export default function Record({ selectUpdateEvent, props }) {
 
   const closeModalHandler = () => {
     setModalOpen(false);
+    setInputs({ ...inputs, date: '' });
   };
 
   useEffect(() => {
@@ -73,7 +78,7 @@ export default function Record({ selectUpdateEvent, props }) {
       activityId,
       imageUrl,
     } = selectUpdateEvent;
-    console.log(selectUpdateEvent);
+
     setInputs({
       date,
       hour,
@@ -181,7 +186,7 @@ export default function Record({ selectUpdateEvent, props }) {
       setFile(file);
       setUrl(url);
     }
-    console.log(file.name);
+
     const uploadFile = storage.ref(`images/record/${file.name}`).put(file);
     uploadFile.on(
       'state_change',
@@ -201,10 +206,6 @@ export default function Record({ selectUpdateEvent, props }) {
     );
   };
 
-  const recordEditHandler = () => {
-    props.recordEditHandler({ ...selectedEvent });
-  };
-
   const inputHandler = (e) => {
     const { name, value } = e.target;
     setInputs({
@@ -222,27 +223,32 @@ export default function Record({ selectUpdateEvent, props }) {
       });
     }
 
-    const savedDate = [];
+    if (name === 'date') {
+      dbService
+        .collection('record')
+        .doc(currentUser.email)
+        .collection('events')
+        // .where('date', '==', value)
+        .get()
+        .then((docs) => {
+          const savedDate = [];
+          docs.forEach((doc) => {
+            savedDate.push(doc.data());
+          });
 
-    dbService
-      .collection('record')
-      .doc(currentUser.email)
-      .collection('events')
-      .where('date', '==', value)
-      .get()
-      .then((docs) => {
-        docs.forEach((doc) => {
-          savedDate.push(doc.data());
+          let sameDateRecord = savedDate.filter((el) => el.date === value)[0];
+          setSelectedEvent(sameDateRecord);
+
+          if (sameDateRecord) {
+            openModalHandler();
+          }
         });
+    }
+  };
 
-        const sameDateRecord = savedDate.filter((el) => el.date === value)[0];
-        if (sameDateRecord) {
-          openModalHandler();
-        }
-
-        console.log(sameDateRecord);
-        setSelectedEvent(sameDateRecord);
-      });
+  const recordEditHandler = () => {
+    props.recordEditHandler({ ...selectedEvent });
+    setModalOpen(false);
   };
 
   const onReset = () => {
@@ -460,7 +466,7 @@ export default function Record({ selectUpdateEvent, props }) {
                 <input
                   type='file'
                   name='image'
-                  required
+                  required={editMode ? false : true}
                   onChange={fileHandler}
                   ref={fileInput}
                 />
