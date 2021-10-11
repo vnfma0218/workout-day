@@ -67,7 +67,9 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
       //로그인되어있으면
       const activityRef = dbService
         .collection('activity')
-        .doc(currentUser.email);
+        .doc(currentUser.email)
+        .collection('activityList');
+
       activityRef.onSnapshot((doc) => {
         if (doc.exists) {
           // setActivities(doc.data().activityList);
@@ -160,7 +162,6 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
       setActivities(oneSelectedTrue);
     }
   };
-
   return (
     <>
       <Modal
