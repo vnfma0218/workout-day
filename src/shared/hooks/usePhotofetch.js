@@ -7,15 +7,13 @@ export default function usePhotofetch() {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [lastDoc, setLastDoc] = useState();
-  const {
-    currentUser: { email },
-  } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     setLoading(true);
     dbService
       .collection('record')
-      .doc(email)
+      .doc(currentUser.email)
       .collection('events')
       .orderBy('date')
       .limit(3)
@@ -30,13 +28,13 @@ export default function usePhotofetch() {
         setHasMore(!docs.empty);
         setLoading(false);
       });
-  }, [email]);
+  }, [currentUser.email]);
 
   const fetchNextData = () => {
     setLoading(true);
     dbService
       .collection('record')
-      .doc(email)
+      .doc(currentUser.email)
       .collection('events')
       .orderBy('date')
       .startAfter(lastDoc)

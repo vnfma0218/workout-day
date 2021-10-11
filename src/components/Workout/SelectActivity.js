@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
@@ -18,7 +19,8 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState(false);
   const [checkItems, setCheckItems] = useState([]);
-
+  // const { currentUser } = useAuth();
+  // const userEmail = currentUser ? currentUser.email : null;
   const openModalHandler = () => {
     setModalOpen(true);
   };
@@ -33,6 +35,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     .collection('activity')
     .doc('jiwon')
     .collection('activityList');
+
   useEffect(() => {
     const activityRef = dbService
       .collection('activity')
@@ -78,7 +81,9 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
         docs.forEach((doc) => {
           activityList.push({ ...doc.data(), id: doc.id });
         });
+
         setActivities(activityDefault.concat(activityList).reverse());
+        // console.log(activityList);
         setLoading(true);
       } else {
         setActivities(activityDefault.reverse());
@@ -109,22 +114,23 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     edit ? setEdit(false) : setEdit(true);
   };
 
-  // const deleteHandler = (e) => {
-  //   activities;
-  //   console.log(e.target);
-  //   activityRef.get().then((docs) => {});
-  // };
+  const deleteHandler = () => {
+    let newActivities = activities.filter(
+      (activity) => !checkItems.includes(activity.id)
+    );
+    setActivities(newActivities);
+    // console.log(newActivities);
+    checkItems.forEach((id) => {
+      activityRef.doc(id).delete();
+    });
+  };
 
   const checkHandler = (id, checked) => {
     if (checked) {
       setCheckItems([...checkItems, id]);
-      // setActivities((prev) => {
-      //   prev.forEach((activi))
-      // })
     } else {
       setCheckItems(checkItems.filter((el) => el !== id));
     }
-    console.log(checkItems, id, checked);
   };
 
   useEffect(() => {
@@ -246,7 +252,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
           <Button
             className={edit ? classes.edit__btn : classes.unactive}
             name='DELETE'
-            // onClick={deleteHandler}
+            onClick={deleteHandler}
           />
           <Button
             className={classes.edit__btn}

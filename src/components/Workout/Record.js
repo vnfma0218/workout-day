@@ -6,8 +6,8 @@ import SelectActivity from './SelectActivity';
 import Button from '../../shared/UIElement/Button';
 import { ModeContext } from '../../context/mode-context';
 import { dbService, storage } from '../../firebase';
-import { useAuth } from '../../context/auth-context';
 import classes from './Record.module.css';
+import { useAuth } from '../../context/auth-context';
 export default function Record({ selectUpdateEvent }) {
   const mode = useContext(ModeContext);
   const [mapOpen, setMapOpen] = useState(false);
@@ -38,9 +38,7 @@ export default function Record({ selectUpdateEvent }) {
   });
   const [clearActivity, setClearActivity] = useState(false);
   const [recordDocId, setRecordDocId] = useState();
-  // const {
-  //   currentUser: { email },
-  // } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (!selectUpdateEvent) return;
@@ -103,7 +101,7 @@ export default function Record({ selectUpdateEvent }) {
     if (!editMode) {
       dbService
         .collection('record')
-        .doc('jiwon')
+        .doc(currentUser.email)
         .collection('events')
         .add({
           date: target.date.value,
@@ -124,7 +122,7 @@ export default function Record({ selectUpdateEvent }) {
     } else {
       dbService
         .collection('record')
-        .doc('jiwon')
+        .doc(currentUser.email)
         .collection('events')
         .doc(recordDocId)
         .set({
@@ -242,6 +240,7 @@ export default function Record({ selectUpdateEvent }) {
       return null;
     }
   };
+
   return (
     <>
       <Modal

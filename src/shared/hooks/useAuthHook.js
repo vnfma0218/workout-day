@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../../context/auth-context';
-import { dbService } from '../../firebase';
+import { config, dbService } from '../../firebase';
 
 export default function useAuthHook() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function useAuthHook() {
       setModalOpen(true);
       return;
     }
-
+    const noImg = 'no-image.png';
     const data = await signup(email, password);
     const userId = data.user.uid;
     const newUser = {
@@ -51,8 +51,8 @@ export default function useAuthHook() {
       email,
       nickname,
       workoutMode: isWorkoutMode,
+      imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
     };
-
     await dbService.doc(`/users/${newUser.email}`).set(newUser);
     history.push('/');
   };
