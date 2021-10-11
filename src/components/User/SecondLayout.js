@@ -3,16 +3,25 @@ import usePhotofetch from '../../shared/hooks/usePhotofetch';
 import MainHeader from '../../shared/Navigation/MainHeader';
 
 import DateRange from '../../shared/UIElement/DatePicker';
+import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 import Wrapper from '../../shared/UIElement/Wrapper';
 
 import classes from './SecondLayout.module.css';
 import UserPhotoInfo from './UserPhotoInfo';
 export default function SecondLayout() {
-  // const [loadedPhotos, setLoadedPhotos] = useState([]);
-  const [minDate, setMinDate] = useState(new Date());
-  const [endDate, setEndDate] = useState();
-  console.log(endDate);
-  const { loadedPhotos, loading, hasMore, fetchNextData } = usePhotofetch();
+  const {
+    loadedPhotos,
+    loading,
+    hasMore,
+    fetchNextData,
+    startDate,
+    setStartDate,
+    setEndDate,
+    fetchPhotosByDate,
+    setInfiniteMode,
+    infiniteMode,
+  } = usePhotofetch();
+
   const observer = useRef();
 
   const lastRef = useCallback(
@@ -35,9 +44,9 @@ export default function SecondLayout() {
   );
 
   const selectMinDate = (date) => {
-    setMinDate(date);
+    setStartDate(date);
   };
-
+  console.log('loadedPhotos', loadedPhotos);
   return (
     <>
       <MainHeader />
@@ -47,15 +56,31 @@ export default function SecondLayout() {
           <div className={classes.selectDate}>
             <DateRange setDate={selectMinDate} />
             <p>–</p>
-            <DateRange minDate={minDate} setDate={(date) => setEndDate(date)} />
+            <DateRange
+              minDate={startDate}
+              setDate={(date) => setEndDate(date)}
+            />
           </div>
-          <button className={classes.selectBtn}>조회</button>
+          <button
+            className={classes.selectBtn}
+            onClick={() => fetchPhotosByDate()}
+          >
+            조회
+          </button>
+
+          <button
+            className={classes.latestBtn}
+            onClick={() => setInfiniteMode(true)}
+          >
+            최근순
+          </button>
         </div>
 
+        {loading && <LoadingSpinner />}
         <article className={classes.photos}>
           {loadedPhotos &&
             loadedPhotos.map((photo, index) => {
-              if (loadedPhotos.length === index + 1) {
+              if (loadedPhotos.length === index + 1 && infiniteMode) {
                 return (
                   <div
                     key={photo.id}

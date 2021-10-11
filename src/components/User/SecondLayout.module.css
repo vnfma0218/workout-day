@@ -1,5 +1,6 @@
 .selectDate__container {
   display: flex;
+  position: relative;
 }
 .selectDate {
   display: flex;
@@ -27,6 +28,20 @@
   font-size: 16px;
   font-weight: 800;
   background-color: rgb(253, 245, 245);
+  cursor: pointer;
+}
+.latestBtn {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  margin-left: 20px;
+  border-radius: 30px;
+  padding: 8px;
+  width: 100px;
+  font-size: 16px;
+  font-weight: 800;
+  background-color: rgb(253, 245, 245);
+  cursor: pointer;
 }
 
 .photos {

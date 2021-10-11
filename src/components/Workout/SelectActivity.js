@@ -19,8 +19,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState(false);
   const [checkItems, setCheckItems] = useState([]);
-  // const { currentUser } = useAuth();
-  // const userEmail = currentUser ? currentUser.email : null;
+  const { currentUser } = useAuth();
   const openModalHandler = () => {
     setModalOpen(true);
   };
@@ -30,18 +29,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
     setError(false);
   };
 
-  // const activityRef = dbService.collection('activity').doc(currentUser.uid);
-  const activityRef = dbService
-    .collection('activity')
-    .doc('jiwon')
-    .collection('activityList');
-
   useEffect(() => {
-    const activityRef = dbService
-      .collection('activity')
-      .doc('jiwon')
-      .collection('activityList');
-
     const activityDefault = [
       {
         name: 'Cycling',
@@ -75,24 +63,35 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
       },
     ];
 
-    activityRef.onSnapshot((docs) => {
-      if (!docs.empty) {
-        let activityList = [];
-        docs.forEach((doc) => {
-          activityList.push({ ...doc.data(), id: doc.id });
-        });
+    if (currentUser) {
+      const activityRef = dbService
+        .collection('activity')
+        .doc(currentUser.email)
+        .collection('activityList');
 
-        setActivities(activityDefault.concat(activityList).reverse());
-        // console.log(activityList);
-        setLoading(true);
-      } else {
-        setActivities(activityDefault.reverse());
-        setLoading(true);
-      }
-    });
-  }, []);
+      activityRef.onSnapshot((docs) => {
+        if (!docs.empty) {
+          let activityList = [];
+          docs.forEach((doc) => {
+            activityList.push({ ...doc.data(), id: doc.id });
+          });
+
+          setActivities(activityDefault.concat(activityList).reverse());
+          setLoading(true);
+        } else {
+          setActivities(activityDefault.reverse());
+          setLoading(true);
+        }
+      });
+    }
+  }, [currentUser]);
 
   const addActivityHandler = () => {
+    const activityRef = dbService
+      .collection('activity')
+      .doc(currentUser.email)
+      .collection('activityList');
+
     if (!inputs.name || !inputs.imageUrl) {
       setError(true);
     } else {
@@ -115,11 +114,15 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
   };
 
   const deleteHandler = () => {
+    const activityRef = dbService
+      .collection('activity')
+      .doc(currentUser.email)
+      .collection('activityList');
+
     let newActivities = activities.filter(
       (activity) => !checkItems.includes(activity.id)
     );
     setActivities(newActivities);
-    // console.log(newActivities);
     checkItems.forEach((id) => {
       activityRef.doc(id).delete();
     });
@@ -173,7 +176,7 @@ export default function SelectActivity({ err, recordActivity, clearActivity }) {
         {<AddActivity inputs={inputs} setInputs={setInputs} error={error} />}
       </Modal>
       <ul className={classes.record__select}>
-        {err.activity && (
+        {err && err.activity && (
           <div className={classes.err__box}>
             <svg
               xmlns='http://www.w3.org/2000/svg'

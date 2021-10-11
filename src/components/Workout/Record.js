@@ -127,10 +127,8 @@ export default function Record({ selectUpdateEvent }) {
         .doc(recordDocId)
         .set({
           date: target.date.value,
-          hour: `${!target.hour.value ? '' : `${target.hour.value}시간`}`,
-          minutes: `${
-            !target.minutes.value ? '' : `${target.minutes.value}분`
-          }`,
+          hour: `${!target.hour.value ? '' : `${target.hour.value}`}`,
+          minutes: `${!target.minutes.value ? '' : `${target.minutes.value}`}`,
           weight: mode.isDietMode ? parseInt(target.weight.value) : 0,
           imageUrl: url,
           memo: target.memo.value,
@@ -182,6 +180,11 @@ export default function Record({ selectUpdateEvent }) {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
+    if (name === 'hour' || name === 'minutes') {
+      setErr((prev) => {
+        return { ...prev, time: null };
+      });
+    }
     setInputs({
       ...inputs,
       [name]: value,
@@ -207,6 +210,7 @@ export default function Record({ selectUpdateEvent }) {
       setPlace(''),
       setAddress(''),
       setActivity(''),
+      setErr(null),
       setClearActivity((prev) => !prev)
     );
   };
@@ -296,7 +300,7 @@ export default function Record({ selectUpdateEvent }) {
                 value={inputs.minutes}
               />
               <span> 분</span>
-              {err.time && (
+              {err && err.time && (
                 <div className={classes.err__box}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
