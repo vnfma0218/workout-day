@@ -31,7 +31,6 @@ export default function Record({ selectUpdateEvent }) {
   const [place, setPlace] = useState('');
   const [address, setAddress] = useState('');
   const [activity, setActivity] = useState('');
-  // const [err, setErr] = useState(false);
   const [err, setErr] = useState({
     time: false,
     activity: false,
@@ -147,7 +146,9 @@ export default function Record({ selectUpdateEvent }) {
 
   // image file 저장
   const fileHandler = (e) => {
+    if (e.target.files.length === 0) return;
     const file = e.target.files[0];
+    console.log(file);
     const reader = new FileReader();
     reader.onload = () => {
       setUrl(reader.result);
@@ -158,7 +159,6 @@ export default function Record({ selectUpdateEvent }) {
       setFile(file);
       setUrl(url);
     }
-    console.log(file.name);
     const uploadFile = storage.ref(`images/record/${file.name}`).put(file);
     uploadFile.on(
       'state_change',
@@ -391,7 +391,7 @@ export default function Record({ selectUpdateEvent }) {
                 <input
                   type='file'
                   name='image'
-                  required
+                  required={editMode ? false : true}
                   onChange={fileHandler}
                   ref={fileInput}
                 />
