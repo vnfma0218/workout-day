@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { dbService } from '../firebase';
+import { useAuth } from './auth-context';
 
 export const ModeContext = React.createContext({
   isDietMode: false,
@@ -7,6 +9,17 @@ export const ModeContext = React.createContext({
 });
 export function ModeContextProvider(props) {
   const [isDietMode, setIsDietMode] = useState(false);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    dbService
+      .collection('users')
+      .doc(currentUser.email)
+      .get()
+      .then((doc) => {
+        setIsDietMode(!doc.data().workoutMode);
+      });
+  }, [currentUser]);
 
   const DietModeHandler = () => {
     setIsDietMode(true);
