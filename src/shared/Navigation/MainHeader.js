@@ -62,7 +62,7 @@ export default function MainHeader(props) {
           history.push('/auth');
         }}
       >
-        You want to logout?
+        <p className={classes.logout__message}> You want to logout?</p>
       </Modal>
       <div className={classes.header__container}>
         <header

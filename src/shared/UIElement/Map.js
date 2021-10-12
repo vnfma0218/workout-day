@@ -31,6 +31,7 @@ export default function Map({ searchPlace, selectPlace }) {
       }
 
       function displayMarker(place) {
+        if (!selectPlace) return;
         // 마커를 생성하고 지도에 표시
         let marker = new kakao.maps.Marker({
           map: map,

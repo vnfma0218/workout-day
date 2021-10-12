@@ -2,6 +2,10 @@ ul {
   list-style: none;
   padding-left: 0;
 }
+.logout__message {
+  padding: 30px 220px 30px 10px;
+  font-size: 1.4rem;
+}
 .header__container {
   width: 100%;
   position: fixed;

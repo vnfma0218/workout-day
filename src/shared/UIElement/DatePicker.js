@@ -5,16 +5,15 @@ import './DatePicker.css';
 import classes from './DatePicker.module.css';
 export default function DateRange(props) {
   const [startDate, setStartDate] = useState(new Date());
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (e) => {
-    setIsOpen(!isOpen);
+    props.pickerOpen(false);
     setStartDate(e);
     props.setDate(e);
   };
   const handleClick = (e) => {
     e.preventDefault();
-    setIsOpen(!isOpen);
+    props.pickerOpen(true);
   };
   return (
     <>
@@ -27,7 +26,7 @@ export default function DateRange(props) {
         alt='dropdown'
         onClick={handleClick}
       />
-      {isOpen && (
+      {props.open && (
         <DatePicker
           selected={startDate}
           onChange={handleChange}

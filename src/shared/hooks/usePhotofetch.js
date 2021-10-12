@@ -8,6 +8,7 @@ export default function usePhotofetch() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const [hasMore, setHasMore] = useState(true);
   const [lastDoc, setLastDoc] = useState();
   const { currentUser } = useAuth();
@@ -15,6 +16,7 @@ export default function usePhotofetch() {
   useEffect(() => {
     if (!infiniteMode) return;
     setLoading(true);
+    setError(null);
     dbService
       .collection('record')
       .doc(currentUser.email)
@@ -38,6 +40,11 @@ export default function usePhotofetch() {
     setInfiniteMode(false);
     const start = startDate.toISOString().split('T')[0];
     const end = endDate.toISOString().split('T')[0];
+    if (new Date(start) > new Date(end)) {
+      setLoadedPhotos([]);
+      return setError('올바른 날짜범위가 아닙니다');
+    }
+    setError(null);
     setLoading(true);
     dbService
       .collection('record')
@@ -91,5 +98,6 @@ export default function usePhotofetch() {
     fetchPhotosByDate,
     setInfiniteMode,
     infiniteMode,
+    error,
   };
 }
