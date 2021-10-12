@@ -5,8 +5,8 @@ import React, { useEffect } from 'react';
 const { kakao } = window;
 
 export default function Map({ searchPlace, selectPlace }) {
-  let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
   useEffect(() => {
+    let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
     const container = document.getElementById('myMap');
     const options = {
       center: new kakao.maps.LatLng(37.517235, 127.047325),

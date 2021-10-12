@@ -52,15 +52,37 @@ export default function Record(props) {
   const [clearActivity, setClearActivity] = useState(false);
   const [recordDocId, setRecordDocId] = useState();
   const { currentUser } = useAuth();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [onSubmit, setOnSubmit] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  const openModalHandler = () => {
-    setModalOpen(true);
+  // Edit Modal
+  const openEditModalHandler = () => {
+    setEditModalOpen(true);
   };
 
-  const closeModalHandler = () => {
-    setModalOpen(false);
+  const closeEditModalHandler = () => {
+    setEditModalOpen(false);
     setInputs({ ...inputs, date: '' });
+  };
+
+  // Map Modal
+  const oepnMapHandler = () => {
+    setMapOpen(true);
+    setEnter(false);
+  };
+
+  const closeMapHandler = () => {
+    setMapOpen(false);
+  };
+
+  // Delete Record Modal
+  const oepnDeleteModalHandler = () => {
+    setDeleteModalOpen(true);
+  };
+
+  const closeDeleteMapHandler = () => {
+    setDeleteModalOpen(false);
   };
 
   useEffect(() => {
@@ -78,7 +100,7 @@ export default function Record(props) {
       activityId,
       imageUrl,
     } = selectUpdateEvent;
-
+    setSelectedEvent(selectUpdateEvent);
     setInputs({
       date,
       hour,
@@ -91,21 +113,11 @@ export default function Record(props) {
     setFile(imageUrl);
     setUrl(imageUrl);
     setEditActivity({ name: activityName, id: activityId });
-  }, [selectUpdateEvent]);
-
-  const oepnMapHandler = () => {
-    setMapOpen(true);
-    setEnter(false);
-  };
-
-  const closeMapHandler = () => {
-    setMapOpen(false);
-  };
+  }, [selectUpdateEvent, setSelectedEvent]);
 
   // form 저장
   const saveHandler = (e) => {
     e.preventDefault();
-
     const target = e.target;
 
     if (!target.hour.value && !target.minutes.value) {
@@ -116,13 +128,14 @@ export default function Record(props) {
       return;
     }
 
-    if (!activity) {
+    if (!activity.name && !activity.id) {
       setErr({
         time: false,
         activity: true,
       });
       return;
     }
+    setOnSubmit(true);
 
     if (!editMode) {
       dbService
@@ -240,14 +253,14 @@ export default function Record(props) {
         .then((docs) => {
           const savedDate = [];
           docs.forEach((doc) => {
-            savedDate.push(doc.data());
+            savedDate.push({ ...doc.data(), id: doc.id });
           });
 
           let sameDateRecord = savedDate.filter((el) => el.date === value)[0];
           setSelectedEvent(sameDateRecord);
 
           if (sameDateRecord) {
-            openModalHandler();
+            openEditModalHandler();
           }
         });
     }
@@ -255,7 +268,7 @@ export default function Record(props) {
 
   const recordEditHandler = () => {
     props.recordEditHandler({ ...selectedEvent });
-    setModalOpen(false);
+    setEditModalOpen(false);
   };
 
   const onReset = () => {
@@ -278,7 +291,8 @@ export default function Record(props) {
       setErr({
         time: false,
         activity: false,
-      })
+      }),
+      setOnSubmit(false)
     );
   };
 
@@ -311,12 +325,38 @@ export default function Record(props) {
       return null;
     }
   };
+
+  const recordDeleteHandler = () => {
+    dbService
+      .collection('record')
+      .doc(currentUser.email)
+      .collection('events')
+      .doc(selectedEvent.id)
+      .delete();
+    setDeleteModalOpen(false);
+    onReset();
+  };
+
   return (
     <>
       <Modal
-        open={modalOpen}
+        open={deleteModalOpen}
         title='Already have record'
-        onClose={closeModalHandler}
+        onClose={closeDeleteMapHandler}
+        onConfirm={recordDeleteHandler}
+        name='DELETE'
+      >
+        {
+          <div className={classes.modal__Delete}>
+            운동기록을 삭제하시겠습니까? <br />
+            삭제한 기록은 복구할 수 없습니다.
+          </div>
+        }
+      </Modal>
+      <Modal
+        open={editModalOpen}
+        title='Already have record'
+        onClose={closeEditModalHandler}
         onConfirm={recordEditHandler}
         name='EDIT'
       >
@@ -506,11 +546,30 @@ export default function Record(props) {
               )}
 
               <Button
-                className={classes.btn}
+                className={onSubmit ? classes.btn__unactive : classes.btn}
                 type='submit'
                 name={editMode ? 'EDIT' : 'SAVE'}
+                disable={onSubmit ? true : false}
               />
             </div>
+            {editMode && (
+              <button
+                className={classes.btn__delete}
+                type='button'
+                onClick={oepnDeleteModalHandler}
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  height='24px'
+                  viewBox='0 0 24 24'
+                  width='24px'
+                  fill='#000000'
+                >
+                  <path d='M0 0h24v24H0z' fill='none' />
+                  <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' />
+                </svg>
+              </button>
+            )}
           </form>
         </div>
       </Wrapper>

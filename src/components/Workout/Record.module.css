@@ -1,7 +1,8 @@
-.modal__date {
-  padding: 1rem;
+.modal__date,
+.modal__Delete {
+  padding: 1rem 8rem 2rem 1rem;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .record {
@@ -186,10 +187,16 @@
   /* margin-left: 80%; */
 }
 
-.btn {
+.btn,
+.btn__unactive {
   margin-left: 20px;
   margin-right: 0;
   font-weight: 400;
+}
+
+.btn__unactive {
+  background-color: #d1d1cf;
+  cursor: initial;
 }
 
 .unactive {
@@ -211,4 +218,15 @@
 .err__box > svg {
   fill: rgb(253, 56, 56);
   margin-right: 8px;
+}
+
+.btn__delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.btn__delete svg {
+  fill: rgb(77, 77, 77);
 }

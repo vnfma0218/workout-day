@@ -89,8 +89,6 @@ export default function SelectActivity({
           });
 
           setActivities(activityDefault.concat(activityList).reverse());
-          // console.log(activityList);
-
           setLoading(true);
         } else {
           setActivities(activityDefault.reverse());
@@ -161,14 +159,16 @@ export default function SelectActivity({
 
   useEffect(() => {
     if (selectActivityNameId) {
-      let activityEditStatus = activities.map((el) => {
-        if (selectActivityNameId.id === el.id) {
-          return { ...el, selected: true };
-        } else {
-          return { ...el, selected: false };
-        }
+      setActivities((prev) => {
+        const Change = prev.map((el) => {
+          if (selectActivityNameId.id === el.id) {
+            return { ...el, selected: true };
+          } else {
+            return { ...el, selected: false };
+          }
+        });
+        return Change;
       });
-      setActivities(activityEditStatus);
     }
   }, [selectActivityNameId]);
 

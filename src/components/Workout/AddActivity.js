@@ -79,7 +79,7 @@ export default function AddActivity(props) {
       });
     }
   };
-
+  console.log(setChoice);
   return (
     <div className={classes.form__wrapper}>
       {props.error && (
