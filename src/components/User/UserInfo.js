@@ -24,7 +24,7 @@ export default function UserInfo() {
         console.log(snapshot.data());
         setUser(snapshot.data());
         if (snapshot.data().weight && snapshot.data().height) {
-          console.log('ddd');
+          console.log(snapshot.data());
           const { bmi, result } = getBMI(
             snapshot.data().weight,
             snapshot.data().height
@@ -50,8 +50,13 @@ export default function UserInfo() {
   };
 
   const getBMI = (weight, height) => {
-    const bmi = (weight / (((height / 100) * height) / 100)).toFixed(2);
+    let bmi = (weight / (((height / 100) * height) / 100)).toFixed(2);
     let result;
+    if (isNaN(bmi)) {
+      result = '키와 몸무게를 입력해주세요';
+      bmi = 0;
+      return { bmi, result };
+    }
     if (bmi <= 18.5) {
       result = '저체중';
     } else if (bmi >= 18.5 && bmi <= 22.9) {

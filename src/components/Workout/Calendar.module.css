@@ -37,18 +37,24 @@
   justify-content: space-between;
   align-items: center;
 }
+.norecord__message {
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
 .workout__header h2 {
   font-size: 1rem;
-}
-.photoBtn {
-  padding: 5px;
-  margin-right: 0;
 }
 
 .guide {
   display: flex;
   align-items: center;
   margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.guide p {
+  font-weight: 500;
 }
 
 .downward__icon {
@@ -74,6 +80,10 @@
   top: 10px;
   margin-right: 10px;
   cursor: pointer;
+}
+
+.noAddress {
+  pointer-events: none;
 }
 
 .mapIcon svg {
@@ -109,6 +119,10 @@
 .editBtn {
   padding: 8px;
 }
+.photoBtn {
+  padding: 8px;
+}
+
 .noEvent {
   height: 30%;
   background-color: #fdfaf1;

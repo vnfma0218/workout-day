@@ -10,9 +10,10 @@
 
 .modal__normal {
   position: fixed;
-  top: 25vh;
-  left: 35%;
+  top: 50%;
+  left: 50%;
   width: auto;
+  transform: translate(-50%, -50%);
   z-index: 100;
   overflow: hidden;
   background-color: #d7e9f7;
@@ -23,8 +24,9 @@
 
 .modal__diet {
   position: fixed;
-  top: 25vh;
-  left: 35%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: auto;
   z-index: 100;
   overflow: hidden;

@@ -12,7 +12,6 @@ import './Calendar.css';
 import classes from './Calendar.module.css';
 import { useAuth } from '../../context/auth-context';
 import { useHistory } from 'react-router';
-import { dbService } from '../../firebase';
 import Map from '../../shared/UIElement/Map';
 
 export default function Calendar(props) {
@@ -26,7 +25,6 @@ export default function Calendar(props) {
     dateClickHandler,
     loading,
   } = useFetchEvents();
-  const [modalOpen, setModalOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const calendarComponentRef = useRef();
   const { currentUser } = useAuth();
@@ -78,16 +76,6 @@ export default function Calendar(props) {
     props.recordEditHandler({ ...selectedEvent });
   };
 
-  const recordDeleteHandler = () => {
-    dbService
-      .collection('record')
-      .doc(currentUser.email)
-      .collection('events')
-      .doc(selectedEvent.id)
-      .delete();
-    setModalOpen(false);
-  };
-
   let dateItem;
   if (!selectedEvent) {
     dateItem = (
@@ -98,9 +86,9 @@ export default function Calendar(props) {
         </div>
         {currentUser && (
           <>
-            <h1>운동기록이 없습니다.</h1>
+            <h1 className={classes.norecord__message}>운동기록이 없습니다.</h1>
             <div className={classes.guide}>
-              <p>운동 등록하기 </p>
+              <p>등록하기 </p>
               <div className={classes.downward__icon} onClick={toRecordPage}>
                 <img src='img/icons/arrow.png' alt='' />
               </div>
@@ -129,9 +117,15 @@ export default function Calendar(props) {
       <>
         <div className={classes.workout__header}>
           <h2>{selectedDate}</h2>
-          <Button name='Photos' to='/photo' className={classes.photoBtn} />
         </div>
-        <span className={classes.mapIcon} onClick={() => setMapOpen(true)}>
+        <span
+          className={
+            typeof selectedEvent.location === 'object'
+              ? `${classes.mapIcon}`
+              : `${classes.mapIcon} ${classes.noAddress}`
+          }
+          onClick={() => setMapOpen(true)}
+        >
           <svg
             viewBox='0 0 33 46'
             fill='none'
@@ -141,25 +135,20 @@ export default function Calendar(props) {
           </svg>
         </span>
         <span className={classes.workout__location}>
-          {typeof selectedEvent.locaiton === 'object'
+          {typeof selectedEvent.location === 'object'
             ? selectedEvent.location[0]
             : selectedEvent.location}
         </span>
-
         <div className={classes.workout__img}>
           <img src={selectedEvent.imageUrl} alt='workout' />
         </div>
 
         <div className={classes.btn}>
+          <Button name='Photos' to='/photo' className={classes.photoBtn} />
           <Button
             name='EDIT'
             className={classes.editBtn}
             onClick={recordEditHandler}
-          />
-          <Button
-            name='DELETE'
-            className={classes.editBtn}
-            onClick={() => setModalOpen(true)}
           />
         </div>
       </>
@@ -167,14 +156,6 @@ export default function Calendar(props) {
   }
   return (
     <>
-      <Modal
-        title='Are you sure'
-        open={modalOpen}
-        onClose={closeModalHandler}
-        onConfirm={recordDeleteHandler}
-      >
-        삭제 하시겠습니까? <br></br>삭제하면 정보를 다시 불러올 수 없습니다.
-      </Modal>
       <Modal
         title='Are you sure'
         open={mapOpen}
@@ -199,18 +180,18 @@ export default function Calendar(props) {
             className={classes.calendarItem}
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView='dayGridMonth'
-            customButtons={{
-              myCustomBtn: {
-                text: 'year',
-                click: () => {
-                  let calendarApi = calendarComponentRef.current.getApi();
-                  calendarApi.gotoDate('2020-01-30');
-                },
-              },
-            }}
+            // customButtons={{
+            //   myCustomBtn: {
+            //     text: 'year',
+            //     click: () => {
+            //       let calendarApi = calendarComponentRef.current.getApi();
+            //       calendarApi.gotoDate('2020-01-30');
+            //     },
+            //   },
+            // }}
             headerToolbar={{
               left: 'title',
-              center: 'myCustomBtn',
+              // center: 'myCustomBtn',
               right: 'today,prev,next',
             }}
             dateClick={dateClickHandler}

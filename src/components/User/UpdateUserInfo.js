@@ -85,13 +85,16 @@ export default function UpdateUserInfo() {
       imageUrl: { value: imageUrl },
       workoutMode: { value: workoutMode },
     } = formState.inputs;
-    dbService.collection('users').doc(currentUser.email).set({
-      nickname,
-      height,
-      weight,
-      imageUrl,
-      workoutMode,
-    });
+    dbService
+      .collection('users')
+      .doc(currentUser.email)
+      .set({
+        nickname,
+        height,
+        weight,
+        imageUrl: previewUrl || imageUrl,
+        workoutMode,
+      });
     history.push('/userinfo');
   };
 
@@ -116,10 +119,6 @@ export default function UpdateUserInfo() {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            dbService
-              .collection('users')
-              .doc(currentUser.email)
-              .update({ imageUrl: url });
             setPreviewUrl(url);
             setLoading(false);
           })
