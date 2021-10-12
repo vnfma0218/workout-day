@@ -13,13 +13,11 @@ export default function useFetchEvents() {
 
   const dateClickHandler = (arg) => {
     if (!arg.dateStr) return;
-    setLoading(true);
     const clickedEvent = events.filter(
       (event) => event.date === arg.dateStr
     )[0];
     setSelectedEvent(clickedEvent);
     setSelectedDate(arg.dateStr);
-    setLoading(false);
   };
 
   useEffect(() => {

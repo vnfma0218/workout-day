@@ -5,10 +5,13 @@ import MainHeader from '../../shared/Navigation/MainHeader';
 import DateRange from '../../shared/UIElement/DatePicker';
 import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 import Wrapper from '../../shared/UIElement/Wrapper';
+import UserPhotoInfo from './UserPhotoInfo';
 
 import classes from './SecondLayout.module.css';
-import UserPhotoInfo from './UserPhotoInfo';
 export default function SecondLayout() {
+  const [startPickerOpen, setStartPickerOpen] = useState(false);
+  const [endPickerOpen, setEndPickerOpen] = useState(false);
+
   const {
     loadedPhotos,
     loading,
@@ -20,6 +23,7 @@ export default function SecondLayout() {
     fetchPhotosByDate,
     setInfiniteMode,
     infiniteMode,
+    error,
   } = usePhotofetch();
 
   const observer = useRef();
@@ -28,6 +32,7 @@ export default function SecondLayout() {
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
+
       let options = {
         rootMargin: '10px',
         threshold: 1,
@@ -46,7 +51,6 @@ export default function SecondLayout() {
   const selectMinDate = (date) => {
     setStartDate(date);
   };
-  console.log('loadedPhotos', loadedPhotos);
   return (
     <>
       <MainHeader />
@@ -54,11 +58,19 @@ export default function SecondLayout() {
         <UserPhotoInfo />
         <div className={classes.selectDate__container}>
           <div className={classes.selectDate}>
-            <DateRange setDate={selectMinDate} />
+            <DateRange
+              open={startPickerOpen}
+              setDate={selectMinDate}
+              pickerOpen={setStartPickerOpen}
+            />
             <p>–</p>
             <DateRange
+              open={!startPickerOpen && endPickerOpen}
               minDate={startDate}
-              setDate={(date) => setEndDate(date)}
+              pickerOpen={setEndPickerOpen}
+              setDate={(date) => {
+                setEndDate(date);
+              }}
             />
           </div>
           <button
@@ -67,7 +79,21 @@ export default function SecondLayout() {
           >
             조회
           </button>
-
+          {error && (
+            <div className={classes.err__box}>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                height='24px'
+                viewBox='0 0 24 24'
+                width='24px'
+                fill='#000000'
+              >
+                <path d='M0 0h24v24H0z' fill='none' />
+                <path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z' />
+              </svg>
+              <p>{error}</p>
+            </div>
+          )}
           <button
             className={classes.latestBtn}
             onClick={() => setInfiniteMode(true)}

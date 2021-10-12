@@ -210,11 +210,7 @@ export default function Record(props) {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    if (name === 'hour' || name === 'minutes') {
-      setErr((prev) => {
-        return { ...prev, time: null };
-      });
-    }
+
     setInputs({
       ...inputs,
       [name]: value,

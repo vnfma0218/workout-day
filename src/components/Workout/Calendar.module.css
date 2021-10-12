@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   padding: 0 100px 30px;
+  position: relative;
 }
 
 .calendarApp {
@@ -31,10 +32,17 @@
   -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
 }
-
 .workout__header {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.workout__header h2 {
   font-size: 1rem;
+}
+.photoBtn {
+  padding: 5px;
+  margin-right: 0;
 }
 
 .guide {
@@ -65,6 +73,7 @@
   position: relative;
   top: 10px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .mapIcon svg {
@@ -97,14 +106,10 @@
   right: 10px;
   bottom: 20px;
 }
-
+.editBtn {
+  padding: 8px;
+}
 .noEvent {
   height: 30%;
   background-color: #fdfaf1;
-}
-
-.btn {
-  position: absolute;
-  right: 10px;
-  bottom: 20px;
 }
