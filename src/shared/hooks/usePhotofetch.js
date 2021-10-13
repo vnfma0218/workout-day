@@ -15,6 +15,7 @@ export default function usePhotofetch() {
 
   useEffect(() => {
     if (!infiniteMode) return;
+    console.log('fetch Photos');
     setLoading(true);
     setError(null);
     dbService
