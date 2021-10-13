@@ -63,7 +63,6 @@ export default function Calendar(props) {
   };
   console.log('render from calendar');
   const closeModalHandler = () => {
-    setModalOpen(false);
     setMapOpen(false);
   };
 
