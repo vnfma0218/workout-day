@@ -8,11 +8,6 @@ import UserInfo from './components/User/UserInfo';
 import UpdateUserInfo from './components/User/UpdateUserInfo';
 import SecondLayout from './components/User/SecondLayout';
 import { AuthProvider } from './context/auth-context';
-import RecordGuide from './components/Home/RecordGuide';
-import GuidePage from './components/Home/GuidePage';
-
-// import Modal from './shared/UIElement/Modal';
-// import SecondLayout from './components/User/SecondLayout';
 
 function App() {
   return (
@@ -21,7 +16,7 @@ function App() {
         <AuthProvider>
           <ModeContextProvider>
             <Route path='/' exact>
-              <GuidePage />
+              <MainPage />
             </Route>
             <Route path='/auth'>
               <Auth />
@@ -35,11 +30,6 @@ function App() {
             <Route path='/photo'>
               <SecondLayout />
             </Route>
-            <Route path='/guide/record'>
-              <RecordGuide />
-            </Route>
-            {/* <Modal /> */}
-            {/* <SecondLayout /> */}
           </ModeContextProvider>
         </AuthProvider>
       </Switch>

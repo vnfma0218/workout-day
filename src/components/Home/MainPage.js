@@ -6,8 +6,13 @@ import Home from './Home';
 import Calendar from '../Workout/Calendar';
 import { useLocation } from 'react-router-dom';
 import Record from '../Workout/Record';
+import { useAuth } from '../../context/auth-context';
+import CalendarGuide from '../Workout/CalendarGuide';
+import RecordGuide from '../Workout/RecordGuide';
 
 export default function MainPage(props) {
+  const { currentUser } = useAuth();
+
   const outerDivRef = useRef();
   const DIVIDER_HEIGHT = 5;
   const location = useLocation();
@@ -115,20 +120,39 @@ export default function MainPage(props) {
         <Home />
 
         <div className={classes.divider}></div>
-        <Calendar
-          toRecordPage={changePage}
-          recordEditHandler={recordEditHandler}
-        />
+        {currentUser ? (
+          <Calendar
+            toRecordPage={changePage}
+            recordEditHandler={recordEditHandler}
+          />
+        ) : (
+          <CalendarGuide currentPage={currentPage} />
+        )}
         <div className={classes.divider}></div>
-        <Record
-          selectUpdateEvent={selectUpdateEvent}
-          recordEditHandler={recordEditHandler}
-        />
+        {currentUser ? (
+          <Record
+            selectUpdateEvent={selectUpdateEvent}
+            recordEditHandler={recordEditHandler}
+          />
+        ) : (
+          <RecordGuide currentPage={currentPage} />
+        )}
       </div>
       <img
         src='img/icons/scroll.png'
         alt='scroll'
-        className={classes.mainpage__scroll}
+        className={
+          currentUser
+            ? classes.mainpage__scroll
+            : !currentUser && currentPage === 'home' && classes.mainpage__scroll
+        }
+      />
+      <img
+        src='img/icons/mouseClick.png'
+        alt='diary'
+        className={
+          !currentUser && currentPage !== 'home' && classes.mainpage__scroll
+        }
       />
     </React.Fragment>
   );

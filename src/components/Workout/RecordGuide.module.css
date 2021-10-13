@@ -46,16 +46,14 @@
 /* Select Activity */
 .pop_1_text {
   display: flex;
-  /* align-items: center; */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
   z-index: 20;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 600;
   color: #ffffff;
-  /* text-shadow: 3px 4px 2px rgb(49, 49, 49); */
 }
 .pop_1_text img {
   /* width: 40px; */
@@ -64,22 +62,25 @@
 }
 
 .pop_2_text {
+  text-align: center;
+
   position: fixed;
-  top: 5%;
-  left: 20%;
+  top: 12%;
+  left: 16%;
   /* transform: translate(-50%, -50%); */
   z-index: 20;
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 600;
   color: #ffffff;
 }
 .pop_3_text {
+  text-align: center;
   position: fixed;
-  top: 5%;
-  right: 20%;
+  top: 12%;
+  right: 16%;
   /* transform: translate(-50%, -50%); */
   z-index: 20;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   color: #ffffff;
 }
@@ -346,8 +347,8 @@
   align-items: center;
   justify-content: flex-end;
   /* position: absolute;
-  right: 1rem;
-  bottom: 1rem; */
+    right: 1rem;
+    bottom: 1rem; */
 }
 
 .place__box > button {

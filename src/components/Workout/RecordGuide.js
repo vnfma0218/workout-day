@@ -1,74 +1,93 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import Button from '../../shared/UIElement/Button';
+import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './RecordGuide.module.css';
 
-import Wrapper from '../../shared/UIElement/Wrapper';
-import Button from '../../shared/UIElement/Button';
+export default function RecordGuide({ currentPage }) {
+  const [step, setStep] = useState(0);
+  const [hidden, setHidden] = useState(true);
 
-export default function RecordGuide() {
-  const [count, setCount] = useState(1);
+  useEffect(() => {
+    if (currentPage === 'calendar') {
+      setStep(0);
+      setTimeout(() => {
+        setHidden(false);
+      }, 700);
+    }
+    return () => setHidden(true);
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (currentPage === 'record') {
+      setStep(0);
+    }
+  }, [currentPage]);
+  useEffect(() => {
+    window.addEventListener('click', addStepCount);
+    return () => {
+      window.removeEventListener('click', addStepCount);
+    };
+  }, []);
+
+  const addStepCount = () =>
+    setStep((prev) => {
+      if (prev === 2) return 0;
+      return prev + 1;
+    });
 
   const activityDefault = [
     {
       name: 'Cycling',
-      imageUrl: '../img/exercise/bicycle.png',
+      imageUrl: 'img/exercise/bicycle.png',
       from: 'admin',
       id: 'adminCycling',
     },
 
     {
       name: 'Yoga',
-      imageUrl: '../img/exercise/yoga.png',
+      imageUrl: 'img/exercise/yoga.png',
       from: 'admin',
       id: 'adminYoga',
     },
     {
       name: 'Swimming',
-      imageUrl: '../img/exercise/swimming.png',
+      imageUrl: 'img/exercise/swimming.png',
       from: 'admin',
       id: 'adminSwimming',
     },
     {
       name: 'Badminton',
-      imageUrl: '../img/exercise/badminton.png',
+      imageUrl: 'img/exercise/badminton.png',
       from: 'admin',
       id: 'adminBadminton',
     },
     {
       name: 'Running',
-      imageUrl: '../img/exercise/jogging.png',
+      imageUrl: 'img/exercise/jogging.png',
       from: 'admin',
       id: 'adminRunning',
     },
     {
       name: 'Gym',
-      imageUrl: '../img/exercise/gym.png',
+      imageUrl: 'img/exercise/gym.png',
       from: 'admin',
       id: 'adminGym',
     },
   ];
 
-  const guideStepHandler = () => {
-    setCount(count + 1);
-    if (count === 4) {
-      setCount(1);
-    }
-    console.log(count);
-  };
-
-  return (
+  const guide = (
     <>
-      <div className={classes.backdrop} onClick={guideStepHandler}>
-        <img src='../img/icons/mouseClick.png' alt='diary' />
-      </div>
-      {count === 1 && (
+      <div className={classes.backdrop}></div>
+      {step === 0 && (
         <div className={classes.pop_1_text}>
-          <img src='../img/icons/diary.png' alt='diary' />
+          <img src='img/icons/diary.png' alt='diary' />
           <p>
-            운동을 기록으로 남겨보며 <br /> 나만의 운동 다이어리를 채워가보세요
+            운동을 기록으로 남겨보며 <br /> 나만의 운동 다이어리를 채워보세요
           </p>
         </div>
       )}
-      {count === 2 && (
+      {step === 1 && (
         <div className={classes.pop_2_text}>
           <p>
             목록에서 원하는 운동을 선택하거나 <br /> 직접 만들어 추가할 수
@@ -76,7 +95,7 @@ export default function RecordGuide() {
           </p>
         </div>
       )}
-      {count === 3 && (
+      {step === 2 && (
         <div className={classes.pop_3_text}>
           <p>
             운동 날짜, 시간, 장소를 입력하고 <br /> 오늘 운동을 추억할 수 있는
@@ -84,9 +103,15 @@ export default function RecordGuide() {
           </p>
         </div>
       )}
+    </>
+  );
+
+  return (
+    <>
+      {(currentPage === 'record') & !hidden && guide}
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
-          <ul className={count === 2 ? classes.pop_2 : classes.record__select}>
+          <ul className={step === 1 ? classes.pop_2 : classes.record__select}>
             <div className={classes.select__header}>
               <h3>Select your Activity</h3>
               <svg
@@ -136,7 +161,7 @@ export default function RecordGuide() {
           {/* Record Form */}
           <form
             id={classes.form}
-            className={count === 3 ? classes.pop_3 : classes.record__form}
+            className={step === 2 ? classes.pop_3 : classes.record__form}
           >
             <div className={classes.form__input}>
               <label className={classes.input_title}>Date :</label>

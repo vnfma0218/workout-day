@@ -3,10 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import classes from './MainPage.module.css';
 import Home from './Home';
-import Calendar from '../Workout/Calendar';
 import { useLocation } from 'react-router-dom';
-import Record from '../Workout/Record';
 import CalendarGuide from '../Workout/CalendarGuide';
+import RecordGuide from '../Workout/RecordGuide';
 
 export default function GuidePage(props) {
   const outerDivRef = useRef();
@@ -120,15 +119,17 @@ export default function GuidePage(props) {
         <div className={classes.divider}></div>
         <CalendarGuide currentPage={currentPage} />
         <div className={classes.divider}></div>
-        <Record
-          selectUpdateEvent={selectUpdateEvent}
-          recordEditHandler={recordEditHandler}
-        />
+        <RecordGuide currentPage={currentPage} />
       </div>
       <img
         src='img/icons/scroll.png'
         alt='scroll'
-        className={classes.mainpage__scroll}
+        className={currentPage === 'home' && classes.mainpage__scroll}
+      />
+      <img
+        src='img/icons/mouseClick.png'
+        alt='diary'
+        className={currentPage !== 'home' && classes.mainpage__scroll}
       />
     </React.Fragment>
   );
