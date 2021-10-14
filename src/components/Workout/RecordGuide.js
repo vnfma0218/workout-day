@@ -9,7 +9,7 @@ export default function RecordGuide({ currentPage }) {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
-    if (currentPage === 'calendar') {
+    if (currentPage === 'record') {
       setStep(0);
       setTimeout(() => {
         setHidden(false);
@@ -18,11 +18,6 @@ export default function RecordGuide({ currentPage }) {
     return () => setHidden(true);
   }, [currentPage]);
 
-  useEffect(() => {
-    if (currentPage === 'record') {
-      setStep(0);
-    }
-  }, [currentPage]);
   useEffect(() => {
     window.addEventListener('click', addStepCount);
     return () => {
