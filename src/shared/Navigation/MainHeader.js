@@ -49,7 +49,6 @@ export default function MainHeader(props) {
     }
     props.navClickHandler(navLink);
   };
-
   return (
     <>
       <Modal
@@ -83,6 +82,8 @@ export default function MainHeader(props) {
               ? 'My Calendar'
               : props.currentPage === 'record'
               ? "Today's Workout"
+              : props.currentPage === 'userinfo'
+              ? 'MyPage'
               : null}
           </h2>
 
@@ -143,7 +144,12 @@ export default function MainHeader(props) {
 
             {/* <NavLink to='/auth' activeClassName={classes.selected} > */}
             <li
-              className={`${classes.nav__item} ${classes.loginBtn}`}
+              className={
+                !currentUser &&
+                (props.currentPage !== 'home' || props.currentPage !== 'auth')
+                  ? null
+                  : classes.nav__item
+              }
               data-link='auth'
             >
               <svg

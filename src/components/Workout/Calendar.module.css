@@ -3,6 +3,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   padding: 0 100px 30px;
   position: relative;
 }
@@ -111,9 +112,12 @@
 }
 
 .btn {
-  position: absolute;
+  position: relative;
   right: 10px;
   bottom: 20px;
+  margin: 30% auto 0;
+  display: flex;
+  justify-content: flex-end;
 }
 .editBtn {
   padding: 8px;
@@ -148,28 +152,42 @@
 .guide__container,
 .inner__container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   height: 90%;
   width: 100%;
-  /* padding: 50px 0 0; */
   align-items: center;
-  margin: 0 auto;
+  margin: 100px auto 40px;
   position: relative;
 }
 
 .first {
+  width: 50%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  height: 60%;
+  overflow-y: hidden;
   z-index: 20;
 }
 
 .second {
+  margin-top: 66px;
+  position: relative;
+  height: 50%;
+  width: 23%;
+  margin: 0 0 20px 0px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
   z-index: 20;
 }
 
-.clickimg {
-  width: 50px;
-  position: fixed;
-  right: 80px;
-  bottom: 40px;
+.third {
+  /* position: absolute; */
+  z-index: 20;
 }
 
 .start__message {
@@ -190,45 +208,57 @@
   margin-right: 20px;
 }
 
-.first__message h3 {
-  position: absolute;
-  top: 13%;
-  left: 10%;
+.first__message {
+  position: fixed;
+  top: 20%;
+  left: 28%;
   z-index: 30;
   color: #ffffff;
   animation: message-first 0.3s;
-  font-size: 20px;
-  font-weight: 500;
-  font-size: 20px;
-  font-weight: 500;
 }
 
-.second__message h3 {
+.second__message {
   text-align: center;
   position: absolute;
   top: 10%;
-  right: 1%;
+  right: 8%;
   z-index: 20;
   color: #ffffff;
   animation: message-second 0.3s;
-  font-size: 20px;
-  font-weight: 500;
+}
+
+.third__message {
+  text-align: right;
+  position: absolute;
+  bottom: 16%;
+  right: 10%;
+  z-index: 20;
+  color: #ffffff;
+  animation: message-third 0.3s;
+}
+.first__message h3,
+.second__message h3,
+.third__message h3 {
   font-size: 20px;
   font-weight: 500;
 }
 
-.third__message h3 {
-  text-align: right;
-  position: absolute;
-  bottom: 16%;
-  font-size: 20px;
-  font-weight: 500;
-  font-size: 20px;
-  font-weight: 500;
-  right: 7%;
-  z-index: 20;
-  color: #ffffff;
-  animation: message-third 0.3s;
+.guide__loginBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d7e9f7;
+  /* pointer-events: none; */
+  cursor: pointer;
+  position: fixed;
+  top: 1.2rem;
+  right: 18rem;
+  z-index: 100;
+}
+
+.guide__loginBtn svg {
+  width: 30px;
+  height: 30px;
 }
 
 /* .dateItem .photo__hilight {

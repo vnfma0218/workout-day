@@ -10,11 +10,15 @@
   position: relative;
 }
 
+.guide__title svg {
+  margin-right: 10px;
+}
+
 .guide__title p {
   z-index: 20;
   font-size: 20px;
   position: absolute;
-  top: 50px;
+  top: 60px;
   left: 50%;
   color: #fdfaf1;
 }
@@ -24,6 +28,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.guide__loginBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d7e9f7;
+  /* pointer-events: none; */
+  cursor: pointer;
+  position: fixed;
+  top: 1.2rem;
+  right: 18rem;
+  z-index: 100;
+}
+
+.guide__loginBtn svg {
+  width: 30px;
+  height: 30px;
 }
 
 .backdrop {
@@ -39,6 +61,16 @@
 .modal__btn__guide {
   margin: 0 10px;
   z-index: 20;
+}
+
+.guide__userInfo {
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  margin: 30px 0;
+  display: flex;
+  position: relative;
 }
 
 /* UserInfo */

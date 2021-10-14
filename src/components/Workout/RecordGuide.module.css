@@ -99,6 +99,24 @@
   margin-top: 40px;
 }
 
+.guide__loginBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d7e9f7;
+  /* pointer-events: none; */
+  cursor: pointer;
+  position: fixed;
+  top: 1.2rem;
+  right: 18rem;
+  z-index: 100;
+}
+
+.guide__loginBtn svg {
+  width: 30px;
+  height: 30px;
+}
+
 .record__select {
   width: 30%;
   height: 90%;
