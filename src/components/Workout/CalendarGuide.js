@@ -67,97 +67,88 @@ export default function CalendarGuide({ currentPage }) {
           <path d='M16.0417 0C7.17292 0 0 7.17292 0 16.0417C0 28.0729 16.0417 45.8333 16.0417 45.8333C16.0417 45.8333 32.0833 28.0729 32.0833 16.0417C32.0833 7.17292 24.9104 0 16.0417 0ZM16.0417 21.7708C12.8792 21.7708 10.3125 19.2042 10.3125 16.0417C10.3125 12.8792 12.8792 10.3125 16.0417 10.3125C19.2042 10.3125 21.7708 12.8792 21.7708 16.0417C21.7708 19.2042 19.2042 21.7708 16.0417 21.7708Z' />
         </svg>
       </span>
-      <span className={classes.workout__location}></span>
+      <span className={classes.workout__location}>한강 체육공원</span>
       <div className={classes.workout__img}>
         <img src='img/exercise/guide/photo1.jpg' alt='workout' />
       </div>
 
-      <div className={classes.btn}>
-        <Button
-          name='Photos'
-          to='/photo'
-          className={step === 3 ? classes.guidebtn : classes.photoBtn}
-        />
+      <div className={`${classes.btn}`}>
+        <Button name='Photos' to='/photo' className={`${classes.photoBtn}`} />
         <Button name='EDIT' className={classes.editBtn} />
         {/* {step === 3 && <div className={classes.photo__border}></div>} */}
       </div>
     </>
   );
 
+  const backdrop = <div className={classes.backdrop}></div>;
+
   const guide = (
-    <div className={classes.guide__container}>
-      <div
-        className={`${classes.guide__message} ${
-          step === 0
-            ? classes.start__message
-            : step === 1
-            ? classes.first__message
-            : step === 2
-            ? classes.second__message
-            : classes.third__message
-        }`}
-      >
-        {step === 0 && (
-          <div className={classes.start__message}>
-            <img
-              className={classes.start__img}
-              src='img/icons/calendar.png'
-              alt='calendar'
-            />
-            <h3>
-              나만의 운동기록을 모아서 <br /> 간편하게 관리해보세요.
-            </h3>
-          </div>
-        )}
-        {step === 1 && (
-          <h3> 👩 이번달 운동시간을 날짜별로 확인할 수 있습니다.</h3>
-        )}
-        {step === 2 && (
+    <div className={`${classes.guide__message}`}>
+      {step === 0 && (
+        <div className={classes.start__message}>
+          <img
+            className={classes.start__img}
+            src='img/icons/calendar.png'
+            alt='calendar'
+          />
           <h3>
-            {' '}
+            나만의 운동기록을 모아서 <br /> 간편하게 관리해보세요.
+          </h3>
+        </div>
+      )}
+      {step === 1 && (
+        <div className={classes.first__message}>
+          <h3> 👩 이번달 운동시간을 날짜별로 확인할 수 있습니다.</h3>
+        </div>
+      )}
+      {step === 2 && (
+        <div className={classes.second__message}>
+          <h3>
             📝 날짜를 클릭하면 <br />
             해당 날짜의 운동 정보를 볼 수 있습니다
           </h3>
-        )}
-        {step === 3 && (
-          <div>
-            <h3>
-              {' '}
-              🏄‍♂️ 운동사진을 한번에 <br /> 모아볼 수 있습니다
-            </h3>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
+      {step === 3 && (
+        <div className={classes.third__message}>
+          <h3>
+            🏄‍♂️ 운동사진을 한번에 <br /> 모아볼 수 있습니다
+          </h3>
+        </div>
+      )}
     </div>
   );
   return (
     <>
       <Wrapper className={classes.calendar__container} id={classes.calendar}>
-        <div
-          className={`${classes.calendarApp} ${
-            step === 1 ? classes.first : null
-          } `}
-        >
-          <FullCalendar
-            className={classes.calendarItem}
-            plugins={[dayGridPlugin, interactionPlugin]}
-            initialView='dayGridMonth'
-            defaultDate='2021-10-01'
-            headerToolbar={{
-              left: 'title',
-              right: 'today,prev,next',
-            }}
-            height='100%'
-            events={SAMPLE_EVENTS}
-          />
-        </div>
-        {(currentPage === 'calendar') & !hidden ? guide : null}
-        <div
-          className={`${classes.dateItem} ${
-            step === 2 ? classes.second : step === 3 && classes.third
-          }`}
-        >
-          {dateItem}
+        <div className={classes.guide__container}>
+          <div
+            className={`${classes.calendarApp} ${
+              step === 1 ? classes.first : null
+            } `}
+          >
+            <FullCalendar
+              className={classes.calendarItem}
+              plugins={[dayGridPlugin, interactionPlugin]}
+              initialView='dayGridMonth'
+              defaultDate='2021-10-01'
+              headerToolbar={{
+                left: 'title',
+                right: 'today,prev,next',
+              }}
+              height='100%'
+              events={SAMPLE_EVENTS}
+            />
+          </div>
+          {(currentPage === 'calendar') & !hidden ? guide : null}
+          {(currentPage === 'calendar') & !hidden ? backdrop : null}
+          <div
+            className={`${classes.dateItem} ${
+              step === 2 || step === 3 ? classes.second : null
+            }`}
+          >
+            {dateItem}
+          </div>
         </div>
       </Wrapper>
     </>
