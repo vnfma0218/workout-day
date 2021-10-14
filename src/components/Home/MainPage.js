@@ -20,8 +20,6 @@ export default function MainPage(props) {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectUpdateEvent, setSelectUpdateEvent] = useState();
   const changePage = (page, pageHeight) => {
-    console.log(page, pageHeight);
-
     if (
       (currentUser && page === 'first') ||
       (!currentUser && page === 'first')

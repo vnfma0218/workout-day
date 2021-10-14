@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../shared/UIElement/Button';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './RecordGuide.module.css';
@@ -18,18 +19,22 @@ export default function RecordGuide({ currentPage }) {
     return () => setHidden(true);
   }, [currentPage]);
 
+  // useEffect(() => {
+  //   window.addEventListener('click', addStepCount);
+  //   return () => {
+  //     window.removeEventListener('click', addStepCount);
+  //   };
+  // }, []);
   useEffect(() => {
-    window.addEventListener('click', addStepCount);
-    return () => {
-      window.removeEventListener('click', addStepCount);
-    };
+    guideStepHandler();
   }, []);
 
-  const addStepCount = () =>
+  const guideStepHandler = () => {
     setStep((prev) => {
       if (prev === 2) return 0;
       return prev + 1;
     });
+  };
 
   const activityDefault = [
     {
@@ -75,9 +80,36 @@ export default function RecordGuide({ currentPage }) {
     <>
       {/* {(currentPage === 'record') & !hidden && guide} */}
       {(currentPage === 'record') & !hidden ? (
-        <div className={classes.backdrop}></div>
+        <>
+          <div className={classes.backdrop} onClick={guideStepHandler}></div>
+          <Link to='/auth'>
+            <button className={classes.guide__loginBtn}>
+              <svg
+                data-key='auth'
+                viewBox='0 0 20 18'
+                fill='#383838'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
+              </svg>
+            </button>
+          </Link>
+        </>
       ) : null}
+
       <Wrapper className={classes.record} id={classes.record}>
+        {/* {(currentPage !== 'home') & !hidden ? (
+          <button className={classes.guide__loginBtn}>
+            <svg
+              data-key='auth'
+              viewBox='0 0 20 18'
+              fill='#383838'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
+            </svg>
+          </button>
+        ) : null} */}
         <div className={classes.record__inner}>
           {(currentPage === 'record') & !hidden & (step === 0) ? (
             <div className={classes.pop_1_text}>
