@@ -111,7 +111,7 @@ export default function UserInfo({ currentPage }) {
           ) : null}
         </div>
 
-        <article className={classes.userInfo}>
+        <article className={classes.guide__userInfo}>
           <div className={classes.userImg}>
             <div className={classes.avatar}>
               <img src='img/exercise/yogaImage.jpg' alt='userAvatar' />

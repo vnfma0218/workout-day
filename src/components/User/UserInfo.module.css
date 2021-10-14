@@ -39,7 +39,7 @@
   cursor: pointer;
   position: fixed;
   top: 1.2rem;
-  right: 3.2rem;
+  right: 18rem;
   z-index: 100;
 }
 
@@ -61,6 +61,16 @@
 .modal__btn__guide {
   margin: 0 10px;
   z-index: 20;
+}
+
+.guide__userInfo {
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  margin: 30px 0;
+  display: flex;
+  position: relative;
 }
 
 /* UserInfo */

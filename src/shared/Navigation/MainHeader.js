@@ -82,6 +82,8 @@ export default function MainHeader(props) {
               ? 'My Calendar'
               : props.currentPage === 'record'
               ? "Today's Workout"
+              : props.currentPage === 'userinfo'
+              ? 'MyPage'
               : null}
           </h2>
 
@@ -141,7 +143,15 @@ export default function MainHeader(props) {
             )}
 
             {/* <NavLink to='/auth' activeClassName={classes.selected} > */}
-            <li className={classes.nav__item} data-link='auth'>
+            <li
+              className={
+                !currentUser &&
+                (props.currentPage !== 'home' || props.currentPage !== 'auth')
+                  ? null
+                  : classes.nav__item
+              }
+              data-link='auth'
+            >
               <svg
                 data-key='auth'
                 viewBox='0 0 20 18'
