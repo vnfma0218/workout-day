@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -55,6 +55,7 @@ export default function CalendarGuide({ currentPage }) {
       if (prev === 3) return 0;
       return prev + 1;
     });
+
   let dateItem;
 
   dateItem = (
