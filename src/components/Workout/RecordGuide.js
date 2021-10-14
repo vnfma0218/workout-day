@@ -9,7 +9,7 @@ export default function RecordGuide({ currentPage }) {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
-    if (currentPage === 'calendar') {
+    if (currentPage === 'record') {
       setStep(0);
       setTimeout(() => {
         setHidden(false);
@@ -18,11 +18,6 @@ export default function RecordGuide({ currentPage }) {
     return () => setHidden(true);
   }, [currentPage]);
 
-  useEffect(() => {
-    if (currentPage === 'record') {
-      setStep(0);
-    }
-  }, [currentPage]);
   useEffect(() => {
     window.addEventListener('click', addStepCount);
     return () => {
@@ -76,41 +71,38 @@ export default function RecordGuide({ currentPage }) {
     },
   ];
 
-  const guide = (
-    <>
-      <div className={classes.backdrop}></div>
-      {step === 0 && (
-        <div className={classes.pop_1_text}>
-          <img src='img/icons/diary.png' alt='diary' />
-          <p>
-            운동을 기록으로 남겨보며 <br /> 나만의 운동 다이어리를 채워보세요
-          </p>
-        </div>
-      )}
-      {step === 1 && (
-        <div className={classes.pop_2_text}>
-          <p>
-            목록에서 원하는 운동을 선택하거나 <br /> 직접 만들어 추가할 수
-            있습니다.
-          </p>
-        </div>
-      )}
-      {step === 2 && (
-        <div className={classes.pop_3_text}>
-          <p>
-            운동 날짜, 시간, 장소를 입력하고 <br /> 오늘 운동을 추억할 수 있는
-            사진과 간단한 메모도 남겨보세요~!
-          </p>
-        </div>
-      )}
-    </>
-  );
-
   return (
     <>
-      {(currentPage === 'record') & !hidden && guide}
+      {/* {(currentPage === 'record') & !hidden && guide} */}
+      {(currentPage === 'record') & !hidden ? (
+        <div className={classes.backdrop}></div>
+      ) : null}
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
+          {(currentPage === 'record') & !hidden & (step === 0) ? (
+            <div className={classes.pop_1_text}>
+              <img src='img/icons/diary.png' alt='diary' />
+              <p>
+                운동을 기록으로 남겨보며 <br /> 나만의 운동 다이어리를
+                채워보세요
+              </p>
+            </div>
+          ) : (currentPage === 'record') & !hidden & (step === 1) ? (
+            <div className={classes.pop_2_text}>
+              <p>
+                목록에서 원하는 운동을 선택하거나 <br /> 직접 만들어 추가할 수
+                있습니다.
+              </p>
+            </div>
+          ) : (currentPage === 'record') & !hidden & (step === 2) ? (
+            <div className={classes.pop_3_text}>
+              <p>
+                운동 날짜, 시간, 장소를 입력하고 <br /> 오늘 운동을 추억할 수
+                있는 사진과 간단한 메모도 남겨보세요 !
+              </p>
+            </div>
+          ) : null}
+
           <ul className={step === 1 ? classes.pop_2 : classes.record__select}>
             <div className={classes.select__header}>
               <h3>Select your Activity</h3>

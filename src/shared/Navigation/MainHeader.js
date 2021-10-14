@@ -142,7 +142,10 @@ export default function MainHeader(props) {
             )}
 
             {/* <NavLink to='/auth' activeClassName={classes.selected} > */}
-            <li className={classes.nav__item} data-link='auth'>
+            <li
+              className={`${classes.nav__item} ${classes.loginBtn}`}
+              data-link='auth'
+            >
               <svg
                 data-key='auth'
                 viewBox='0 0 20 18'

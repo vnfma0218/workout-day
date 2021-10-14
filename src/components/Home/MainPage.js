@@ -9,6 +9,7 @@ import Record from '../Workout/Record';
 import { useAuth } from '../../context/auth-context';
 import CalendarGuide from '../Workout/CalendarGuide';
 import RecordGuide from '../Workout/RecordGuide';
+import UserInfoGuide from '../User/UserInfoGuide';
 
 export default function MainPage(props) {
   const { currentUser } = useAuth();
@@ -19,14 +20,22 @@ export default function MainPage(props) {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectUpdateEvent, setSelectUpdateEvent] = useState();
   const changePage = (page, pageHeight) => {
-    if (page === 'first') {
+    console.log(page, pageHeight);
+
+    if (
+      (currentUser && page === 'first') ||
+      (!currentUser && page === 'first')
+    ) {
       setCurrentPage('home');
       outerDivRef.current.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth',
       });
-    } else if (page === 'second') {
+    } else if (
+      (currentUser && page === 'second') ||
+      (!currentUser && page === 'second')
+    ) {
       setCurrentPage('calendar');
 
       outerDivRef.current.scrollTo({
@@ -34,11 +43,21 @@ export default function MainPage(props) {
         left: 0,
         behavior: 'smooth',
       });
-    } else {
+    } else if (
+      (currentUser && page === 'last') ||
+      (!currentUser && page === 'last')
+    ) {
       setCurrentPage('record');
 
       outerDivRef.current.scrollTo({
         top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
+        left: 0,
+        behavior: 'smooth',
+      });
+    } else if (!currentUser && page === 'end') {
+      setCurrentPage('userinfo');
+      outerDivRef.current.scrollTo({
+        top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
         left: 0,
         behavior: 'smooth',
       });
@@ -60,9 +79,12 @@ export default function MainPage(props) {
         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
           //현재 2페이지
           changePage('last', pageHeight);
-        } else {
+        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
           // 현재 3페이지
-          changePage('last', pageHeight);
+          changePage('end', pageHeight);
+        } else {
+          // 현재 4페이지
+          changePage('end', pageHeight);
         }
       } else {
         // 스크롤 올릴 때
@@ -72,9 +94,12 @@ export default function MainPage(props) {
         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
           //현재 2페이지
           changePage('first', pageHeight);
-        } else {
+        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
           // 현재 3페이지
           changePage('second', pageHeight);
+        } else {
+          // 현재 4페이지
+          changePage('last', pageHeight);
         }
       }
     };
@@ -118,7 +143,6 @@ export default function MainPage(props) {
       <MainHeader navClickHandler={navClickHandler} currentPage={currentPage} />
       <div ref={outerDivRef} className={classes.container}>
         <Home />
-
         <div className={classes.divider}></div>
         {currentUser ? (
           <Calendar
@@ -128,7 +152,9 @@ export default function MainPage(props) {
         ) : (
           <CalendarGuide currentPage={currentPage} />
         )}
+
         <div className={classes.divider}></div>
+
         {currentUser ? (
           <Record
             selectUpdateEvent={selectUpdateEvent}
@@ -137,22 +163,20 @@ export default function MainPage(props) {
         ) : (
           <RecordGuide currentPage={currentPage} />
         )}
+        <div className={classes.divider}></div>
+
+        {!currentUser && <UserInfoGuide currentPage={currentPage} />}
       </div>
       <img
-        src='img/icons/scroll.png'
-        alt='scroll'
-        className={
+        src={
           currentUser
-            ? classes.mainpage__scroll
-            : !currentUser && currentPage === 'home' && classes.mainpage__scroll
+            ? 'img/icons/scroll.png'
+            : !currentUser && currentPage === 'home'
+            ? 'img/icons/scroll.png'
+            : 'img/icons/mouseClick.png'
         }
-      />
-      <img
-        src='img/icons/mouseClick.png'
-        alt='diary'
-        className={
-          !currentUser && currentPage !== 'home' && classes.mainpage__scroll
-        }
+        alt='scroll'
+        className={classes.mainpage__scroll}
       />
     </React.Fragment>
   );
