@@ -44,11 +44,6 @@ export default function CalendarGuide({ currentPage }) {
   }, [currentPage]);
 
   useEffect(() => {
-    if (currentPage === 'calendar') {
-      setStep(0);
-    }
-  }, [currentPage]);
-  useEffect(() => {
     window.addEventListener('click', addStepCount);
     return () => {
       window.removeEventListener('click', addStepCount);
@@ -156,7 +151,7 @@ export default function CalendarGuide({ currentPage }) {
             events={SAMPLE_EVENTS}
           />
         </div>
-        {(currentPage === 'calendar') & !hidden && guide}
+        {(currentPage === 'calendar') & !hidden ? guide : null}
         <div
           className={`${classes.dateItem} ${
             step === 2 ? classes.second : step === 3 && classes.third

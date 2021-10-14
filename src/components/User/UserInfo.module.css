@@ -1,7 +1,47 @@
 /* rgba(255, 255, 255, 0.4); container background  
     #fdf2e5; input background 
 */
+/* guide */
+.guide__container {
+  height: 100%;
+}
+.guide__title {
+  text-align: center;
+  position: relative;
+}
 
+.guide__title p {
+  z-index: 20;
+  font-size: 20px;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  color: #fdfaf1;
+}
+
+.guide__container h1 {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(69, 93, 109, 0.6);
+}
+
+.modal__btn__guide {
+  margin: 0 10px;
+  z-index: 20;
+}
+
+/* UserInfo */
 .userInfo__container {
   padding: 100px 140px 50px;
   height: 1000px;

@@ -81,3 +81,7 @@ ul {
   height: 30px;
   pointer-events: none;
 }
+
+.loginBtn {
+  z-index: 40;
+}
