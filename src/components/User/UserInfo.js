@@ -94,6 +94,7 @@ export default function UserInfo() {
       </Modal>
       {user && (
         <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
+          <Button className={classes.chartBtn} name='통계' to='/chart' />
           <h1>
             현재 JW 님은
             <Button

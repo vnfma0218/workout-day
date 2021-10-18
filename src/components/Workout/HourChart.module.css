@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  padding: 10rem 60px 2rem;
+}
+
+.chart__title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.chart__content {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.datepicker {
+  flex: 1;
+}
+.datepicker__btn {
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid lightblue;
+  width: 100px;
+  height: 40px;
+}
+
+.chart {
+  flex: 3;
+  height: 400px;
+}
+
+/* weight */
+.weight__container {
+  margin-top: 100px;
+}

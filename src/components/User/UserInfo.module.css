@@ -86,7 +86,12 @@
   align-items: center;
   justify-content: center;
 }
-
+.chartBtn {
+  position: absolute;
+  right: 140px;
+  top: 107px;
+  font-weight: 800;
+}
 .modal__btn {
   margin: 0 10px;
 }

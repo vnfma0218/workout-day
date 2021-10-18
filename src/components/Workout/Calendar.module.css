@@ -149,7 +149,8 @@
   background: rgba(69, 93, 109, 0.6);
 }
 
-.guide__container {
+.guide__container,
+.inner__container {
   display: flex;
   justify-content: space-evenly;
   height: 90%;

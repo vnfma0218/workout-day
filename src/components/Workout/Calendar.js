@@ -173,41 +173,43 @@ export default function Calendar(props) {
       </Modal>
 
       <Wrapper className={classes.calendar__container} id={classes.calendar}>
-        <div className={classes.calendarApp} onClick={dateClickHandler}>
-          {loading && <LoadingSpinner />}
-          <FullCalendar
-            className={classes.calendarItem}
-            plugins={[dayGridPlugin, interactionPlugin]}
-            initialView='dayGridMonth'
-            // customButtons={{
-            //   myCustomBtn: {
-            //     text: 'year',
-            //     click: () => {
-            //       let calendarApi = calendarComponentRef.current.getApi();
-            //       calendarApi.gotoDate('2020-01-30');
-            //     },
-            //   },
-            // }}
-            headerToolbar={{
-              left: 'title',
-              // center: 'myCustomBtn',
-              right: 'today,prev,next',
-            }}
-            dateClick={dateClickHandler}
-            ref={calendarComponentRef}
-            events={(fetchInfo, successCallback, failureCallback) =>
-              getCalendarData(fetchInfo, successCallback, failureCallback)
-            }
-            height='100%'
-          />
-        </div>
-        <div
-          className={[
-            classes.dateItem,
-            !selectedEvent ? classes.noEvent : [],
-          ].join(' ')}
-        >
-          {!loading && dateItem}
+        <div className={classes.inner__container}>
+          <div className={classes.calendarApp} onClick={dateClickHandler}>
+            {loading && <LoadingSpinner />}
+            <FullCalendar
+              className={classes.calendarItem}
+              plugins={[dayGridPlugin, interactionPlugin]}
+              initialView='dayGridMonth'
+              // customButtons={{
+              //   myCustomBtn: {
+              //     text: 'year',
+              //     click: () => {
+              //       let calendarApi = calendarComponentRef.current.getApi();
+              //       calendarApi.gotoDate('2020-01-30');
+              //     },
+              //   },
+              // }}
+              headerToolbar={{
+                left: 'title',
+                // center: 'myCustomBtn',
+                right: 'today,prev,next',
+              }}
+              dateClick={dateClickHandler}
+              ref={calendarComponentRef}
+              events={(fetchInfo, successCallback, failureCallback) =>
+                getCalendarData(fetchInfo, successCallback, failureCallback)
+              }
+              height='100%'
+            />
+          </div>
+          <div
+            className={[
+              classes.dateItem,
+              !selectedEvent ? classes.noEvent : [],
+            ].join(' ')}
+          >
+            {!loading && dateItem}
+          </div>
         </div>
       </Wrapper>
     </>
