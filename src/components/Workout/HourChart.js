@@ -5,8 +5,7 @@ import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 import MonthPicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
-import classes from './Chart.module.css';
-import MainHeader from '../../shared/Navigation/MainHeader';
+import classes from './HourChart.module.css';
 
 const Chart = () => {
   const [data, setData] = useState([]);
@@ -24,8 +23,10 @@ const Chart = () => {
     setLoading(true);
     dbService
       .collection('record')
-      .doc('vnfma0218@naver.com')
+      .doc(currentUser.email)
       .collection('events')
+      .orderBy('date')
+      .limit(10)
       .get()
       .then((docs) => {
         const loadedData = [];
@@ -47,7 +48,14 @@ const Chart = () => {
     gradient.addColorStop(1, 'rgba(0,210,255,0.3)');
 
     return {
-      labels: data.map((el) => el.date),
+      labels: data
+        .map((el) => el.date)
+        .map((el) => {
+          return el
+            .split('-')
+            .filter((el, i) => i !== 0)
+            .join('-');
+        }),
       datasets: [
         {
           label: '운동시간',
@@ -107,51 +115,43 @@ const Chart = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <MainHeader />
-      <div className={classes.hour__container}>
-        <div className={classes.chart__title}>
-          <h1>운동시간</h1>
-        </div>
-        <div className={classes.chart__content}>
-          <div className={classes.datepicker}>
-            <MonthPicker
-              locale={ko}
-              selected={startDate}
-              onChange={(date) => selectDate(date)}
-              dateFormat='MM/yyyy'
-              showMonthYearPicker
-              showFullMonthYearPicker
-              showFourColumnMonthYearPicker
-              customInput={<ExampleCustomInput />}
-            />
-          </div>
-          {data && !loading && (
-            <div className={classes.chart}>
-              <Line
-                data={chartData}
-                options={{
-                  radius: 5,
-                  hitRadius: 30,
-                  hoverRadius: 12,
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      ticks: {
-                        callback: function (value) {
-                          return value + '(분)';
-                        },
-                      },
+    <>
+      <div className={classes.datepicker}>
+        <MonthPicker
+          locale={ko}
+          selected={startDate}
+          onChange={(date) => selectDate(date)}
+          dateFormat='MM/yyyy'
+          showMonthYearPicker
+          showFullMonthYearPicker
+          showFourColumnMonthYearPicker
+          customInput={<ExampleCustomInput />}
+        />
+      </div>
+      {data && !loading && (
+        <div className={classes.chart}>
+          <Line
+            data={chartData}
+            options={{
+              radius: 5,
+              hitRadius: 30,
+              hoverRadius: 12,
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  ticks: {
+                    callback: function (value) {
+                      return value + '(분)';
                     },
                   },
-                }}
-              />
-            </div>
-          )}
+                },
+              },
+            }}
+          />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

@@ -1,90 +1,30 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
-import { useAuth } from '../../context/auth-context';
-import { dbService } from '../../firebase';
-import Wrapper from '../../shared/UIElement/Wrapper';
-// import classes from './Chart.module.css';
-import DatePicker from 'react-datepicker';
-import { Line } from 'react-chartjs-2';
-import './Chart.css';
+import WeightChart from './WeightChart';
+import HourChart from './HourChart';
+import MainHeader from '../../shared/Navigation/MainHeader';
+import classes from './HourChart.module.css';
 
-export default function Chart() {
-  const { currentUser } = useAuth();
-  const [recordData, setRecordData] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [selectDate, setSelectDate] = useState('');
-  useEffect(() => {
-    dbService
-      .collection('record')
-      .doc(currentUser.email)
-      .collection('events')
-
-      .orderBy('date')
-      .onSnapshot((snapshot) => {
-        const record = [];
-
-        snapshot.forEach((doc) => {
-          if (doc.data().weight) {
-            record.push({ date: doc.data().date, weight: doc.data().weight });
-          }
-        });
-
-        let chartDate = [];
-        if (selectDate) {
-          chartDate = record.filter((el) => {
-            return el.date.slice(0, 7) === selectDate;
-          });
-        } else {
-          chartDate = record.filter(
-            (el) => el.date.slice(0, 7) === startDate.toISOString().slice(0, 7)
-          );
-        }
-
-        setRecordData(chartDate);
-      });
-  }, [selectDate]);
-  console.log(recordData);
-
-  const monthChangeHandler = (date) => {
-    const dateInfo = date.toISOString().slice(0, 7);
-    setSelectDate(dateInfo);
-    setStartDate(date);
-  };
+const Chart = () => {
   return (
-    <Wrapper>
-      <Line
-        data={{
-          labels: recordData.map(({ date }) => date),
-          datasets: [
-            {
-              data: recordData.map(({ weight }) => weight),
-              label: 'weight',
-              borderColor: 'rgb(75, 192, 192)',
-              fill: true,
-            },
-          ],
-        }}
-        options={{
-          scales: {
-            yAxes: {
-              ticks: {
-                min: 0,
-                callback: function (label, index, labels) {
-                  return label + 'kg';
-                },
-              },
-            },
-          },
-        }}
-      />
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => monthChangeHandler(date)}
-        dateFormat='MM/yyyy'
-        showMonthYearPicker
-        showFullMonthYearPicker
-        showFourClumnMonthYearPicker
-      />
-    </Wrapper>
+    <div className={classes.container}>
+      <MainHeader />
+      <div className={classes.hour__container}>
+        <div className={classes.chart__title}>
+          <h1>운동시간</h1>
+        </div>
+        <div className={classes.chart__content}>
+          <HourChart />
+        </div>
+      </div>
+      <div className={classes.weight__container}>
+        <div className={classes.chart__title}>
+          <h1>몸무게</h1>
+        </div>
+        <div className={classes.chart__content}>
+          <WeightChart />
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default Chart;

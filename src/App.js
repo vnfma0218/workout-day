@@ -8,7 +8,7 @@ import UserInfo from './components/User/UserInfo';
 import UpdateUserInfo from './components/User/UpdateUserInfo';
 import SecondLayout from './components/User/SecondLayout';
 import { AuthProvider } from './context/auth-context';
-import Chart from './components/Chart/Chart';
+import Chart from './components/Workout/Chart';
 
 function App() {
   return (
