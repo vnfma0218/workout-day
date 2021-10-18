@@ -128,26 +128,25 @@ export default function CalendarGuide({ currentPage }) {
               </h3>
             </div>
           ) : null}
-          {step === 1 && (
+
+          {(currentPage === 'calendar') & (step === 1) ? (
             <div className={classes.first__message}>
               <h3> 👩 이번달 운동시간을 날짜별로 확인할 수 있습니다.</h3>
             </div>
-          )}
-          {step === 2 && (
+          ) : (currentPage === 'calendar') & (step === 2) ? (
             <div className={classes.second__message}>
               <h3>
                 📝 날짜를 클릭하면 <br />
                 해당 날짜의 운동 정보를 볼 수 있습니다
               </h3>
             </div>
-          )}
-          {step === 3 && (
+          ) : (currentPage === 'calendar') & (step === 3) ? (
             <div className={classes.third__message}>
               <h3>
                 운동사진을 한번에 <br /> 모아볼 수 있습니다
               </h3>
             </div>
-          )}
+          ) : null}
           <div
             className={`${classes.calendarApp} ${
               step === 1 ? classes.first : classes.calendarApp
