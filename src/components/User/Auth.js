@@ -91,7 +91,7 @@ export default function Auth() {
   return (
     <>
       <MainHeader />
-      <Wrapper>
+      <Wrapper className={classes.auth__container}>
         <Modal
           open={modalOpen}
           title='Error'

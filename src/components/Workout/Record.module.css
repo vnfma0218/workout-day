@@ -311,7 +311,7 @@
     width: 80%;
     margin: auto;
     height: 540px;
-    font-size: 16px;
+    font-size: 14px;
     padding: 30px 30px 20px;
   }
 
@@ -364,5 +364,70 @@
 
   .err__box > p {
     font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .record__form {
+    width: 96%;
+    margin: auto;
+    height: 440px;
+    font-size: 12px;
+    padding: 20px 8px 20px;
+  }
+
+  .input_title {
+    width: 40px;
+    margin-right: 0;
+  }
+
+  .form__input:nth-child(1) input {
+    width: 150px;
+  }
+
+  .form__input:nth-child(2) input {
+    width: 60px;
+  }
+
+  .file__input {
+    height: 8rem;
+  }
+
+  .memo__input {
+    height: 4rem;
+  }
+
+  .place__box {
+    width: 200px;
+  }
+
+  .place__box img {
+    height: 20px;
+  }
+
+  .preview__Image {
+    width: 200px;
+  }
+
+  .image__box__icon {
+    height: 30px;
+  }
+
+  .form__input textarea {
+    height: 100%;
+    width: 200px;
+  }
+
+  .place__box > button {
+    width: 30px;
+    font-size: 8px;
+  }
+
+  .err__box > p {
+    font-size: 12px;
+  }
+
+  .form__input > span {
+    margin: 0 10px 0 5px;
   }
 }

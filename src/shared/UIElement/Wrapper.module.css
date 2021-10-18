@@ -24,6 +24,13 @@
   background-color: #d7e9f7;
 }
 
+@media screen and (max-width: 1024px) {
+  .wrapper__dietmode,
+  .wrapper__normalmode {
+    padding: 8rem 40px 2rem;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .wrapper__dietmode,
   .wrapper__normalmode {
