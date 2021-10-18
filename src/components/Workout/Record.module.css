@@ -230,3 +230,139 @@
 .btn__delete svg {
   fill: rgb(77, 77, 77);
 }
+
+@media screen and (max-width: 1024px) {
+  .record__form {
+    font-size: 14px;
+    padding: 20px 20px 20px;
+  }
+
+  .input_title {
+    width: 50px;
+    margin-right: 30px;
+  }
+
+  .form__input:nth-child(1) input {
+    width: 150px;
+  }
+
+  .form__input:nth-child(2) input {
+    width: 50px;
+  }
+
+  .file__input {
+    height: 10rem;
+  }
+
+  .memo__input {
+    height: 4rem;
+  }
+
+  .place__box {
+    width: 200px;
+  }
+
+  .place__box img {
+    height: 20px;
+  }
+
+  .preview__Image {
+    width: 200px;
+  }
+
+  .image__box__icon {
+    height: 20px;
+  }
+
+  .form__input textarea {
+    height: 100%;
+    width: 200px;
+  }
+
+  .form__btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* position: absolute;
+    right: 1rem;
+    bottom: 1rem; */
+  }
+
+  .place__box > button {
+    width: 30px;
+    font-size: 8px;
+  }
+
+  .err__box > p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .record {
+    overflow-y: scroll;
+  }
+  .record__inner {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .record__form {
+    width: 80%;
+    margin: auto;
+    height: 540px;
+    font-size: 16px;
+    padding: 30px 30px 20px;
+  }
+
+  .input_title {
+    width: 50px;
+    margin-right: 30px;
+  }
+
+  .form__input:nth-child(1) input {
+    width: 150px;
+  }
+
+  .form__input:nth-child(2) input {
+    width: 80px;
+  }
+
+  .file__input {
+    height: 12rem;
+  }
+
+  .memo__input {
+    height: 6rem;
+  }
+
+  .place__box {
+    width: 300px;
+  }
+
+  .place__box img {
+    height: 28px;
+  }
+
+  .preview__Image {
+    width: 300px;
+  }
+
+  .image__box__icon {
+    height: 30px;
+  }
+
+  .form__input textarea {
+    height: 100%;
+    width: 300px;
+  }
+
+  .place__box > button {
+    width: 40px;
+    font-size: 10px;
+  }
+
+  .err__box > p {
+    font-size: 16px;
+  }
+}

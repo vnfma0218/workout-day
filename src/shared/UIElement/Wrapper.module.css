@@ -23,3 +23,10 @@
   /* background-color: #fde0b4; */
   background-color: #d7e9f7;
 }
+
+@media screen and (max-width: 768px) {
+  .wrapper__dietmode,
+  .wrapper__normalmode {
+    padding: 8rem 10px 2rem;
+  }
+}
