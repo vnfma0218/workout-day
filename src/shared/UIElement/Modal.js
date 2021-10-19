@@ -28,6 +28,8 @@ const ModalOverlay = (props) => {
           name={props.name ? props.name : 'CONFIRM'}
           className={classes.add__btn}
           onClick={props.onConfirm}
+          type={props.type ? props.type : 'button'}
+          disable={props.disable ? props.disable : null}
         />
 
         {/* <Button onClick={props.onConfirm}>CONFIRM</Button> */}

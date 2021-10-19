@@ -7,7 +7,7 @@ import Wrapper from '../../shared/UIElement/Wrapper';
 const Chart = () => {
   return (
     <Wrapper className={classes.container} id={classes.chart}>
-      <MainHeader />
+      <MainHeader pageName='My Chart' />
       <div className={classes.hour__container}>
         <div className={classes.chart__title}>
           <h1>Time of workout</h1>

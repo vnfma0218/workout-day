@@ -9,6 +9,7 @@ import UpdateUserInfo from './components/User/UpdateUserInfo';
 import SecondLayout from './components/User/SecondLayout';
 import { AuthProvider } from './context/auth-context';
 import Chart from './components/Workout/Chart';
+import DietPhoto from './components/User/DietPhoto';
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
             </Route>
             <Route path='/photo'>
               <SecondLayout />
+            </Route>
+            <Route path='/diet'>
+              <DietPhoto />
             </Route>
             <Route path='/chart'>
               <Chart />

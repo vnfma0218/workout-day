@@ -103,6 +103,8 @@ export default function MainHeader(props) {
               ? "Today's Workout"
               : props.currentPage === 'userinfo'
               ? 'MyPage'
+              : props.pageName
+              ? props.pageName
               : null}
           </h2>
 

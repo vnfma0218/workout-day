@@ -162,6 +162,7 @@ export default function SelectActivity({
       setActivities((prev) => {
         const Change = prev.map((el) => {
           if (selectActivityNameId.id === el.id) {
+            recordActivity(el.name, el.id);
             return { ...el, selected: true };
           } else {
             return { ...el, selected: false };

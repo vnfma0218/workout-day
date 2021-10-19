@@ -26,7 +26,7 @@
   width: 23%;
   margin: 0 0 20px 0px;
   background-color: rgba(255, 255, 255, 0.6);
-  padding: 28px;
+  padding: 28px 28px 20px;
   border-radius: 14px;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
   -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
@@ -58,11 +58,27 @@
 }
 
 .downward__icon {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 110px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+  background-color: rgb(252, 243, 166);
+  border: none;
+}
+
+.downward__icon p {
+  font-weight: 700;
+}
+/* .downward__icon {
   width: 30px;
   height: 30px;
   margin-left: 10px;
   cursor: pointer;
-}
+} */
 
 .downward__icon img {
   width: 100%;

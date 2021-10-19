@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 
-export default function usePhotofetch() {
+export default function usePhotofetch(props) {
   const [loadedPhotos, setLoadedPhotos] = useState([]);
   const [infiniteMode, setInfiniteMode] = useState(true);
   const [startDate, setStartDate] = useState(new Date());

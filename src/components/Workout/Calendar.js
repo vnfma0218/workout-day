@@ -90,10 +90,30 @@ export default function Calendar(props) {
           <>
             <h1 className={classes.norecord__message}>운동기록이 없습니다.</h1>
             <div className={classes.guide}>
-              <p>등록하기 </p>
+              <Button
+                name={
+                  <>
+                    <p>등록하기 </p>{' '}
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      enable-background='new 0 0 24 24'
+                      height='24px'
+                      viewBox='0 0 24 24'
+                      width='24px'
+                      fill='#000000'
+                    >
+                      <rect fill='none' height='24' width='24' />
+                      <path d='M19,15l-1.41-1.41L13,18.17V2H11v16.17l-4.59-4.59L5,15l7,7L19,15z' />
+                    </svg>
+                  </>
+                }
+                onClick={toRecordPage}
+                className={classes.downward__icon}
+              />
+              {/* <p>등록하기 </p>
               <div className={classes.downward__icon} onClick={toRecordPage}>
                 <img src='img/icons/arrow.png' alt='' />
-              </div>
+              </div> */}
             </div>
           </>
         )}

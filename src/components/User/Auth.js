@@ -90,7 +90,7 @@ export default function Auth() {
 
   return (
     <>
-      <MainHeader />
+      <MainHeader pageName='Login' />
       <Wrapper className={classes.auth__container}>
         <Modal
           open={modalOpen}

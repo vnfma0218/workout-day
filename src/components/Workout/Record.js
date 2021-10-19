@@ -9,6 +9,7 @@ import { dbService, storage } from '../../firebase';
 import classes from './Record.module.css';
 import { useAuth } from '../../context/auth-context';
 import useFetchEvents from '../../shared/hooks/useFetchEvents';
+import FoodModal from './FoodModal';
 
 export default function Record(props) {
   const selectUpdateEvent = props.selectUpdateEvent;
@@ -44,7 +45,7 @@ export default function Record(props) {
     name: '',
     id: '',
   });
-
+  console.log(activity);
   const [err, setErr] = useState({
     time: false,
     activity: false,
@@ -386,7 +387,7 @@ export default function Record(props) {
             onSubmit={saveHandler}
           >
             <div className={classes.form__input}>
-              <label className={classes.input_title}>Date :</label>
+              <label className={classes.input_title}>Date</label>
 
               <input
                 type='date'
@@ -399,7 +400,7 @@ export default function Record(props) {
               />
             </div>
             <div className={classes.form__input}>
-              <label className={classes.input_title}>Time :</label>
+              <label className={classes.input_title}>Time</label>
               <input
                 type='number'
                 name='hour'
@@ -435,7 +436,7 @@ export default function Record(props) {
               )}
             </div>
             <div className={classes.form__input}>
-              <label className={classes.input_title}>Place :</label>
+              <label className={classes.input_title}>Place</label>
               <div className={classes.place__box}>
                 <div>
                   <img
@@ -471,7 +472,7 @@ export default function Record(props) {
             </div>
             {mode.isDietMode && (
               <div className={classes.form__input}>
-                <label className={classes.input_title}>Weight :</label>
+                <label className={classes.input_title}>Weight</label>
                 <input
                   type='number'
                   name='weight'
@@ -540,7 +541,7 @@ export default function Record(props) {
                   onClick={cancelHandler}
                 />
               )}
-
+              {mode.isDietMode && !editMode ? <FoodModal /> : null}
               <Button
                 className={onSubmit ? classes.btn__unactive : classes.btn}
                 type='submit'
