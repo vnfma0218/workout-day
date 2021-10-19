@@ -13,6 +13,7 @@ import classes from './Calendar.module.css';
 import { useAuth } from '../../context/auth-context';
 import { useHistory } from 'react-router';
 import Map from '../../shared/UIElement/Map';
+import useWindowDimensions from '../../shared/hooks/useWindowDemensions';
 
 export default function Calendar(props) {
   const {
@@ -25,6 +26,8 @@ export default function Calendar(props) {
     dateClickHandler,
     loading,
   } = useFetchEvents();
+  const { width } = useWindowDimensions();
+
   const [mapOpen, setMapOpen] = useState(false);
   const calendarComponentRef = useRef();
   const { currentUser } = useAuth();
@@ -141,6 +144,14 @@ export default function Calendar(props) {
         <div className={classes.workout__img}>
           <img src={selectedEvent.imageUrl} alt='workout' />
         </div>
+        {width < 768 && (
+          <div className={classes.memo__container}>
+            <p className={classes.memo__title}>MEMO</p>
+            <p className={classes.memo}>
+              {selectedEvent.memo.split('').splice(0, 40).join('')}...
+            </p>
+          </div>
+        )}
 
         <div className={classes.btn}>
           <Button name='Photos' to='/photo' className={classes.photoBtn} />
@@ -180,19 +191,9 @@ export default function Calendar(props) {
               className={classes.calendarItem}
               plugins={[dayGridPlugin, interactionPlugin]}
               initialView='dayGridMonth'
-              // customButtons={{
-              //   myCustomBtn: {
-              //     text: 'year',
-              //     click: () => {
-              //       let calendarApi = calendarComponentRef.current.getApi();
-              //       calendarApi.gotoDate('2020-01-30');
-              //     },
-              //   },
-              // }}
               headerToolbar={{
                 left: 'title',
-                // center: 'myCustomBtn',
-                right: 'today,prev,next',
+                right: width > 1024 ? 'today,prev,next' : 'prev,next',
               }}
               dateClick={dateClickHandler}
               ref={calendarComponentRef}

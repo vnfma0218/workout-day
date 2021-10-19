@@ -20,15 +20,20 @@ const Chart = () => {
   ));
 
   useEffect(() => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const start = `${year}-${month < 10 ? `0${month}` : month}-01`;
+    const end = `${year}-${month < 10 ? `0${month}` : month}-31`;
     setLoading(true);
     dbService
       .collection('record')
       .doc(currentUser.email)
       .collection('events')
       .orderBy('date')
-      .limit(10)
-      .get()
-      .then((docs) => {
+      .startAt(start)
+      .endAt(end)
+      .onSnapshot((docs) => {
         const loadedData = [];
         docs.forEach((doc) => {
           loadedData.push({

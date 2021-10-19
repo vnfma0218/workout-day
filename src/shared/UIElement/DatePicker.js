@@ -11,10 +11,12 @@ export default function DateRange(props) {
     setStartDate(e);
     props.setDate(e);
   };
+
   const handleClick = (e) => {
     e.preventDefault();
     props.pickerOpen(true);
   };
+
   return (
     <>
       <span className={classes.dateInput}>

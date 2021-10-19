@@ -5,7 +5,7 @@ import MainHeader from '../../shared/Navigation/MainHeader';
 import DateRange from '../../shared/UIElement/DatePicker';
 import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 import Wrapper from '../../shared/UIElement/Wrapper';
-import UserPhotoInfo from './UserPhotoInfo';
+// import UserPhotoInfo from './UserPhotoInfo';
 
 import classes from './SecondLayout.module.css';
 export default function SecondLayout() {
@@ -55,7 +55,7 @@ export default function SecondLayout() {
     <>
       <MainHeader />
       <Wrapper id='second__layout' className={classes.second__layout}>
-        <UserPhotoInfo />
+        {/* <UserPhotoInfo /> */}
         <div className={classes.selectDate__container}>
           <div className={classes.selectDate}>
             <DateRange

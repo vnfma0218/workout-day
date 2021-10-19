@@ -145,9 +145,11 @@ export default function MainHeader(props) {
             {/* <NavLink to='/auth' activeClassName={classes.selected} > */}
             <li
               className={
-                !currentUser && props.currentPage === 'home'
+                currentUser
                   ? classes.nav__item
-                  : !currentUser && props.currentPage === undefined
+                  : !currentUser & (props.currentPage === 'home')
+                  ? classes.nav__item
+                  : !currentUser & (props.currentPage === undefined)
                   ? classes.nav__item
                   : null
               }
