@@ -28,3 +28,11 @@
   color: black;
   font-weight: 500;
 }
+@media screen and (max-width: 500px) {
+  .fc .fc-toolbar-title {
+    font-size: 22px;
+  }
+  .fc-header-toolbar fc-toolbar fc-toolbar-ltr {
+    margin-bottom: 0;
+  }
+}

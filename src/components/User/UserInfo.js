@@ -96,24 +96,6 @@ export default function UserInfo() {
       </Modal>
       {user && (
         <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
-          {/* {width > 768 && (
-            <Button
-              className={classes.chartBtn}
-              name={
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='24px'
-                  viewBox='0 0 24 24'
-                  width='24px'
-                  fill='#000000'
-                >
-                  <path d='M0 0h24v24H0z' fill='none' />
-                  <path d='M17 4h3v16h-3zM5 14h3v6H5zm6-5h3v11h-3z' />
-                </svg>
-              }
-              to='/chart'
-            />
-          )} */}
           <h1>
             현재 JW 님은
             <Button
