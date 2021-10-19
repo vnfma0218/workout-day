@@ -17,6 +17,7 @@ export default function Chart() {
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <button className={classes.datepicker__btn} onClick={onClick} ref={ref}>
       {value}
+      <img src='img/icons/down-arrow.png' alt='down-arrow' />
     </button>
   ));
 

@@ -14,9 +14,7 @@ export default function MainHeader(props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // let pageWidth = window.innerWidth;
   const [width, setWidth] = useState(window.innerWidth);
-  // const [responsiveHeader, setResponsiveHeader] = useState(false);
 
   useEffect(() => {
     const resizeWindowHandler = () => {
@@ -28,7 +26,6 @@ export default function MainHeader(props) {
 
     return () => window.removeEventListener('resize', resizeWindowHandler);
   }, []);
-  console.log(width);
 
   const onNavLinkClick = (e) => {
     const navLink = e.target.dataset.link;

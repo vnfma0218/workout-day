@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/auth-context';
 import { ModeContext } from '../../context/mode-context';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
@@ -9,9 +8,6 @@ import classes from './UserInfo.module.css';
 
 export default function UserInfo({ currentPage }) {
   const mode = useContext(ModeContext);
-  const [user, setUser] = useState();
-  const [bmi, setBMI] = useState(null);
-  const { currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [hidden, setHidden] = useState(true);
