@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  width: 25%;
+  width: 35%;
   border-radius: 30px;
   background-color: rgb(253, 245, 245);
 }
@@ -61,8 +61,10 @@
 }
 
 .photos {
-  margin-top: 50px;
-  padding: 0 130px;
+  width: 80%;
+  margin: 50px auto 0;
+  /* padding: 0 50px; */
+  justify-content: flex-start;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -70,8 +72,8 @@
 }
 
 .photo {
-  width: 293px;
-  height: 293px;
+  width: 253px;
+  height: 273px;
   margin: 30px;
   position: relative;
 }
@@ -136,4 +138,31 @@
 .photo__date {
   margin-bottom: 20px;
   letter-spacing: 10px;
+}
+@media screen and (max-width: 1300px) {
+  .selectDate {
+    width: 40%;
+  }
+  .photos {
+    padding-left: 70px;
+  }
+  .photo {
+    width: 220px;
+    margin: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .selectDate {
+    width: 40%;
+  }
+  .photos {
+    padding: 0;
+    /* flex-wrap: nowrap; */
+    justify-content: center;
+  }
+  .photo {
+    width: 230px;
+    margin: 10px;
+  }
 }

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useAuth } from '../../context/auth-context';
 import { ModeContext } from '../../context/mode-context';
 import { dbService } from '../../firebase';
+import useWindowDimensions from '../../shared/hooks/useWindowDemensions';
 import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
@@ -15,6 +16,7 @@ export default function UserInfo() {
   const [bmi, setBMI] = useState(null);
   const { currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     dbService
@@ -94,7 +96,9 @@ export default function UserInfo() {
       </Modal>
       {user && (
         <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
-          <Button className={classes.chartBtn} name='통계' to='/chart' />
+          {width > 768 && (
+            <Button className={classes.chartBtn} name='통계' to='/chart' />
+          )}
           <h1>
             현재 JW 님은
             <Button
@@ -118,7 +122,7 @@ export default function UserInfo() {
                 </div>
                 <div className={`${classes.user__personal}`}>
                   <p className={classes.email}>이메일</p>
-                  <p>{currentUser.email}</p>
+                  <p className={classes.emailValue}>{currentUser.email}</p>
                 </div>
                 <div className={`${classes.user__personal}`}>
                   <p className={classes.password}>비밀번호</p>
@@ -144,9 +148,12 @@ export default function UserInfo() {
                 </div>
               </div>
             </div>
+            {width < 768 && (
+              <Button className={classes.chartBtn} name='통계' to='/chart' />
+            )}
             <Button
               to='/userinfo/edit'
-              name='EDIT'
+              name='수정'
               className={classes.edit__btn}
             />
           </article>

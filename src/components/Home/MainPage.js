@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import MainHeader from '../../shared/Navigation/MainHeader';
 import classes from './MainPage.module.css';
@@ -19,48 +19,52 @@ export default function MainPage(props) {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('home');
   const [selectUpdateEvent, setSelectUpdateEvent] = useState();
-  const changePage = (page, pageHeight) => {
-    if (
-      (currentUser && page === 'first') ||
-      (!currentUser && page === 'first')
-    ) {
-      setCurrentPage('home');
-      outerDivRef.current.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      });
-    } else if (
-      (currentUser && page === 'second') ||
-      (!currentUser && page === 'second')
-    ) {
-      setCurrentPage('calendar');
 
-      outerDivRef.current.scrollTo({
-        top: pageHeight + DIVIDER_HEIGHT,
-        left: 0,
-        behavior: 'smooth',
-      });
-    } else if (
-      (currentUser && page === 'last') ||
-      (!currentUser && page === 'last')
-    ) {
-      setCurrentPage('record');
+  const changePage = useCallback(
+    (page, pageHeight) => {
+      if (
+        (currentUser && page === 'first') ||
+        (!currentUser && page === 'first')
+      ) {
+        setCurrentPage('home');
+        outerDivRef.current.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        });
+      } else if (
+        (currentUser && page === 'second') ||
+        (!currentUser && page === 'second')
+      ) {
+        setCurrentPage('calendar');
 
-      outerDivRef.current.scrollTo({
-        top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-        left: 0,
-        behavior: 'smooth',
-      });
-    } else if (!currentUser && page === 'end') {
-      setCurrentPage('userinfo');
-      outerDivRef.current.scrollTo({
-        top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
-        left: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
+        outerDivRef.current.scrollTo({
+          top: pageHeight + DIVIDER_HEIGHT,
+          left: 0,
+          behavior: 'smooth',
+        });
+      } else if (
+        (currentUser && page === 'last') ||
+        (!currentUser && page === 'last')
+      ) {
+        setCurrentPage('record');
+
+        outerDivRef.current.scrollTo({
+          top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
+          left: 0,
+          behavior: 'smooth',
+        });
+      } else if (!currentUser && page === 'end') {
+        setCurrentPage('userinfo');
+        outerDivRef.current.scrollTo({
+          top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
+          left: 0,
+          behavior: 'smooth',
+        });
+      }
+    },
+    [currentUser]
+  );
 
   useEffect(() => {
     const wheelHandler = (e) => {
@@ -111,7 +115,7 @@ export default function MainPage(props) {
         passive: false,
       });
     };
-  }, []);
+  }, [changePage]);
 
   const pageHeight = window.innerHeight;
 
@@ -119,7 +123,7 @@ export default function MainPage(props) {
     if (location.state) {
       changePage(location.state.page, pageHeight);
     }
-  }, [location.state, pageHeight]);
+  }, [location.state, pageHeight, changePage]);
 
   const navClickHandler = (link) => {
     if (link === 'home') {

@@ -113,7 +113,6 @@
 
 .btn {
   position: relative;
-  right: 10px;
   bottom: 20px;
   margin: 30% auto 0;
   display: flex;
@@ -121,6 +120,7 @@
 }
 .editBtn {
   padding: 8px;
+  margin-right: 0;
 }
 .photoBtn {
   padding: 8px;
@@ -261,10 +261,98 @@
   height: 30px;
 }
 
-/* .dateItem .photo__hilight {
-  z-index: 20;
-  background-color: white;
-} */
+@media screen and (max-width: 1024px) {
+  .dateItem {
+    padding: 8px;
+  }
+  .workout__header {
+    margin-bottom: 10px;
+  }
+  .workout__img {
+    width: 70%;
+    object-fit: contain;
+  }
+  .mapIcon svg {
+    width: 25px;
+    height: 20px;
+  }
+
+  .norecord__message {
+    font-size: 0.9rem;
+  }
+  .guide {
+    font-size: 0.9rem;
+  }
+  .noEvent {
+    height: 200px;
+  }
+  .btn {
+    bottom: 0;
+    position: static;
+    margin-right: 14px;
+  }
+  .photoBtn,
+  .editBtn {
+    width: 60px;
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .inner__container {
+    flex-direction: column;
+  }
+  .calendarApp {
+    flex: 3;
+    width: 100%;
+  }
+  .workout__img {
+    display: none;
+  }
+  .dateItem {
+    width: 60%;
+    flex: 1;
+    position: relative;
+    margin-top: 20px;
+  }
+  .noEvent {
+    text-align: center;
+    height: 100px;
+  }
+  .btn {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .guide {
+    display: flex;
+    justify-content: center;
+  }
+
+  .memo__container {
+    display: flex;
+    margin-top: 10px;
+    height: 50%;
+    align-items: center;
+    /* justify-content: center; */
+  }
+  .memo__title {
+    margin-right: 10px;
+  }
+
+  .memo {
+    flex: 4;
+  }
+  .photoBtn,
+  .editBtn {
+    width: 60px;
+    padding: 6px;
+    font-size: 12px;
+  }
+}
 
 @keyframes message-first {
   from {

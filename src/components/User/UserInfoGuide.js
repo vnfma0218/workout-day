@@ -11,7 +11,7 @@ export default function UserInfo({ currentPage }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [hidden, setHidden] = useState(true);
-
+  console.log(step);
   const openModalHandler = () => {
     setModalOpen(true);
   };

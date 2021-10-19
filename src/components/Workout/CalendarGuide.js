@@ -57,42 +57,6 @@ export default function CalendarGuide({ currentPage }) {
       return prev + 1;
     });
 
-  const guide = (
-    <div className={`${classes.guide__message}`}>
-      {step === 0 && (
-        <div className={classes.start__message}>
-          <img
-            className={classes.start__img}
-            src='img/icons/calendar.png'
-            alt='calendar'
-          />
-          <h3>
-            나만의 운동기록을 모아서 <br /> 간편하게 관리해보세요.
-          </h3>
-        </div>
-      )}
-      {step === 1 && (
-        <div className={classes.first__message}>
-          <h3> 👩 이번달 운동시간을 날짜별로 확인할 수 있습니다.</h3>
-        </div>
-      )}
-      {step === 2 && (
-        <div className={classes.second__message}>
-          <h3>
-            📝 날짜를 클릭하면 <br />
-            해당 날짜의 운동 정보를 볼 수 있습니다
-          </h3>
-        </div>
-      )}
-      {step === 3 && (
-        <div className={classes.third__message}>
-          <h3>
-            🏄‍♂️ 운동사진을 한번에 <br /> 모아볼 수 있습니다
-          </h3>
-        </div>
-      )}
-    </div>
-  );
   return (
     <>
       {(currentPage === 'calendar') & !hidden && (
