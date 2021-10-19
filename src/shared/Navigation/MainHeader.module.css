@@ -18,44 +18,38 @@ ul {
 .main__header {
   width: 100%;
   max-width: 1440px;
-  /* color: #4d4d4d; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
   margin: 0 auto;
-  /* background-color: #fde0b4; */
   background-color: #d7e9f7;
 }
 
 .main__header__diet {
   width: 100%;
   max-width: 1440px;
-  /* color: #4d4d4d; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 60px;
   margin: 0 auto;
   background-color: #cbb9e0;
-  /* background-color: #c6d57e; */
 }
 
 .logo {
   font-size: 28px;
   cursor: pointer;
-  /* fill: #4d4d4d; */
 }
 
 .currentpage {
-  /* osition: absolute; */
-  /* writing-mode: vertical-rl; */
   font-size: 25px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .nav__list {
+  position: relative;
   display: flex;
   align-items: center;
   width: 15%;
@@ -66,6 +60,45 @@ ul {
   margin: 0 3px;
   cursor: pointer;
   transition: all 0.4 ease-in-out;
+}
+
+/* dropdown */
+.menu {
+  background: #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  top: 40px;
+  right: -30px;
+  width: 100px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+.menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  border-bottom: 1px solid #dddddd;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #333333;
+  padding: 15px 10px;
+  display: block;
+  text-align: center;
 }
 
 .selected {
@@ -92,7 +125,6 @@ ul {
 .show__menu {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   width: 140px;
   height: 100vh;
   position: absolute;
@@ -118,7 +150,6 @@ ul {
 .hide__menu {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   width: 140px;
   height: 100vh;
   position: absolute;
@@ -138,9 +169,33 @@ ul {
     display: block;
   }
 
-  /* .nav__list {
-    display: none;
-  } */
+  .menu {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    top: 0;
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu li {
+    border-bottom: 1px solid #dddddd;
+    width: 100px;
+    height: 50px;
+    margin: 0;
+  }
+
+  .menu li a {
+    text-decoration: none;
+    color: #333333;
+    padding: 15px 10px;
+    display: block;
+    text-align: center;
+  }
 }
 
 @media screen and (max-width: 768px) {

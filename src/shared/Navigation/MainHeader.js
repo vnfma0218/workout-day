@@ -1,21 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { ModeContext } from '../../context/mode-context';
 import { useAuth } from '../../context/auth-context';
 import Modal from '../UIElement/Modal';
 
 import classes from './MainHeader.module.css';
+import useDetectOutsideClick from '../hooks/useDetectOutsideClick';
 export default function MainHeader(props) {
   const mode = useContext(ModeContext);
   const history = useHistory();
   const location = useLocation();
   const { currentUser, logout } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
-
+  const dropdownRef = useRef(null);
+  const sideBarRef = useRef(null);
+  const [dropdownIsActive, setDropdownIsActive] = useDetectOutsideClick(
+    dropdownRef,
+    false
+  );
+  const [sidebarIsActive, setSidebarIsActive] = useDetectOutsideClick(
+    sideBarRef,
+    false
+  );
   useEffect(() => {
     const resizeWindowHandler = () => {
       let newWidth = window.innerWidth;
@@ -65,9 +74,8 @@ export default function MainHeader(props) {
   };
 
   const toggleHandler = () => {
-    setMenuOpen((menuOpen) => !menuOpen);
+    setSidebarIsActive((sidebarIsActive) => !sidebarIsActive);
   };
-
   return (
     <>
       <Modal
@@ -108,12 +116,13 @@ export default function MainHeader(props) {
 
           <ul
             className={
-              currentUser && width <= 1024 && menuOpen
+              currentUser && width <= 1024 && sidebarIsActive
                 ? classes.show__menu
-                : currentUser && width <= 1024 && !menuOpen
+                : currentUser && width <= 1024 && !sidebarIsActive
                 ? classes.hide__menu
                 : classes.nav__list
             }
+            ref={sideBarRef}
           >
             {currentUser && (
               <li
@@ -161,25 +170,46 @@ export default function MainHeader(props) {
               </li>
             )}
             {currentUser && (
-              <NavLink to='/userinfo' activeClassName={classes.selected}>
-                <li className={classes.nav__item}>
-                  {width <= 1024 ? (
-                    'MyPage'
-                  ) : (
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      height='24px'
-                      viewBox='0 0 24 24'
-                      width='24px'
-                      fill='#000000'
-                    >
-                      <path d='M0 0h24v24H0z' fill='none' />
-                      <path d='M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z' />
-                    </svg>
-                  )}
-                </li>
-              </NavLink>
+              <li
+                className={
+                  location.pathname === '/userinfo' ||
+                  location.pathname === '/photo'
+                    ? `${classes.selected} ${classes.nav__item}`
+                    : classes.nav__item
+                }
+                onClick={() => setDropdownIsActive(!dropdownIsActive)}
+              >
+                {width <= 1024 ? (
+                  'MyPage'
+                ) : (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    height='24px'
+                    viewBox='0 0 24 24'
+                    width='24px'
+                    fill='#000000'
+                  >
+                    <path d='M0 0h24v24H0z' fill='none' />
+                    <path d='M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z' />
+                  </svg>
+                )}
+              </li>
             )}
+            <nav
+              ref={dropdownRef}
+              className={`${classes.menu} ${
+                dropdownIsActive ? classes.active : classes.inactive
+              }`}
+            >
+              <ul>
+                <li>
+                  <Link to='/userinfo'>My Page</Link>
+                </li>
+                <li>
+                  <Link to='/photo'>Photo</Link>
+                </li>
+              </ul>
+            </nav>
 
             {/* <NavLink to='/auth' activeClassName={classes.selected}> */}
             <li

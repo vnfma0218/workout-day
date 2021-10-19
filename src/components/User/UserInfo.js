@@ -99,7 +99,7 @@ export default function UserInfo() {
           {width > 768 && (
             <Button className={classes.chartBtn} name='통계' to='/chart' />
           )}
-          <h1>
+          <h1 className={classes.mode__state}>
             현재 JW 님은
             <Button
               name={mode.isDietMode ? '다이어트 모드' : '운동 모드'}

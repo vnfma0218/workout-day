@@ -166,3 +166,38 @@
     margin: 10px;
   }
 }
+
+@media screen and (max-width: 650px) {
+  .selectDate__container {
+    justify-content: space-between;
+  }
+  .selectDate {
+    width: 60%;
+    /* height: 30px; */
+  }
+
+  .latestBtn {
+    top: 70px;
+    right: 10px;
+    width: 60px;
+    border-radius: 50%;
+    font-size: 13px;
+  }
+
+  .photos {
+    margin-top: 100px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .selectDate {
+    width: 80%;
+    /* height: 30px; */
+    font-size: 0.8rem;
+  }
+
+  .latestBtn {
+    /* top: 60px;
+    right: 0; */
+  }
+}
