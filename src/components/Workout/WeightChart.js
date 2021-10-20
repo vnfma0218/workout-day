@@ -24,8 +24,8 @@ export default function Chart() {
   const chartData = (canvas) => {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(203, 185, 224,1)');
-    gradient.addColorStop(1, 'rgba(203, 185, 224,0.3)');
+    gradient.addColorStop(0, 'rgba(255, 230, 153,1)');
+    gradient.addColorStop(1, 'rgba(255, 230, 153,0.3)');
 
     return {
       labels: recordData

@@ -34,14 +34,11 @@ export default function UserInfo() {
           setBMI({ bmi, result });
         }
       });
-    // .then((doc) => {
-    // });
   }, [currentUser]);
 
   const openModalHandler = () => {
     setModalOpen(true);
   };
-
   const closeModalHandler = () => {
     setModalOpen(false);
   };
@@ -97,7 +94,7 @@ export default function UserInfo() {
       {user && (
         <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
           <h1>
-            현재 JW 님은
+            현재 {user.nickname} 님은
             <Button
               name={mode.isDietMode ? '다이어트 모드' : '운동 모드'}
               onClick={openModalHandler}
@@ -115,7 +112,7 @@ export default function UserInfo() {
               <div className={classes.user__info}>
                 <div className={`${classes.user__personal}`}>
                   <p className={classes.nickname}>닉네임</p>
-                  <p>Mr. Lee</p>
+                  <p>{user.nickname}</p>
                 </div>
                 <div className={`${classes.user__personal}`}>
                   <p className={classes.email}>이메일</p>

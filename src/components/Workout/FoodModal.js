@@ -198,7 +198,7 @@ export default function FoodModal() {
             focusable='false'
             data-prefix='fas'
             data-icon='utensils'
-            class='svg-inline--fa fa-utensils fa-w-13'
+            className='svg-inline--fa fa-utensils fa-w-13'
             role='img'
             viewBox='0 0 416 512'
           >

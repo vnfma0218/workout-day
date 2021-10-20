@@ -99,6 +99,7 @@ ul {
   padding: 15px 10px;
   display: block;
   text-align: center;
+  font-size: 15px;
 }
 
 .selected {
@@ -182,7 +183,7 @@ ul {
 
   .menu {
     position: relative;
-    height: 100px;
+    height: 150px;
     width: 100px;
     top: 0;
   }

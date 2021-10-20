@@ -201,14 +201,17 @@ export default function MainHeader(props) {
               ref={dropdownRef}
               className={`${classes.menu} ${
                 dropdownIsActive ? classes.active : classes.inactive
-              }`}
+              } ${width <= 1024 ? classes.menu__dropdown : null}`}
             >
               <ul>
                 <li>
                   <Link to='/userinfo'>My Page</Link>
                 </li>
                 <li>
-                  <Link to='/photo'>Photo</Link>
+                  <Link to='/photo'>Workout Photo</Link>
+                </li>
+                <li>
+                  <Link to='/diet'>Diet Photo</Link>
                 </li>
               </ul>
             </nav>

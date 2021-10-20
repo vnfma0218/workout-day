@@ -10,26 +10,32 @@ export const ModeContext = React.createContext({
 export function ModeContextProvider(props) {
   const [isDietMode, setIsDietMode] = useState(false);
   const { currentUser } = useAuth();
-  console.log();
   useEffect(() => {
     if (currentUser) {
       dbService
         .collection('users')
         .doc(currentUser.email)
-        .get()
-        .then((doc) => {
+        .onSnapshot((doc) => {
           setIsDietMode(!doc.data().workoutMode);
-        })
-        .catch((err) => console.log(err));
+        });
+      // .catch((err) => console.log(err));
     }
   }, [currentUser]);
 
   const DietModeHandler = () => {
-    setIsDietMode(true);
+    dbService
+      .collection('users')
+      .doc(currentUser.email)
+      .update({ workoutMode: false })
+      .catch((err) => console.log(err));
   };
-  const NormalModeHandler = () => {
-    setIsDietMode(false);
-  };
+  function NormalModeHandler() {
+    dbService
+      .collection('users')
+      .doc(currentUser.email)
+      .update({ workoutMode: true })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <ModeContext.Provider

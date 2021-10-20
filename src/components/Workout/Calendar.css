@@ -28,6 +28,22 @@
   color: black;
   font-weight: 500;
 }
+
+@media screen and (max-width: 768px) {
+  .fc .fc-toolbar-title {
+    font-size: 20px;
+  }
+  .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child),
+  .fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+    width: 31.8px;
+    padding-left: 6.4;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 32px;
+  }
+}
 @media screen and (max-width: 500px) {
   .fc .fc-toolbar-title {
     font-size: 22px;
