@@ -130,7 +130,13 @@ export default function UpdateUserInfo() {
     <>
       <MainHeader />
       <Wrapper className={classes.userInfo__container} id={classes.userInfo}>
-        <h1>현재 JW 님은 '운동모드' 입니다</h1>
+        <h1>
+          현재 {loadedUserInfo && loadedUserInfo.nickname.value} 님은 '
+          {loadedUserInfo && loadedUserInfo.workoutMode.value === true
+            ? '운동모드'
+            : '다이어트모드'}
+          '입니다
+        </h1>
         {loadedUserInfo && (
           <article className={classes.userInfo}>
             <div className={classes.userImg}>

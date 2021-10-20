@@ -54,7 +54,7 @@ export default function DietPhoto() {
 
   return (
     <>
-      <MainHeader pageName='Diet Photos' />
+      <MainHeader pageName='My Diet' />
       <Wrapper id='second__layout' className={classes.second__layout}>
         {/* <UserPhotoInfo /> */}
         <div className={classes.selectDate__container}>

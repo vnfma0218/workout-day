@@ -80,6 +80,7 @@
 }
 
 .userInfo__container h1 {
+  font-size: 35px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -200,6 +201,12 @@
 }
 
 @media screen and (max-width: 768px) {
+  #userInfo {
+    height: 100%;
+  }
+  .userInfo__container h1 {
+    font-size: 26px;
+  }
   .userInfo {
     flex-direction: column;
     height: 85%;
@@ -275,9 +282,23 @@
   .userInfo__container {
     padding: 100px 40px 50px;
   }
+  .userInfo__container h1 {
+    font-size: 20px;
+  }
+
+  .modal__btn {
+    width: 60px;
+  }
 }
 
 @media screen and (max-width: 400px) {
+  .userInfo__container h1 {
+    font-size: 15px;
+  }
+  .modal__btn {
+    height: 30px;
+    width: 40px;
+  }
   .edit__btn,
   .chartBtn {
     margin: 0;
