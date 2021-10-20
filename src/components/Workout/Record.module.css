@@ -23,13 +23,15 @@
   width: 100%;
   /* padding: 50px 0 0; */
   margin: 0 auto;
+  overflow-y: scroll;
 }
 
 /* Record Form CSS */
 .record__form {
   position: relative;
   width: 45%;
-  height: 90%;
+  /* height: 90%; */
+  height: 600px;
   padding: 30px 40px 20px;
   font-size: 16px;
   font-weight: 600;
@@ -343,12 +345,21 @@
 }
 
 @media screen and (max-width: 768px) {
+  .form__food {
+    width: 300px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
   .record {
     overflow-y: scroll;
   }
   .record__inner {
     flex-direction: column;
     height: auto;
+    overflow-y: initial;
   }
 
   .record__form {

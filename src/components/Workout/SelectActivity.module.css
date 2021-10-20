@@ -1,6 +1,7 @@
 .record__select {
   width: 30%;
-  height: 90%;
+  /* height: 90%; */
+  height: 500px;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 40px 20px 56px;
   display: flex;

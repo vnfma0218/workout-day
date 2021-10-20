@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './AddActivity.module.css';
 import Select from 'react-select';
 
 export default function AddActivity(props) {
-  const [choice, setChoice] = useState('');
-  // const [inputs, setInputs] = useState({
-  //   name: '',
-  //   icon: '',
-  //   from: 'user',
-  // });
+  // const [choice, setChoice] = useState('');
+  // console.log(setChoice);
   const options = [
-    {
-      value: 'Free',
-      label: 'barbell',
-      iconUrl:
-        'https://img-premium.flaticon.com/png/512/1297/premium/1297690.png?token=exp=1633497627~hmac=2a8cf4f6633cce9c49193d3500662f65',
-    },
+    // {
+    //   value: 'Free',
+    //   label: 'barbell',
+    //   iconUrl:
+    //     'https://img-premium.flaticon.com/png/512/1297/premium/1297690.png?token=exp=1633497627~hmac=2a8cf4f6633cce9c49193d3500662f65',
+    // },
     {
       value: 'Free',
       label: 'golf',
@@ -36,34 +32,18 @@ export default function AddActivity(props) {
       label: 'dance',
       iconUrl: 'https://cdn-icons-png.flaticon.com/512/3048/3048356.png',
     },
-    {
-      value: 'Free',
-      label: 'stretch',
-      iconUrl:
-        'https://img-premium.flaticon.com/png/512/1653/premium/1653925.png?token=exp=1633497932~hmac=7d63cbd8c42ab7c31628f5f97fb28279',
-    },
+    // {
+    //   value: 'Free',
+    //   label: 'stretch',
+    //   iconUrl:
+    //     'https://img-premium.flaticon.com/png/512/1653/premium/1653925.png?token=exp=1633497932~hmac=7d63cbd8c42ab7c31628f5f97fb28279',
+    // },
     {
       value: 'Free',
       label: 'etc',
       iconUrl: 'https://cdn-icons-png.flaticon.com/512/3388/3388801.png',
     },
   ];
-
-  // const { Option } = components;
-  // const IconOption = (props) => (
-  //   <Option {...props}>
-  //     <img
-  //       src={require('./' + props.data.iconUrl)}
-  //       style={{ width: 36 }}
-  //       alt={props.data.label}
-  //     />
-  //     {props.data.label}
-  //   </Option>
-  // );
-
-  // const choiceHandler = (e) => {
-  //   setChoice(e.iconUrl);
-  // };
 
   const activityInputHandler = (e) => {
     if (e.iconUrl) {
@@ -79,7 +59,6 @@ export default function AddActivity(props) {
       });
     }
   };
-  console.log(setChoice);
   return (
     <div className={classes.form__wrapper}>
       {props.error && (
@@ -102,9 +81,9 @@ export default function AddActivity(props) {
           options={options}
           name='choice'
           className={classes.form__select}
-          value={options.find((op) => {
-            return op.value === choice;
-          })}
+          // value={options.find((op) => {
+          //   return op.value === choice;
+          // })}
           placeholder='icon'
           menuPortalTarget={document.body}
           styles={{

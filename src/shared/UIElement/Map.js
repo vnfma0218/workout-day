@@ -60,8 +60,8 @@ export default function Map({ searchPlace, selectPlace }) {
     <div
       id='myMap'
       style={{
-        width: '500px',
-        height: '300px',
+        width: '20rem',
+        height: '14rem',
       }}
     ></div>
   );

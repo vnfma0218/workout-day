@@ -171,7 +171,7 @@ export default function SelectActivity({
         return Change;
       });
     }
-  }, [selectActivityNameId]);
+  }, [selectActivityNameId, recordActivity]);
 
   const selectActivityHandler = (id, activity) => {
     const allSelectedFalse = activities.map((el) => {

@@ -19,6 +19,7 @@ export default function FoodModal() {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
   const fileInput = useRef();
+  const [error, setError] = useState(false);
 
   // Add food photo
   const oepnDietModalHandler = () => {
@@ -27,14 +28,15 @@ export default function FoodModal() {
 
   const closeDietModalHandler = () => {
     setDietModalOpen(false);
+    setError(false);
   };
-  console.log(inputs);
+
   // Form Save
   const saveHandler = (e) => {
     e.preventDefault();
-    const target = e.target;
-
-    console.log(target);
+    if (!inputs.date || !url) {
+      return setError(true);
+    }
     setOnSubmit(true);
 
     dbService
@@ -52,6 +54,7 @@ export default function FoodModal() {
       })
       .catch((err) => console.error(err));
   };
+  console.log(error);
 
   const filehandler = (e) => {
     if (e.target.files.length === 0) return;
@@ -85,7 +88,6 @@ export default function FoodModal() {
       }
     );
   };
-
   const inputHandler = (e) => {
     const { name, value } = e.target;
     setInputs({
@@ -106,84 +108,102 @@ export default function FoodModal() {
       }),
       setUrl(''),
       setFile(''),
-      setOnSubmit(false)
+      setOnSubmit(false),
+      setError(false)
     );
   };
 
   const modalContent = (
-    <form className={classes.form__food} onSubmit={saveHandler}>
-      <div className={classes.food__input}>
-        <label className={classes.input_title}>Date</label>
-
-        <input
-          type='date'
-          name='date'
-          min='2021-01-01'
-          max={new Date().toISOString().split('T')[0]}
-          required
-          value={inputs.date}
-          onChange={inputHandler}
-        />
-      </div>
-      <div className={classes.food__input}>
-        <label className={classes.input_title}>Time</label>
-        <input
-          type='time'
-          name='time'
-          min='1'
-          max='24'
-          onChange={inputHandler}
-          value={inputs.time}
-        />
-      </div>
-      <div className={`${classes.food__input} ${classes.file__input}`}>
-        <label className={classes.input_title}>Image</label>
-        <div
-          className={classes.preview__Image}
-          onClick={() => fileInput.current.click()}
-        >
-          {file ? (
-            <img
-              src={url}
-              alt='preview_image'
-              className={classes.preview__box__img}
-            />
-          ) : (
-            <img
-              src='img/icons/add_photo.svg'
-              alt='icon'
-              className={classes.image__box__icon}
-            />
-          )}
+    <>
+      {error && (
+        <div className={classes.err__box}>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            height='24px'
+            viewBox='0 0 24 24'
+            width='24px'
+            fill='#000000'
+          >
+            <path d='M0 0h24v24H0z' fill='none' />
+            <path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z' />
+          </svg>
+          <p>날짜와 식단 사진을 입력해주세요. </p>
         </div>
-        <div className={classes.filebox}>
+      )}
+      <form className={classes.form__food} onSubmit={saveHandler}>
+        <div className={classes.food__input}>
+          <label className={classes.input_title}>Date</label>
+
           <input
-            type='file'
-            name='image'
-            onChange={filehandler}
+            type='date'
+            name='date'
+            min='2021-01-01'
+            max={new Date().toISOString().split('T')[0]}
             required
-            ref={fileInput}
+            value={inputs.date}
+            onChange={inputHandler}
           />
         </div>
-      </div>
-      <div className={`${classes.food__input} ${classes.memo__input}`}>
-        <div className={classes.memo__box}>
-          <label className={classes.input_title}>Memo</label>
-          <p>
-            <span>{`(${totalByte} / 100)`}</span>
-          </p>
+        <div className={classes.food__input}>
+          <label className={classes.input_title}>Time</label>
+          <input
+            type='time'
+            name='time'
+            min='1'
+            max='24'
+            onChange={inputHandler}
+            value={inputs.time}
+          />
         </div>
-        <textarea
-          name='memo'
-          cols='30'
-          rows='5'
-          maxLength='100'
-          placeholder='메모를 남겨보세요 😃'
-          value={inputs.memo}
-          onChange={inputHandler}
-        ></textarea>
-      </div>
-    </form>
+        <div className={`${classes.food__input} ${classes.file__input}`}>
+          <label className={classes.input_title}>Image</label>
+          <div
+            className={classes.preview__Image}
+            onClick={() => fileInput.current.click()}
+          >
+            {file ? (
+              <img
+                src={url}
+                alt='preview_image'
+                className={classes.preview__box__img}
+              />
+            ) : (
+              <img
+                src='img/icons/add_photo.svg'
+                alt='icon'
+                className={classes.image__box__icon}
+              />
+            )}
+          </div>
+          <div className={classes.filebox}>
+            <input
+              type='file'
+              name='image'
+              onChange={filehandler}
+              required
+              ref={fileInput}
+            />
+          </div>
+        </div>
+        <div className={`${classes.food__input} ${classes.memo__input}`}>
+          <div className={classes.memo__box}>
+            <label className={classes.input_title}>Memo</label>
+            <p>
+              <span>{`(${totalByte} / 100)`}</span>
+            </p>
+          </div>
+          <textarea
+            name='memo'
+            cols='30'
+            rows='5'
+            maxLength='100'
+            placeholder='메모를 남겨보세요 😃'
+            value={inputs.memo}
+            onChange={inputHandler}
+          ></textarea>
+        </div>
+      </form>
+    </>
   );
 
   return (

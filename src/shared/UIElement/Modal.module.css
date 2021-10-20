@@ -50,7 +50,7 @@
 }
 
 .content {
-  padding: 1rem;
+  padding: 2rem 1rem;
   height: auto;
 }
 
@@ -85,9 +85,19 @@
   }
 }
 
-/* @media (min-width: 768px) {
-  .modal {
-    left: calc(50% - 20rem);
-    width: 40rem;
+@media screen and (max-width: 768px) {
+  .header {
+    height: 40px;
   }
-} */
+
+  .header h2 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .content h3,
+  .content p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}

@@ -97,9 +97,9 @@
   margin: 0 10px;
 }
 
-.modal__content {
-  height: 100px;
-}
+/* .modal__content {
+  height: auto;
+} */
 
 .modal__content > h3 {
   font-size: 18px;
@@ -107,8 +107,9 @@
   font-weight: 300;
 }
 
-.modal__content > div > p {
+.modal__content > p {
   margin-bottom: 4px;
+  font-weight: 600;
 }
 
 .userInfo {

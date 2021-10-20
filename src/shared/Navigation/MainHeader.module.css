@@ -3,7 +3,8 @@ ul {
   padding-left: 0;
 }
 .logout__message {
-  padding: 30px 220px 30px 10px;
+  width: 300px;
+  margin: 30px 220px 30px 10px;
   font-size: 1.4rem;
 }
 .header__container {
@@ -32,7 +33,7 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 60px;
+  padding: 20px 60px;
   margin: 0 auto;
   background-color: #cbb9e0;
 }
@@ -172,7 +173,8 @@ ul {
     font-size: 22px;
   }
 
-  .main__header {
+  .main__header,
+  .main__header__diet {
     padding: 20px 40px;
   }
 
@@ -218,7 +220,14 @@ ul {
     font-size: 18px;
   }
 
-  .main__header {
+  .main__header,
+  .main__header__diet {
     padding: 20px 20px;
+  }
+
+  .logout__message {
+    width: 280px;
+    margin: 10px;
+    font-size: 1.4rem;
   }
 }

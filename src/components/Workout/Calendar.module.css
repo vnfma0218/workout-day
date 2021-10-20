@@ -324,12 +324,16 @@
 @media screen and (max-width: 768px) {
   .calendar__container {
     padding: 0 20px;
+    overflow-y: scroll;
   }
   .inner__container {
+    padding-top: 200px;
     flex-direction: column;
+    height: auto;
   }
   .calendarApp {
-    flex: 3;
+    /* flex: 3; */
+    height: 400px;
     width: 100%;
   }
   .workout__img {
@@ -337,7 +341,9 @@
   }
   .dateItem {
     width: 60%;
-    flex: 1;
+    /* flex: 1; */
+    padding-bottom: 40px;
+    height: auto;
     position: relative;
     margin-top: 20px;
   }
