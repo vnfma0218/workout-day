@@ -59,7 +59,7 @@ export default function CalendarGuide({ currentPage }) {
 
   return (
     <>
-      {(currentPage === 'calendar') & !hidden && (
+      {currentPage === 'calendar' && !hidden ? (
         <>
           <div className={classes.backdrop}>
             <Link to='/auth'>
@@ -76,7 +76,7 @@ export default function CalendarGuide({ currentPage }) {
             </Link>
           </div>
         </>
-      )}
+      ) : null}
 
       <Wrapper className={classes.calendar__container} id={classes.calendar}>
         <div className={classes.guide__container}>

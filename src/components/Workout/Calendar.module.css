@@ -278,9 +278,9 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .calendar__container {
-    /* padding: 0; */
-  }
+  /* .calendar__container {
+    padding: 0;
+  } */
   .calendarApp {
     width: 60%;
   }

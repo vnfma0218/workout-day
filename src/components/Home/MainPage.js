@@ -19,7 +19,18 @@ export default function MainPage(props) {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('home');
   const [selectUpdateEvent, setSelectUpdateEvent] = useState();
+  const [width, setWidth] = useState(window.innerWidth);
 
+  useEffect(() => {
+    const resizeWindowHandler = () => {
+      let newWidth = window.innerWidth;
+      setWidth(newWidth);
+    };
+
+    window.addEventListener('resize', resizeWindowHandler);
+
+    return () => window.removeEventListener('resize', resizeWindowHandler);
+  }, []);
   const changePage = useCallback(
     (page, pageHeight) => {
       if (
