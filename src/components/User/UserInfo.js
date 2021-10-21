@@ -17,7 +17,6 @@ export default function UserInfo() {
   const { currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const { width } = useWindowDimensions();
-
   useEffect(() => {
     dbService
       .collection('users')
@@ -35,6 +34,7 @@ export default function UserInfo() {
         }
       });
   }, [currentUser]);
+  console.log(user);
 
   const openModalHandler = () => {
     setModalOpen(true);

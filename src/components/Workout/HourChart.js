@@ -1,6 +1,5 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { useState } from 'react/cjs/react.development';
 import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 import MonthPicker from 'react-datepicker';

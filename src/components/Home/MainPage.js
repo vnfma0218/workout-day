@@ -156,32 +156,30 @@ export default function MainPage(props) {
   return (
     <React.Fragment>
       <MainHeader navClickHandler={navClickHandler} currentPage={currentPage} />
-      <div ref={outerDivRef} className={classes.container}>
-        <Home />
-        {currentUser ? (
-          <>
-            <div className={classes.divider}></div>
-            <Calendar
-              toRecordPage={changePage}
-              recordEditHandler={recordEditHandler}
-            />
-            <div className={classes.divider}></div>
-            <Record
-              selectUpdateEvent={selectUpdateEvent}
-              recordEditHandler={recordEditHandler}
-            />
-          </>
-        ) : null}
-        {!currentUser && width > 1024 ? (
-          <>
-            <CalendarGuide currentPage={currentPage} />
-            <div className={classes.divider}></div>
-            <RecordGuide currentPage={currentPage} />
-            <div className={classes.divider}></div>
-            <UserInfoGuide currentPage={currentPage} />
-          </>
-        ) : null}
-      </div>
+      <Home />
+      {currentUser ? (
+        <div ref={outerDivRef} className={classes.container}>
+          <div className={classes.divider}></div>
+          <Calendar
+            toRecordPage={changePage}
+            recordEditHandler={recordEditHandler}
+          />
+          <div className={classes.divider}></div>
+          <Record
+            selectUpdateEvent={selectUpdateEvent}
+            recordEditHandler={recordEditHandler}
+          />
+        </div>
+      ) : null}
+      {!currentUser && width > 1024 ? (
+        <div ref={outerDivRef} className={classes.container}>
+          <CalendarGuide currentPage={currentPage} />
+          <div className={classes.divider}></div>
+          <RecordGuide currentPage={currentPage} />
+          <div className={classes.divider}></div>
+          <UserInfoGuide currentPage={currentPage} />
+        </div>
+      ) : null}
 
       {!currentUser && width > 1024 ? (
         <img

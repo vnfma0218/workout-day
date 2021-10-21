@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Wrapper className={classes.home} id={classes.home}>
       <img
-        src='img/illustrations/indoorbike.svg'
+        src='img/illustrations/Indoorbike.svg'
         className={classes.home__img}
         alt='home'
       />
