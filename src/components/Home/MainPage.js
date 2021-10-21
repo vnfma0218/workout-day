@@ -31,6 +31,7 @@ export default function MainPage(props) {
 
     return () => window.removeEventListener('resize', resizeWindowHandler);
   }, []);
+
   const changePage = useCallback(
     (page, pageHeight) => {
       if (
@@ -78,6 +79,7 @@ export default function MainPage(props) {
   );
 
   useEffect(() => {
+    if (width <= 1024) return;
     const wheelHandler = (e) => {
       if (width <= 1024) return;
       e.preventDefault();
@@ -127,7 +129,7 @@ export default function MainPage(props) {
         passive: false,
       });
     };
-  }, [changePage]);
+  }, [changePage, width]);
 
   const pageHeight = window.innerHeight;
 
