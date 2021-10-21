@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import Modal from '../../shared/UIElement/Modal';
 import SearchPlace from '../../shared/UIElement/SearchPlace';
@@ -305,14 +311,14 @@ export default function Record(props) {
     setAddress('');
   };
 
-  const recordActivity = (activityName, activityId) => {
+  const recordActivity = useCallback((activityName, activityId) => {
     if (activityName === null) {
       setActivity({ name: '', id: '' });
     } else {
       setErr(false);
       setActivity({ name: activityName, id: activityId });
     }
-  };
+  }, []);
 
   const cancelHandler = () => {
     if (editMode) {

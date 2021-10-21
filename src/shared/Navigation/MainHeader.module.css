@@ -72,15 +72,16 @@ ul {
   right: -30px;
   width: 100px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  visibility: hidden;
+  display: none;
+  /* visibility: hidden; */
   transform: translateY(-20px);
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
 }
 
 .menu.active {
-  opacity: 1;
-  visibility: visible;
+  display: block;
+  /* opacity: 1; */
+  /* visibility: visible; */
   transform: translateY(0);
 }
 
@@ -95,12 +96,16 @@ ul {
 }
 
 .menu li a {
+  height: 100%;
+  width: 100%;
+  text-align: center;
   text-decoration: none;
   color: #333333;
-  padding: 15px 10px;
-  display: block;
-  text-align: center;
+  padding: 5px 10px;
   font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .selected {
@@ -204,11 +209,16 @@ ul {
   }
 
   .menu li a {
+    height: 100%;
+    width: 100%;
+    text-align: center;
     text-decoration: none;
     color: #333333;
-    padding: 15px 10px;
-    display: block;
-    text-align: center;
+    padding: 5px 10px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
