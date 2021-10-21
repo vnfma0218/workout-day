@@ -1,5 +1,4 @@
-import React, { forwardRef, useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { useAuth } from '../../context/auth-context';
 import { dbService } from '../../firebase';
 import DatePicker from 'react-datepicker';

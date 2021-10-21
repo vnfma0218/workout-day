@@ -1,5 +1,4 @@
-import React, { useReducer } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import React, { useReducer, useEffect } from 'react';
 import classes from './Input.module.css';
 const inputReducer = (state, action) => {
   switch (action.type) {
