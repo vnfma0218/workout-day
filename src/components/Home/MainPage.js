@@ -19,7 +19,18 @@ export default function MainPage(props) {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('home');
   const [selectUpdateEvent, setSelectUpdateEvent] = useState();
+  const [width, setWidth] = useState(window.innerWidth);
 
+  useEffect(() => {
+    const resizeWindowHandler = () => {
+      let newWidth = window.innerWidth;
+      setWidth(newWidth);
+    };
+
+    window.addEventListener('resize', resizeWindowHandler);
+
+    return () => window.removeEventListener('resize', resizeWindowHandler);
+  }, []);
   const changePage = useCallback(
     (page, pageHeight) => {
       if (
@@ -68,6 +79,7 @@ export default function MainPage(props) {
 
   useEffect(() => {
     const wheelHandler = (e) => {
+      if (width <= 1024) return;
       e.preventDefault();
       const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
       const { deltaY } = e;
@@ -145,41 +157,44 @@ export default function MainPage(props) {
       <MainHeader navClickHandler={navClickHandler} currentPage={currentPage} />
       <div ref={outerDivRef} className={classes.container}>
         <Home />
-        <div className={classes.divider}></div>
         {currentUser ? (
-          <Calendar
-            toRecordPage={changePage}
-            recordEditHandler={recordEditHandler}
-          />
-        ) : (
-          <CalendarGuide currentPage={currentPage} />
-        )}
-
-        <div className={classes.divider}></div>
-
-        {currentUser ? (
-          <Record
-            selectUpdateEvent={selectUpdateEvent}
-            recordEditHandler={recordEditHandler}
-          />
-        ) : (
-          <RecordGuide currentPage={currentPage} />
-        )}
-        <div className={classes.divider}></div>
-
-        {!currentUser && <UserInfoGuide currentPage={currentPage} />}
+          <>
+            <div className={classes.divider}></div>
+            <Calendar
+              toRecordPage={changePage}
+              recordEditHandler={recordEditHandler}
+            />
+            <div className={classes.divider}></div>
+            <Record
+              selectUpdateEvent={selectUpdateEvent}
+              recordEditHandler={recordEditHandler}
+            />
+          </>
+        ) : null}
+        {!currentUser && width > 1024 ? (
+          <>
+            <CalendarGuide currentPage={currentPage} />
+            <div className={classes.divider}></div>
+            <RecordGuide currentPage={currentPage} />
+            <div className={classes.divider}></div>
+            <UserInfoGuide currentPage={currentPage} />
+          </>
+        ) : null}
       </div>
-      <img
-        src={
-          currentUser
-            ? 'img/icons/scroll.png'
-            : !currentUser && currentPage === 'home'
-            ? 'img/icons/scroll.png'
-            : 'img/icons/mouseClick.png'
-        }
-        alt='scroll'
-        className={classes.mainpage__scroll}
-      />
+
+      {!currentUser && width > 1024 ? (
+        <img
+          src={
+            currentUser
+              ? 'img/icons/scroll.png'
+              : !currentUser && currentPage === 'home'
+              ? 'img/icons/scroll.png'
+              : 'img/icons/mouseClick.png'
+          }
+          alt='scroll'
+          className={classes.mainpage__scroll}
+        />
+      ) : null}
     </React.Fragment>
   );
 }
