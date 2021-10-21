@@ -1,0 +1,10 @@
+.dateInput {
+  height: 40px;
+  line-height: 40px;
+  margin-right: 10px;
+}
+
+.arrowIcon {
+  width: 15px;
+  cursor: pointer;
+}

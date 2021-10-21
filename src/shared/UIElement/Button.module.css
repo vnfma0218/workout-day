@@ -1,0 +1,40 @@
+.btn {
+  font: inherit;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px 15px;
+  /* border: 1px solid #ff0055; */
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  height: auto;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+  background-color: #fdfaf1;
+  border: 1px solid #fdfaf1;
+}
+
+.btn:disabled,
+.btn:hover:disabled,
+.btn:active:disabled {
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* .workout__mode {
+  background-color: #d7e9f7;
+  border: 1px solid #d7e9f7;
+}
+
+.diet__mode {
+  background-color: #c6d57e;
+  border: 1px solid #c6d57e;
+} */

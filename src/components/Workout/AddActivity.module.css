@@ -1,0 +1,87 @@
+.form__wrapper {
+  width: 400px;
+  height: auto;
+}
+
+.err__box {
+  width: auto;
+  display: flex;
+  padding: 10px;
+  color: rgb(241, 57, 57);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.err__box > svg {
+  fill: rgb(253, 56, 56);
+  margin-right: 8px;
+}
+
+.form {
+  width: 400px;
+  height: 100px;
+  padding: 20px;
+  /* margin-top: 30px; */
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form__select {
+  width: 30%;
+  height: 60px;
+  margin-right: 10px;
+  padding-top: 10px;
+}
+
+.activity__name {
+  width: 40%;
+  height: 40px;
+  padding: 0.8em 0.5em;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+.form svg {
+  fill: #9e9e9e;
+  margin-left: 10%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .form__wrapper {
+    width: auto;
+    height: auto;
+  }
+
+  .form {
+    width: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .form__select {
+    width: 50%;
+    height: 60px;
+    margin-right: 10px;
+    padding-top: 10px;
+  }
+
+  .activity__name {
+    width: 80%;
+    height: 40px;
+    padding: 0.8em 0.5em;
+    border: 1px solid #999;
+    border-radius: 4px;
+  }
+
+  .form svg {
+    display: none;
+  }
+}

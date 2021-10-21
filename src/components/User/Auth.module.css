@@ -1,0 +1,183 @@
+.auth__container {
+  max-width: 1440px;
+  color: #4d4d4d;
+  height: 100%;
+  /* padding: 100px 60px 0; */
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.auth__img {
+  flex: 50%;
+}
+
+.auth__img img {
+  width: 100%;
+}
+
+.form__container {
+  flex: 50%;
+}
+
+.form__container_content {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.form__title {
+  margin-bottom: 50px;
+}
+
+.authMode__title {
+  margin-bottom: 50px;
+  font-size: 32px;
+}
+
+.workout__mode_container {
+  display: flex;
+}
+
+.workout__mode {
+  margin-right: 10px;
+}
+
+.workout__mode label,
+.diet__mode label {
+  margin-right: 3px;
+}
+
+.workout__mode input,
+.diet__mode input {
+  height: 15px;
+  width: 15px;
+  background-color: #2196f3;
+  border-color: #2196f3;
+}
+
+.workout__mode,
+.diet__mode {
+  position: relative;
+}
+
+/* tooltip */
+.workout__mode .workout__mode_text,
+.diet__mode .diet__mode_text {
+  visibility: hidden;
+  width: 220px;
+  opacity: 0.9;
+  background-color: #fde0b4;
+  color: #313131;
+  border-radius: 6px;
+  padding: 8px;
+  font-weight: 800;
+  font-size: 13px;
+  /* Position the tooltip */
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  z-index: 1;
+}
+
+.diet__mode .diet__mode_text {
+  background-color: #c6d57e;
+}
+
+.workout__mode:hover .workout__mode_text,
+.diet__mode:hover .diet__mode_text {
+  visibility: visible;
+}
+
+.form__control {
+  margin-top: 20px;
+}
+
+.form__control input {
+  width: 92%;
+  height: 40px;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+}
+
+.auth__helper {
+  width: 90%;
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+.auth__helper span,
+.forgot {
+  font-size: 12px;
+  margin: 0;
+}
+
+.submit__btn {
+  outline: none;
+  /* background: transparent; */
+  cursor: pointer;
+  margin-top: 30px;
+  width: 92%;
+  height: 45px;
+  /* background-color: #fde0b4; */
+  border: none;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.loginMode {
+  display: flex;
+  margin-top: 10px;
+}
+.toggleLoginMode {
+  color: dodgerblue;
+  cursor: pointer;
+  font-size: 17px;
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 1024px) {
+  /* .auth__img {
+    flex: 40%;
+  }
+
+  .form__container {
+    flex: 60%;
+  } */
+
+  .form__container_content {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .auth__container {
+    margin: auto;
+    display: block;
+    margin: 2rem auto 0;
+  }
+
+  .auth__img {
+    display: none;
+  }
+
+  .form__container {
+    width: 60%;
+    margin: auto;
+  }
+  .form__container_content {
+    width: 100%;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .form__container {
+    width: 80%;
+  }
+}

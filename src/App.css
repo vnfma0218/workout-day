@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+body,
+button,
+input,
+select {
+  font-family: 'BalsamiqSans', 'GowunDodum';
+  /* color: #252525;
+   */
+  color: #383838;
+  /* color: #4d4d4d; */
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: #383838;
+}
+
+@font-face {
+  font-family: 'BalsamiqSans';
+  src: url('./fonts/BalsamiqSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'GowunDodum';
+  src: url('./fonts/GowunDodum-Regular.ttf');
+}

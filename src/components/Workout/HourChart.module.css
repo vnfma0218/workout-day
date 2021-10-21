@@ -1,0 +1,96 @@
+.container {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.chart__title {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  font-size: 18px;
+}
+
+.hour__container,
+.weight__container {
+  width: 46%;
+}
+
+.chart__content {
+  /* display: flex; */
+  width: 100%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.datepicker {
+  flex: 1;
+}
+.datepicker__btn {
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid rgb(150, 150, 150);
+  background-color: rgb(255, 255, 255);
+  width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.datepicker__btn img {
+  width: 18px;
+  margin-left: 4px;
+}
+
+.chart {
+  flex: 3;
+  height: 400px;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hour__container,
+  .weight__container {
+    width: 80%;
+  }
+
+  .weight__container {
+    margin-top: 80px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hour__container,
+  .weight__container {
+    width: 90%;
+  }
+
+  .datepicker__btn {
+    font-size: 14px;
+    width: 90px;
+    height: 34px;
+  }
+
+  .datepicker__btn img {
+    width: 16px;
+  }
+
+  .chart__title {
+    font-size: 16px;
+  }
+
+  .weight__container {
+    margin-top: 60px;
+  }
+}

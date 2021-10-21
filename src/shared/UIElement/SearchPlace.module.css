@@ -1,0 +1,26 @@
+.searchForm {
+  width: auto;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.searchForm > input {
+  width: 200px;
+  height: 30px;
+  background-color: #fdf2e5;
+  outline: none;
+  border: 1px solid rgba(150, 150, 150, 0.4);
+  padding-left: 6px;
+  border-radius: 6px;
+  margin-right: 4px;
+}
+
+.searchForm > button > svg {
+  width: 30px;
+  fill: rgba(61, 61, 61);
+  line-height: 30px;
+  vertical-align: middle;
+}
