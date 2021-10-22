@@ -323,9 +323,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  /* .calendar__container {
-    overflow-y: scroll;
-  } */
+  .calendar__container {
+    height: auto;
+  }
 
   .inner__container {
     padding-top: 30px;
