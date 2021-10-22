@@ -32,17 +32,17 @@ const SAMPLE_EVENTS = [
 
 export default function CalendarGuide() {
   const [step, setStep] = useState(0);
-  const [hidden, setHidden] = useState(true);
+  // const [hidden, setHidden] = useState(true);
 
-  useEffect(() => {
-    console.log('d');
-    setStep(0);
-    setTimeout(() => {
-      setHidden(false);
-    }, 700);
+  // useEffect(() => {
+  //   console.log('d');
+  //   setStep(0);
+  //   setTimeout(() => {
+  //     setHidden(false);
+  //   }, 700);
 
-    return () => setHidden(true);
-  }, []);
+  //   return () => setHidden(true);
+  // }, []);
 
   useEffect(() => {
     window.addEventListener('click', addStepCount);
@@ -59,10 +59,10 @@ export default function CalendarGuide() {
 
   return (
     <>
-      {!hidden ? (
-        <>
-          <div className={classes.backdrop}>
-            <Link to='/auth'>
+      {/* {!hidden ? (
+        <> */}
+      <div className={classes.backdrop}></div>
+      {/* <Link to='/auth'>
               <button className={classes.guide__loginBtn}>
                 <svg
                   data-key='auth'
@@ -73,18 +73,18 @@ export default function CalendarGuide() {
                   <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
                 </svg>
               </button>
-            </Link>
-          </div>
-        </>
-      ) : null}
+            </Link> */}
+
+      {/* </>
+      ) : null} */}
 
       <Wrapper className={classes.calendar__container} id={classes.calendar}>
         <div className={classes.guide__container}>
-          {!hidden && step === 0 ? (
+          {step === 0 ? (
             <div className={classes.start__message}>
               <img
                 className={classes.start__img}
-                src='img/icons/pen.png'
+                src='../img/icons/calendar.png'
                 alt='calendar'
               />
               <h3>
@@ -147,7 +147,7 @@ export default function CalendarGuide() {
             </span>
             <span className={classes.workout__location}>한강 체육공원</span>
             <div className={classes.workout__img}>
-              <img src='img/exercise/guide/photo1.jpg' alt='workout' />
+              <img src='../img/exercise/guide/photo1.jpg' alt='workout' />
             </div>
 
             <div className={classes.btn}>

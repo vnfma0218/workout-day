@@ -7,16 +7,16 @@ import classes from './RecordGuide.module.css';
 
 export default function RecordGuide() {
   const [step, setStep] = useState(0);
-  const [hidden, setHidden] = useState(true);
+  // const [hidden, setHidden] = useState(true);
 
-  useEffect(() => {
-    setStep(0);
-    setTimeout(() => {
-      setHidden(false);
-    }, 700);
+  // useEffect(() => {
+  //   setStep(0);
+  //   setTimeout(() => {
+  //     setHidden(false);
+  //   }, 700);
 
-    return () => setHidden(true);
-  }, []);
+  //   return () => setHidden(true);
+  // }, []);
 
   useEffect(() => {
     guideStepHandler();
@@ -32,38 +32,38 @@ export default function RecordGuide() {
   const activityDefault = [
     {
       name: 'Cycling',
-      imageUrl: 'img/exercise/bicycle.png',
+      imageUrl: '../img/exercise/bicycle.png',
       from: 'admin',
       id: 'adminCycling',
     },
 
     {
       name: 'Yoga',
-      imageUrl: 'img/exercise/yoga.png',
+      imageUrl: '../img/exercise/yoga.png',
       from: 'admin',
       id: 'adminYoga',
     },
     {
       name: 'Swimming',
-      imageUrl: 'img/exercise/swimming.png',
+      imageUrl: '../img/exercise/swimming.png',
       from: 'admin',
       id: 'adminSwimming',
     },
     {
       name: 'Badminton',
-      imageUrl: 'img/exercise/badminton.png',
+      imageUrl: '../img/exercise/badminton.png',
       from: 'admin',
       id: 'adminBadminton',
     },
     {
       name: 'Running',
-      imageUrl: 'img/exercise/jogging.png',
+      imageUrl: '../img/exercise/jogging.png',
       from: 'admin',
       id: 'adminRunning',
     },
     {
       name: 'Gym',
-      imageUrl: 'img/exercise/gym.png',
+      imageUrl: '../img/exercise/gym.png',
       from: 'admin',
       id: 'adminGym',
     },
@@ -72,10 +72,10 @@ export default function RecordGuide() {
   return (
     <>
       {/* {(currentPage === 'record') & !hidden && guide} */}
-      {!hidden ? (
-        <>
-          <div className={classes.backdrop} onClick={guideStepHandler}></div>
-          <Link to='/auth'>
+      {/* {!hidden ? (
+        <> */}
+      <div className={classes.backdrop} onClick={guideStepHandler}></div>
+      {/* <Link to='/auth'>
             <button className={classes.guide__loginBtn}>
               <svg
                 data-key='auth'
@@ -86,9 +86,9 @@ export default function RecordGuide() {
                 <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
               </svg>
             </button>
-          </Link>
-        </>
-      ) : null}
+          </Link> */}
+      {/* </>
+      ) : null} */}
 
       <Wrapper className={classes.record} id={classes.record}>
         {/* {(currentPage !== 'home') & !hidden ? (
@@ -104,22 +104,22 @@ export default function RecordGuide() {
           </button>
         ) : null} */}
         <div className={classes.record__inner}>
-          {!hidden & (step === 0) ? (
+          {step === 0 ? (
             <div className={classes.pop_1_text}>
-              <img src='img/icons/diary.png' alt='diary' />
+              <img src='../img/icons/diary.png' alt='diary' />
               <p>
                 운동을 기록으로 남겨보며 <br /> 나만의 운동 다이어리를
                 채워보세요
               </p>
             </div>
-          ) : !hidden & (step === 1) ? (
+          ) : step === 1 ? (
             <div className={classes.pop_2_text}>
               <p>
                 목록에서 원하는 운동을 선택하거나 <br /> 직접 만들어 추가할 수
                 있습니다.
               </p>
             </div>
-          ) : !hidden & (step === 2) ? (
+          ) : step === 2 ? (
             <div className={classes.pop_3_text}>
               <p>
                 운동 날짜, 시간, 장소를 입력하고 <br /> 오늘 운동을 추억할 수

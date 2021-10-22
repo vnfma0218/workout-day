@@ -10,7 +10,7 @@ export default function UserInfo() {
   const mode = useContext(ModeContext);
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState(0);
-  const [hidden, setHidden] = useState(true);
+  // const [hidden, setHidden] = useState(true);
   const history = useHistory();
   console.log(step);
   const openModalHandler = () => {
@@ -25,13 +25,13 @@ export default function UserInfo() {
     history.push('/auth');
   };
 
-  useEffect(() => {
-    setStep(0);
-    setTimeout(() => {
-      setHidden(false);
-    }, 700);
-    return () => setHidden(true);
-  }, []);
+  // useEffect(() => {
+  //   setStep(0);
+  //   setTimeout(() => {
+  //     setHidden(false);
+  //   }, 700);
+  //   return () => setHidden(true);
+  // }, []);
 
   return (
     <>
@@ -56,10 +56,10 @@ export default function UserInfo() {
           </div>
         </div>
       </Modal>
-      {!hidden ? (
-        <>
-          <div className={classes.backdrop}></div>
-          <Link to='/auth'>
+      {/* {!hidden ? (
+        <> */}
+      <div className={classes.backdrop}></div>
+      {/* <Link to='/auth'>
             <button className={classes.guide__loginBtn}>
               <svg
                 data-key='auth'
@@ -70,9 +70,9 @@ export default function UserInfo() {
                 <path d='M9 4L7.6 5.4L10.2 8H0V10H10.2L7.6 12.6L9 14L14 9L9 4ZM18 16H10V18H18C19.1 18 20 17.1 20 16V2C20 0.9 19.1 0 18 0H10V2H18V16Z' />
               </svg>
             </button>
-          </Link>
-        </>
-      ) : null}
+          </Link> */}
+      {/* </>
+      ) : null} */}
 
       <Wrapper className={classes.guide__container} id={classes.userInfo}>
         <div className={classes.guide__title}>
@@ -86,29 +86,29 @@ export default function UserInfo() {
             입니다.
           </h1>
 
-          {!hidden ? (
-            <p>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                enableBackground='new 0 0 24 24'
-                height='24px'
-                viewBox='0 0 24 24'
-                width='24px'
-                fill='#FFFFFF'
-              >
-                <rect fill='none' height='24' width='24' />
-                <path d='M5,9l1.41,1.41L11,5.83V22H13V5.83l4.59,4.59L19,9l-7-7L5,9z' />
-              </svg>
-              버튼을 클릭해보세요. <br />
-              설정 모드를 변경할 수 있습니다.
-            </p>
-          ) : null}
+          {/* {!hidden ? ( */}
+          <p>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              enableBackground='new 0 0 24 24'
+              height='24px'
+              viewBox='0 0 24 24'
+              width='24px'
+              fill='#FFFFFF'
+            >
+              <rect fill='none' height='24' width='24' />
+              <path d='M5,9l1.41,1.41L11,5.83V22H13V5.83l4.59,4.59L19,9l-7-7L5,9z' />
+            </svg>
+            버튼을 클릭해보세요. <br />
+            설정 모드를 변경할 수 있습니다.
+          </p>
+          {/* ) : null} */}
         </div>
 
         <article className={classes.guide__userInfo}>
           <div className={classes.userImg}>
             <div className={classes.avatar}>
-              <img src='img/exercise/yogaImage.jpg' alt='userAvatar' />
+              <img src='../img/exercise/yogaImage.jpg' alt='userAvatar' />
             </div>
           </div>
           <div className={classes.user__detail}>
