@@ -84,7 +84,7 @@ export default function CalendarGuide() {
             <div className={classes.start__message}>
               <img
                 className={classes.start__img}
-                src='img/icons/calendar.png'
+                src='img/icons/pen.png'
                 alt='calendar'
               />
               <h3>
