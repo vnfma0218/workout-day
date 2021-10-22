@@ -70,12 +70,15 @@ export default function Calendar(props) {
   };
 
   const toRecordPage = () => {
-    const pageHeight = window.innerHeight;
-    props.toRecordPage('last', pageHeight);
+    history.push('/record');
   };
 
   const recordEditHandler = () => {
-    props.recordEditHandler({ ...selectedEvent });
+    // props.recordEditHandler({ ...selectedEvent });
+    history.push({
+      pathname: '/record',
+      state: { selectedEvent: { ...selectedEvent } },
+    });
   };
 
   let dateItem;
@@ -93,7 +96,7 @@ export default function Calendar(props) {
               <Button
                 name={
                   <>
-                    <p>등록하기 </p>{' '}
+                    <p>등록하기 </p>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       enableBackground='new 0 0 24 24'

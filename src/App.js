@@ -10,6 +10,9 @@ import SecondLayout from './components/User/SecondLayout';
 import { AuthProvider } from './context/auth-context';
 import Chart from './components/Workout/Chart';
 import DietPhoto from './components/User/DietPhoto';
+import Record from './components/Workout/Record';
+import Calendar from './components/Workout/Calendar';
+import MainHeader from './shared/Navigation/MainHeader';
 
 function App() {
   return (
@@ -17,8 +20,15 @@ function App() {
       <Switch>
         <AuthProvider>
           <ModeContextProvider>
+            <MainHeader />
             <Route path='/' exact>
               <MainPage />
+            </Route>
+            <Route path='/record' exact>
+              <Record />
+            </Route>
+            <Route path='/calendar' exact>
+              <Calendar />
             </Route>
             <Route path='/auth'>
               <Auth />

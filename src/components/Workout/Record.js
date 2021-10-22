@@ -16,9 +16,15 @@ import classes from './Record.module.css';
 import { useAuth } from '../../context/auth-context';
 import useFetchEvents from '../../shared/hooks/useFetchEvents';
 import FoodModal from './FoodModal';
+import { useLocation } from 'react-router';
 
-export default function Record(props) {
-  const selectUpdateEvent = props.selectUpdateEvent;
+export default function Record() {
+  const location = useLocation();
+
+  const [selectUpdateEvent, setSelectUpdateEvent] = useState(
+    location.state ? location.state.selectedEvent : null
+  );
+
   const { selectedEvent, setSelectedEvent } = useFetchEvents();
 
   const mode = useContext(ModeContext);
@@ -270,7 +276,7 @@ export default function Record(props) {
   };
 
   const recordEditHandler = () => {
-    props.recordEditHandler({ ...selectedEvent });
+    setSelectUpdateEvent({ ...selectedEvent });
     setEditModalOpen(false);
   };
 

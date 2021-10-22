@@ -153,7 +153,7 @@ export default function CalendarGuide({ currentPage }) {
             <div className={classes.btn}>
               <Button
                 name='Photos'
-                to='/photo'
+                to='/auth'
                 className={step === 3 ? classes.third : classes.photoBtn}
               />
               <Button name='EDIT' className={classes.editBtn} />
