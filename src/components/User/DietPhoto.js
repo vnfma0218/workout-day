@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import useDietfetch from '../../shared/hooks/useDietfetch';
-import MainHeader from '../../shared/Navigation/MainHeader';
 import DateRange from '../../shared/UIElement/DatePicker';
 import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
 import Wrapper from '../../shared/UIElement/Wrapper';
@@ -54,7 +53,6 @@ export default function DietPhoto() {
 
   return (
     <>
-      <MainHeader pageName='My Diet' />
       <Wrapper id='second__layout' className={classes.second__layout}>
         {/* <UserPhotoInfo /> */}
         <div className={classes.selectDate__container}>

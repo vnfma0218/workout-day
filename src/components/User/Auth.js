@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Input from '../../shared/FormElement/Input';
-import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
 import useForm from '../../shared/hooks/form-hooks';
 import Wrapper from '../../shared/UIElement/Wrapper';
@@ -90,7 +89,6 @@ export default function Auth() {
 
   return (
     <>
-      <MainHeader pageName='Login' />
       <Wrapper className={classes.auth__container}>
         <Modal
           open={modalOpen}

@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { ModeContext } from '../../context/mode-context';
 import { useAuth } from '../../context/auth-context';
+import useCurrentPage from '../hooks/useCurrentPage';
 import Modal from '../UIElement/Modal';
 
 import classes from './MainHeader.module.css';
@@ -25,6 +26,9 @@ export default function MainHeader(props) {
     sideBarRef,
     false
   );
+
+  const currentPage = useCurrentPage(setDropdownIsActive, setSidebarIsActive);
+
   useEffect(() => {
     const resizeWindowHandler = () => {
       let newWidth = window.innerWidth;
@@ -50,23 +54,21 @@ export default function MainHeader(props) {
       return;
     }
 
-    if (location.pathname !== '/' && navLink === 'home') {
+    if (navLink === 'home') {
       history.push('/');
       return;
     }
 
-    if (location.pathname !== '/' && navLink === 'calendar') {
+    if (navLink === 'calendar') {
       history.push({
-        pathname: '/',
-        state: { page: 'second' },
+        pathname: '/calendar',
       });
       return;
     }
 
-    if (location.pathname !== '/' && navLink === 'record') {
+    if (navLink === 'record') {
       history.push({
-        pathname: '/',
-        state: { page: 'last' },
+        pathname: '/record',
       });
       return;
     }
@@ -104,17 +106,7 @@ export default function MainHeader(props) {
               </h1>
             </NavLink>
           </div>
-          <h2 className={classes.currentpage}>
-            {props.currentPage === 'calendar'
-              ? 'My Calendar'
-              : props.currentPage === 'record'
-              ? "Today's Workout"
-              : props.currentPage === 'userinfo'
-              ? 'MyPage'
-              : props.pageName
-              ? props.pageName
-              : null}
-          </h2>
+          <h2 className={classes.currentpage}>{currentPage}</h2>
 
           <ul
             className={

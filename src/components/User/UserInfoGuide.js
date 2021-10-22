@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ModeContext } from '../../context/mode-context';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
@@ -11,6 +11,7 @@ export default function UserInfo({ currentPage }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [hidden, setHidden] = useState(true);
+  const history = useHistory();
   console.log(step);
   const openModalHandler = () => {
     setModalOpen(true);
@@ -21,8 +22,7 @@ export default function UserInfo({ currentPage }) {
   };
 
   const changeModelHandler = () => {
-    setModalOpen(false);
-    mode.isDietMode ? mode.onNormalMode() : mode.onDietMode();
+    history.push('/auth');
   };
 
   useEffect(() => {
