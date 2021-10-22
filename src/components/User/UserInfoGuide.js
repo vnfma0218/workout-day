@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ModeContext } from '../../context/mode-context';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
@@ -9,10 +9,10 @@ import classes from './UserInfo.module.css';
 export default function UserInfo() {
   const mode = useContext(ModeContext);
   const [modalOpen, setModalOpen] = useState(false);
-  const [step, setStep] = useState(0);
+  // const [step, setStep] = useState(0);
   // const [hidden, setHidden] = useState(true);
   const history = useHistory();
-  console.log(step);
+  // console.log(setStep);
   const openModalHandler = () => {
     setModalOpen(true);
   };
