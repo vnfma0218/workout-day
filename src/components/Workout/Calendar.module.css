@@ -22,7 +22,7 @@
   margin-top: 66px;
   position: relative;
   height: 70%;
-  width: 23%;
+  width: 26%;
   margin: 0 0 20px 0px;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 28px 28px 20px;
@@ -64,7 +64,7 @@
   height: 40px;
   cursor: pointer;
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   right: 0;
   background-color: rgb(252, 243, 166);
   border: none;
@@ -173,7 +173,7 @@
   height: 100%;
   width: 100%;
   align-items: center;
-  margin: 0 auto 40px;
+  /* margin: 0 auto 40px; */
   position: relative;
 }
 
@@ -323,31 +323,33 @@
 }
 
 @media screen and (max-width: 768px) {
-  .calendar__container {
+  /* .calendar__container {
     overflow-y: scroll;
-  }
+  } */
 
   .inner__container {
+    padding-top: 30px;
     flex-direction: column;
-    height: auto;
+    /* justify-content: space-around; */
+    height: 100%;
   }
   .calendarApp {
     /* flex: 3; */
-    height: 400px;
-    width: 100%;
+    height: 500px;
+    width: 96%;
   }
   .workout__img {
     display: none;
   }
   .dateItem {
-    width: 60%;
+    width: 50%;
     /* flex: 1; */
     height: 200px;
     position: relative;
     margin-top: 50px;
   }
   .noEvent {
-    text-align: center;
+    /* text-align: center; */
     height: 100px;
   }
   .btn {
@@ -398,10 +400,16 @@
     font-size: 12px;
   }
   .downward__icon {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 40px;
     font-size: 12px;
     padding: 3px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .dateItem {
+    width: 80%;
   }
 }
 

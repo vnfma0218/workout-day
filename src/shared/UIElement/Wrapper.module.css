@@ -34,6 +34,6 @@
 @media screen and (max-width: 768px) {
   .wrapper__dietmode,
   .wrapper__normalmode {
-    padding: 8rem 10px 2rem;
+    padding: 6rem 10px 2rem;
   }
 }

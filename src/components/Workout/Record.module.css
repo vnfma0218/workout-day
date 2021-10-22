@@ -19,9 +19,9 @@
 .record__inner {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   height: 100%;
   width: 100%;
-  /* padding: 50px 0 0; */
   margin: 0 auto;
   overflow-y: scroll;
 }
@@ -29,7 +29,7 @@
 /* Record Form CSS */
 .record__form {
   position: relative;
-  width: 45%;
+  width: 40%;
   /* height: 90%; */
   height: 600px;
   padding: 30px 40px 20px;
@@ -131,7 +131,7 @@
 }
 
 .preview__Image {
-  width: 80%;
+  width: 50%;
   /* width: 300px; */
   height: 100%;
   background-color: rgb(255, 255, 255, 255);
@@ -354,7 +354,7 @@
   }
 
   .record {
-    overflow-y: scroll;
+    height: auto;
   }
   .record__inner {
     flex-direction: column;
@@ -403,7 +403,7 @@
 
   .preview__Image {
     /* width: 300px; */
-    width: 80%;
+    width: 50%;
   }
 
   .form__input textarea {
