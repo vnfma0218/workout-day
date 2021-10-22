@@ -419,6 +419,7 @@
 @media screen and (max-width: 550px) {
   .dateItem {
     width: 80%;
+    height: 280px;
   }
 }
 
