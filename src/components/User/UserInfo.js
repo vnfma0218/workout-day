@@ -4,7 +4,6 @@ import { useAuth } from '../../context/auth-context';
 import { ModeContext } from '../../context/mode-context';
 import { dbService } from '../../firebase';
 import useWindowDimensions from '../../shared/hooks/useWindowDemensions';
-import MainHeader from '../../shared/Navigation/MainHeader';
 import Button from '../../shared/UIElement/Button';
 import Modal from '../../shared/UIElement/Modal';
 import Wrapper from '../../shared/UIElement/Wrapper';
@@ -69,7 +68,6 @@ export default function UserInfo() {
   };
   return (
     <>
-      <MainHeader pageName='My Page' />
       <Modal
         title='Change Your Mode'
         open={modalOpen}

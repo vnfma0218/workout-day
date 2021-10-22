@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import usePhotofetch from '../../shared/hooks/usePhotofetch';
-import MainHeader from '../../shared/Navigation/MainHeader';
 
 import DateRange from '../../shared/UIElement/DatePicker';
 import LoadingSpinner from '../../shared/UIElement/LoadingSpinner';
@@ -54,7 +53,6 @@ export default function SecondLayout() {
   };
   return (
     <>
-      <MainHeader pageName='Photos' />
       <Wrapper id='second__layout' className={classes.second__layout}>
         {/* <UserPhotoInfo /> */}
         <div className={classes.selectDate__container}>
