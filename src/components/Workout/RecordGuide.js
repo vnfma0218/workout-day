@@ -5,26 +5,19 @@ import Button from '../../shared/UIElement/Button';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './RecordGuide.module.css';
 
-export default function RecordGuide({ currentPage }) {
+export default function RecordGuide() {
   const [step, setStep] = useState(0);
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
-    if (currentPage === 'record') {
-      setStep(0);
-      setTimeout(() => {
-        setHidden(false);
-      }, 700);
-    }
-    return () => setHidden(true);
-  }, [currentPage]);
+    setStep(0);
+    setTimeout(() => {
+      setHidden(false);
+    }, 700);
 
-  // useEffect(() => {
-  //   window.addEventListener('click', addStepCount);
-  //   return () => {
-  //     window.removeEventListener('click', addStepCount);
-  //   };
-  // }, []);
+    return () => setHidden(true);
+  }, []);
+
   useEffect(() => {
     guideStepHandler();
   }, []);
@@ -79,7 +72,7 @@ export default function RecordGuide({ currentPage }) {
   return (
     <>
       {/* {(currentPage === 'record') & !hidden && guide} */}
-      {(currentPage === 'record') & !hidden ? (
+      {!hidden ? (
         <>
           <div className={classes.backdrop} onClick={guideStepHandler}></div>
           <Link to='/auth'>
@@ -111,7 +104,7 @@ export default function RecordGuide({ currentPage }) {
           </button>
         ) : null} */}
         <div className={classes.record__inner}>
-          {(currentPage === 'record') & !hidden & (step === 0) ? (
+          {!hidden & (step === 0) ? (
             <div className={classes.pop_1_text}>
               <img src='img/icons/diary.png' alt='diary' />
               <p>
@@ -119,14 +112,14 @@ export default function RecordGuide({ currentPage }) {
                 채워보세요
               </p>
             </div>
-          ) : (currentPage === 'record') & !hidden & (step === 1) ? (
+          ) : !hidden & (step === 1) ? (
             <div className={classes.pop_2_text}>
               <p>
                 목록에서 원하는 운동을 선택하거나 <br /> 직접 만들어 추가할 수
                 있습니다.
               </p>
             </div>
-          ) : (currentPage === 'record') & !hidden & (step === 2) ? (
+          ) : !hidden & (step === 2) ? (
             <div className={classes.pop_3_text}>
               <p>
                 운동 날짜, 시간, 장소를 입력하고 <br /> 오늘 운동을 추억할 수

@@ -6,7 +6,7 @@ import Modal from '../../shared/UIElement/Modal';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './UserInfo.module.css';
 
-export default function UserInfo({ currentPage }) {
+export default function UserInfo() {
   const mode = useContext(ModeContext);
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState(0);
@@ -26,14 +26,12 @@ export default function UserInfo({ currentPage }) {
   };
 
   useEffect(() => {
-    if (currentPage === 'userinfo') {
-      setStep(0);
-      setTimeout(() => {
-        setHidden(false);
-      }, 700);
-    }
+    setStep(0);
+    setTimeout(() => {
+      setHidden(false);
+    }, 700);
     return () => setHidden(true);
-  }, [currentPage]);
+  }, []);
 
   return (
     <>
@@ -58,7 +56,7 @@ export default function UserInfo({ currentPage }) {
           </div>
         </div>
       </Modal>
-      {(currentPage === 'userinfo') & !hidden ? (
+      {!hidden ? (
         <>
           <div className={classes.backdrop}></div>
           <Link to='/auth'>
@@ -88,7 +86,7 @@ export default function UserInfo({ currentPage }) {
             입니다.
           </h1>
 
-          {(currentPage === 'userinfo') & !hidden ? (
+          {!hidden ? (
             <p>
               <svg
                 xmlns='http://www.w3.org/2000/svg'

@@ -13,7 +13,9 @@ import DietPhoto from './components/User/DietPhoto';
 import Record from './components/Workout/Record';
 import Calendar from './components/Workout/Calendar';
 import MainHeader from './shared/Navigation/MainHeader';
-
+import CalendarGuide from './components/Workout/CalendarGuide';
+import RecordGuide from './components/Workout/RecordGuide';
+import UserInfoGuide from './components/User/UserInfoGuide';
 function App() {
   return (
     <Router>
@@ -24,14 +26,23 @@ function App() {
             <Route path='/' exact>
               <MainPage />
             </Route>
+            <Route path='/record/guide' exact>
+              <RecordGuide />
+            </Route>
             <Route path='/record' exact>
               <Record />
+            </Route>
+            <Route path='/calendar/guide' exact>
+              <CalendarGuide />
             </Route>
             <Route path='/calendar' exact>
               <Calendar />
             </Route>
             <Route path='/auth'>
               <Auth />
+            </Route>
+            <Route path='/userinfo/guide' exact>
+              <UserInfoGuide />
             </Route>
             <Route path='/userinfo/edit' exact>
               <UpdateUserInfo />

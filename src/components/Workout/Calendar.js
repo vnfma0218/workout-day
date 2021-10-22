@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -16,6 +16,13 @@ import Map from '../../shared/UIElement/Map';
 import useWindowDimensions from '../../shared/hooks/useWindowDemensions';
 
 export default function Calendar(props) {
+  const { currentUser } = useAuth();
+  const history = useHistory();
+  const { width } = useWindowDimensions();
+  if (!currentUser && width > 1024) {
+    history.push('/calendar/guide');
+  }
+
   const {
     events,
     selectedDate,
@@ -26,12 +33,16 @@ export default function Calendar(props) {
     dateClickHandler,
     loading,
   } = useFetchEvents();
-  const { width } = useWindowDimensions();
 
   const [mapOpen, setMapOpen] = useState(false);
   const calendarComponentRef = useRef();
-  const { currentUser } = useAuth();
-  const history = useHistory();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!currentUser) {
+      setLoginModalOpen(true);
+    }
+  }, [currentUser]);
 
   const getCalendarData = (fetchInfo, successCallback, failureCallback) => {
     if (fetchInfo) {
@@ -91,28 +102,32 @@ export default function Calendar(props) {
         </div>
         {currentUser && (
           <>
-            <h1 className={classes.norecord__message}>운동기록이 없습니다.</h1>
-            <div className={classes.guide}>
-              <Button
-                name={
-                  <>
-                    <p>등록하기 </p>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      enableBackground='new 0 0 24 24'
-                      height='24px'
-                      viewBox='0 0 24 24'
-                      width='24px'
-                      fill='#000000'
-                    >
-                      <rect fill='none' height='24' width='24' />
-                      <path d='M19,15l-1.41-1.41L13,18.17V2H11v16.17l-4.59-4.59L5,15l7,7L19,15z' />
-                    </svg>
-                  </>
-                }
-                onClick={toRecordPage}
-                className={classes.downward__icon}
-              />
+            <div className={classes.norecord}>
+              <h1 className={classes.norecord__message}>
+                운동기록이 없습니다.
+              </h1>
+              <div className={classes.guide}>
+                <Button
+                  name={
+                    <>
+                      <p>등록하기 </p>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        enableBackground='new 0 0 24 24'
+                        height='24px'
+                        viewBox='0 0 24 24'
+                        width='24px'
+                        fill='#000000'
+                      >
+                        <rect fill='none' height='24' width='24' />
+                        <path d='M19,15l-1.41-1.41L13,18.17V2H11v16.17l-4.59-4.59L5,15l7,7L19,15z' />
+                      </svg>
+                    </>
+                  }
+                  onClick={toRecordPage}
+                  className={classes.downward__icon}
+                />
+              </div>
               {/* <p>등록하기 </p>
               <div className={classes.downward__icon} onClick={toRecordPage}>
                 <img src='img/icons/arrow.png' alt='' />
@@ -172,10 +187,11 @@ export default function Calendar(props) {
         </div>
         {width < 768 && (
           <div className={classes.memo__container}>
-            <p className={classes.memo__title}>MEMO</p>
+            <img src={selectedEvent.imageUrl} alt='workoutImg' />
+            {/* <p className={classes.memo__title}>MEMO</p>
             <p className={classes.memo}>
               {selectedEvent.memo.split('').splice(0, 40).join('')}
-            </p>
+            </p> */}
           </div>
         )}
 
@@ -192,6 +208,21 @@ export default function Calendar(props) {
   }
   return (
     <>
+      <Modal
+        open={loginModalOpen}
+        title='UnAuthorization'
+        onClose={() => {
+          setLoginModalOpen(false);
+          history.push('/auth');
+        }}
+        onConfirm={() => {
+          setLoginModalOpen(false);
+          history.push('/auth');
+        }}
+      >
+        <p className={classes.logout__message}> You need to Log in</p>
+      </Modal>
+
       <Modal
         title='Are you sure'
         open={mapOpen}

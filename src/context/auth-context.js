@@ -27,6 +27,7 @@ export function AuthProvider(props) {
   useEffect(() => {
     const unsubscribe = authService.onAuthStateChanged((user) => {
       setCurrentUser(user);
+
       setLoading(false);
     });
     return unsubscribe;

@@ -30,19 +30,19 @@ const SAMPLE_EVENTS = [
   },
 ];
 
-export default function CalendarGuide({ currentPage }) {
+export default function CalendarGuide() {
   const [step, setStep] = useState(0);
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
-    if (currentPage === 'calendar') {
-      setStep(0);
-      setTimeout(() => {
-        setHidden(false);
-      }, 700);
-    }
+    console.log('d');
+    setStep(0);
+    setTimeout(() => {
+      setHidden(false);
+    }, 700);
+
     return () => setHidden(true);
-  }, [currentPage]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener('click', addStepCount);
@@ -59,7 +59,7 @@ export default function CalendarGuide({ currentPage }) {
 
   return (
     <>
-      {currentPage === 'calendar' && !hidden ? (
+      {!hidden ? (
         <>
           <div className={classes.backdrop}>
             <Link to='/auth'>
@@ -80,7 +80,7 @@ export default function CalendarGuide({ currentPage }) {
 
       <Wrapper className={classes.calendar__container} id={classes.calendar}>
         <div className={classes.guide__container}>
-          {(currentPage === 'calendar') & !hidden && step === 0 ? (
+          {!hidden && step === 0 ? (
             <div className={classes.start__message}>
               <img
                 className={classes.start__img}
@@ -93,18 +93,18 @@ export default function CalendarGuide({ currentPage }) {
             </div>
           ) : null}
 
-          {(currentPage === 'calendar') & (step === 1) ? (
+          {step === 1 ? (
             <div className={classes.first__message}>
               <h3> 👩 이번달 운동시간을 날짜별로 확인할 수 있습니다.</h3>
             </div>
-          ) : (currentPage === 'calendar') & (step === 2) ? (
+          ) : step === 2 ? (
             <div className={classes.second__message}>
               <h3>
                 📝 날짜를 클릭하면 <br />
                 해당 날짜의 운동 정보를 볼 수 있습니다
               </h3>
             </div>
-          ) : (currentPage === 'calendar') & (step === 3) ? (
+          ) : step === 3 ? (
             <div className={classes.third__message}>
               <h3>
                 운동사진을 한번에 <br /> 모아볼 수 있습니다
