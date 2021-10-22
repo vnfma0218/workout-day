@@ -16,10 +16,14 @@ import classes from './Record.module.css';
 import { useAuth } from '../../context/auth-context';
 import useFetchEvents from '../../shared/hooks/useFetchEvents';
 import FoodModal from './FoodModal';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
+import useWindowDimensions from '../../shared/hooks/useWindowDemensions';
 
 export default function Record() {
   const location = useLocation();
+  const { currentUser } = useAuth();
+  const history = useHistory();
+  const { width } = useWindowDimensions();
 
   const [selectUpdateEvent, setSelectUpdateEvent] = useState(
     location.state ? location.state.selectedEvent : null
@@ -64,10 +68,20 @@ export default function Record() {
   });
   const [clearActivity, setClearActivity] = useState(false);
   const [recordDocId, setRecordDocId] = useState();
-  const { currentUser } = useAuth();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  if (!currentUser && width > 1024) {
+    history.push('/record/guide');
+  }
+
+  useEffect(() => {
+    if (!currentUser) {
+      setLoginModalOpen(true);
+    }
+  }, [currentUser]);
 
   // Edit Modal
   const openEditModalHandler = () => {
@@ -348,6 +362,21 @@ export default function Record() {
 
   return (
     <>
+      <Modal
+        open={loginModalOpen}
+        title='UnAuthorization'
+        onClose={() => {
+          setLoginModalOpen(false);
+          history.push('/auth');
+        }}
+        onConfirm={() => {
+          setLoginModalOpen(false);
+          history.push('/auth');
+        }}
+      >
+        <p className={classes.logout__message}> You need to Log in</p>
+      </Modal>
+
       <Modal
         open={deleteModalOpen}
         title='Already have record'
