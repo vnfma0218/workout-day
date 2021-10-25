@@ -415,53 +415,188 @@ export default function Record() {
       </Modal>
       <Wrapper className={classes.record} id={classes.record}>
         <div className={classes.record__inner}>
-          <SelectActivity
-            recordActivity={recordActivity}
-            err={err}
-            clearActivity={clearActivity}
-            selectActivityNameId={editActivity}
-          />
-          {/* Record Form */}
-          <form
-            id={classes.form}
-            className={classes.record__form}
-            onSubmit={saveHandler}
-          >
-            <div className={classes.form__input}>
-              <label className={classes.input_title}>Date</label>
+          <div className={classes.record__inner__box}>
+            <SelectActivity
+              recordActivity={recordActivity}
+              err={err}
+              clearActivity={clearActivity}
+              selectActivityNameId={editActivity}
+            />
+            {/* Record Form */}
+            <form
+              id={classes.form}
+              className={classes.record__form}
+              onSubmit={saveHandler}
+            >
+              <div className={classes.form__input}>
+                <label className={classes.input_title}>Date</label>
 
-              <input
-                type='date'
-                name='date'
-                min='2021-01-01'
-                max={new Date().toISOString().split('T')[0]}
-                required
-                onChange={inputHandler}
-                value={inputs.date}
-              />
-            </div>
-            <div className={classes.form__input}>
-              <label className={classes.input_title}>Time</label>
-              <input
-                type='number'
-                name='hour'
-                min='1'
-                max='24'
-                onChange={inputHandler}
-                value={inputs.hour}
-              />
-              <span> 시간</span>
-              <input
-                type='number'
-                name='minutes'
-                min='1'
-                max='59'
-                onChange={inputHandler}
-                value={inputs.minutes}
-              />
-              <span> 분</span>
-              {err && err.time && (
-                <div className={classes.err__box}>
+                <input
+                  type='date'
+                  name='date'
+                  min='2021-01-01'
+                  max={new Date().toISOString().split('T')[0]}
+                  required
+                  onChange={inputHandler}
+                  value={inputs.date}
+                />
+              </div>
+              <div className={classes.form__input}>
+                <label className={classes.input_title}>Time</label>
+                <input
+                  type='number'
+                  name='hour'
+                  min='1'
+                  max='24'
+                  onChange={inputHandler}
+                  value={inputs.hour}
+                />
+                <span> 시간</span>
+                <input
+                  type='number'
+                  name='minutes'
+                  min='1'
+                  max='59'
+                  onChange={inputHandler}
+                  value={inputs.minutes}
+                />
+                <span> 분</span>
+                {err && err.time && (
+                  <div className={classes.err__box}>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      height='24px'
+                      viewBox='0 0 24 24'
+                      width='24px'
+                      fill='#000000'
+                    >
+                      <path d='M0 0h24v24H0z' fill='none' />
+                      <path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z' />
+                    </svg>
+                    <p>운동 시간을 입력해주세요.</p>
+                  </div>
+                )}
+              </div>
+              <div className={classes.form__input}>
+                <label className={classes.input_title}>Place</label>
+                <div className={classes.place__box}>
+                  <div>
+                    <img
+                      src='img/icons/location.svg'
+                      alt='location'
+                      onClick={oepnMapHandler}
+                    />
+                    {enter ? (
+                      <input
+                        name='location'
+                        type='text'
+                        maxLength='30'
+                        placeholder='장소를 입력하세요.'
+                        onChange={inputHandler}
+                        value={inputs.location}
+                      />
+                    ) : (
+                      <span className={classes.location__result}>{place}</span>
+                    )}
+                  </div>
+
+                  <button
+                    className={
+                      enter
+                        ? classes.enterBtn__active
+                        : classes.enterBtn__unactive
+                    }
+                    onClick={enterPlaceHandler}
+                  >
+                    <img src='img/icons/pen.svg' alt='write' />
+                  </button>
+                </div>
+              </div>
+              {mode.isDietMode && (
+                <div className={classes.form__input}>
+                  <label className={classes.input_title}>Weight</label>
+                  <input
+                    type='number'
+                    name='weight'
+                    min='0'
+                    required
+                    // disabled={mode.isDietMode ? false : true}
+                    onChange={inputHandler}
+                    value={inputs.weight}
+                  />
+                  &nbsp;&nbsp;kg
+                </div>
+              )}
+
+              <div className={`${classes.form__input} ${classes.file__input}`}>
+                <label className={classes.input_title}>Image</label>
+                <div
+                  className={classes.preview__Image}
+                  onClick={() => fileInput.current.click()}
+                >
+                  {file ? (
+                    <img
+                      src={url}
+                      alt='preview_image'
+                      className={classes.preview__box__img}
+                    />
+                  ) : (
+                    <img
+                      src='img/icons/add_photo.svg'
+                      alt='icon'
+                      className={classes.image__box__icon}
+                    />
+                  )}
+                </div>
+                <div className={classes.filebox}>
+                  <input
+                    type='file'
+                    name='image'
+                    required={editMode ? false : true}
+                    onChange={fileHandler}
+                    ref={fileInput}
+                  />
+                </div>
+              </div>
+              <div className={`${classes.form__input} ${classes.memo__input}`}>
+                <div className={classes.memo__box}>
+                  <label className={classes.input_title}>Memo</label>
+                  <p>
+                    <span>{`(${totalByte} / 100)`}</span>
+                  </p>
+                </div>
+                <textarea
+                  name='memo'
+                  cols='30'
+                  rows='5'
+                  maxLength='100'
+                  placeholder='메모를 남겨보세요 😃'
+                  onChange={inputHandler}
+                  value={inputs.memo}
+                ></textarea>
+              </div>
+              <div className={classes.form__btn}>
+                {editMode && (
+                  <Button
+                    className={classes.btn}
+                    name='CANCEL'
+                    onClick={cancelHandler}
+                  />
+                )}
+                {mode.isDietMode && !editMode ? <FoodModal /> : null}
+                <Button
+                  className={onSubmit ? classes.btn__unactive : classes.btn}
+                  type='submit'
+                  name={editMode ? 'EDIT' : 'SAVE'}
+                  disable={onSubmit ? true : false}
+                />
+              </div>
+              {editMode && (
+                <button
+                  className={classes.btn__delete}
+                  type='button'
+                  onClick={oepnDeleteModalHandler}
+                >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     height='24px'
@@ -470,145 +605,12 @@ export default function Record() {
                     fill='#000000'
                   >
                     <path d='M0 0h24v24H0z' fill='none' />
-                    <path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z' />
+                    <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' />
                   </svg>
-                  <p>운동 시간을 입력해주세요.</p>
-                </div>
-              )}
-            </div>
-            <div className={classes.form__input}>
-              <label className={classes.input_title}>Place</label>
-              <div className={classes.place__box}>
-                <div>
-                  <img
-                    src='img/icons/location.svg'
-                    alt='location'
-                    onClick={oepnMapHandler}
-                  />
-                  {enter ? (
-                    <input
-                      name='location'
-                      type='text'
-                      maxLength='30'
-                      placeholder='장소를 입력하세요.'
-                      onChange={inputHandler}
-                      value={inputs.location}
-                    />
-                  ) : (
-                    <span className={classes.location__result}>{place}</span>
-                  )}
-                </div>
-
-                <button
-                  className={
-                    enter
-                      ? classes.enterBtn__active
-                      : classes.enterBtn__unactive
-                  }
-                  onClick={enterPlaceHandler}
-                >
-                  <img src='img/icons/pen.svg' alt='write' />
                 </button>
-              </div>
-            </div>
-            {mode.isDietMode && (
-              <div className={classes.form__input}>
-                <label className={classes.input_title}>Weight</label>
-                <input
-                  type='number'
-                  name='weight'
-                  min='0'
-                  required
-                  // disabled={mode.isDietMode ? false : true}
-                  onChange={inputHandler}
-                  value={inputs.weight}
-                />
-                &nbsp;&nbsp;kg
-              </div>
-            )}
-
-            <div className={`${classes.form__input} ${classes.file__input}`}>
-              <label className={classes.input_title}>Image</label>
-              <div
-                className={classes.preview__Image}
-                onClick={() => fileInput.current.click()}
-              >
-                {file ? (
-                  <img
-                    src={url}
-                    alt='preview_image'
-                    className={classes.preview__box__img}
-                  />
-                ) : (
-                  <img
-                    src='img/icons/add_photo.svg'
-                    alt='icon'
-                    className={classes.image__box__icon}
-                  />
-                )}
-              </div>
-              <div className={classes.filebox}>
-                <input
-                  type='file'
-                  name='image'
-                  required={editMode ? false : true}
-                  onChange={fileHandler}
-                  ref={fileInput}
-                />
-              </div>
-            </div>
-            <div className={`${classes.form__input} ${classes.memo__input}`}>
-              <div className={classes.memo__box}>
-                <label className={classes.input_title}>Memo</label>
-                <p>
-                  <span>{`(${totalByte} / 100)`}</span>
-                </p>
-              </div>
-              <textarea
-                name='memo'
-                cols='30'
-                rows='5'
-                maxLength='100'
-                placeholder='메모를 남겨보세요 😃'
-                onChange={inputHandler}
-                value={inputs.memo}
-              ></textarea>
-            </div>
-            <div className={classes.form__btn}>
-              {editMode && (
-                <Button
-                  className={classes.btn}
-                  name='CANCEL'
-                  onClick={cancelHandler}
-                />
               )}
-              {mode.isDietMode && !editMode ? <FoodModal /> : null}
-              <Button
-                className={onSubmit ? classes.btn__unactive : classes.btn}
-                type='submit'
-                name={editMode ? 'EDIT' : 'SAVE'}
-                disable={onSubmit ? true : false}
-              />
-            </div>
-            {editMode && (
-              <button
-                className={classes.btn__delete}
-                type='button'
-                onClick={oepnDeleteModalHandler}
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='24px'
-                  viewBox='0 0 24 24'
-                  width='24px'
-                  fill='#000000'
-                >
-                  <path d='M0 0h24v24H0z' fill='none' />
-                  <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' />
-                </svg>
-              </button>
-            )}
-          </form>
+            </form>
+          </div>
         </div>
       </Wrapper>
     </>

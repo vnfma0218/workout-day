@@ -194,6 +194,7 @@
   .selectDate p {
     margin: 0 10px;
     font-size: 14px;
+    line-height: 14px;
   }
 
   .selectBtn {
@@ -237,9 +238,9 @@
   .latestBtn {
     top: 70px;
     right: 10px;
-    width: 60px;
-    border-radius: 50%;
+    width: 70px;
     font-size: 13px;
+    line-height: 13px;
   }
 
   .photos {
