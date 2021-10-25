@@ -37,7 +37,7 @@
 .record__inner {
   display: flex;
   justify-content: space-around;
-  height: 90%;
+  height: 100%;
   width: 100%;
   /* padding: 50px 0 0; */
   margin: 0 auto;

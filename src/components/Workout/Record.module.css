@@ -17,15 +17,20 @@
 }
 
 .record__inner {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   height: 100%;
   width: 100%;
   margin: 0 auto;
   overflow-y: scroll;
 }
 
+.record__inner__box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+}
 /* Record Form CSS */
 .record__form {
   position: relative;
@@ -273,6 +278,12 @@
   width: 80%;
 }
 
+@media screen and (max-height: 800px) {
+  .record__inner__box {
+    height: 150%;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .record__form {
     font-size: 14px;
@@ -356,7 +367,7 @@
   .record {
     height: auto;
   }
-  .record__inner {
+  .record__inner__box {
     flex-direction: column;
     height: auto;
     overflow-y: initial;
