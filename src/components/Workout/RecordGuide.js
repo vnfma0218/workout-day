@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Button from '../../shared/UIElement/Button';
 import Wrapper from '../../shared/UIElement/Wrapper';
 import classes from './RecordGuide.module.css';

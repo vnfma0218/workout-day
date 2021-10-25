@@ -7,7 +7,6 @@ import Button from '../../shared/UIElement/Button';
 
 import './Calendar.css';
 import classes from './Calendar.module.css';
-import { Link } from 'react-router-dom';
 
 const SAMPLE_EVENTS = [
   {
